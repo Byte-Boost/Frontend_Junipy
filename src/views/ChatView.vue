@@ -16,6 +16,7 @@
 
     <form @submit.prevent="sendMessage" class="input-container">
       <textarea
+        :disabled="!hasReply"
         v-model="input"
         placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)"
         class="chat-input"
@@ -32,24 +33,60 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from "vue";
-import axios from "axios";
+import { ref, onMounted, nextTick, watch } from "vue";
 import { marked } from "marked";
 import IconSend from "@/components/icons/IconSend.vue";
+import { useChatSocket } from "@/scripts/websocket/chat";
 
 const defaultText =
   "Hi! I'm Junipy a virtual assistant. How can I help you today?";
 const errorText = "⚠️ Error contacting server.";
-const input = ref("");
-const messages = ref([]);
 const isLoading = ref(true);
+
 const userId = ref("2");
+const token = ref(
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJrb3NAZ21haWwuY29tIiwiaWF0IjoxNzU4NzYwNDY3LCJleHAiOjE3NTg3NjQwNjd9.ynByLaIMoIEsVzrIyad6CR0m0xYFzJv2vU8HmT8xbaw"
+);
+
 const textareaRef = ref(null);
+const input = ref("");
+
+const {
+  messages,
+  isConnected,
+  connect,
+  disconnect,
+  hasReply,
+  sendMessage: socketSendMessage,
+} = useChatSocket(userId.value);
 
 onMounted(async () => {
-  await loadChatHistory();
+  if (messages.value.length === 0) {
+    messages.value.push({ role: "assistant", content: defaultText });
+  }
+  connect(token.value);
 });
 
+watch(isConnected, (newVal) => {
+  if (newVal) {
+    isLoading.value = false;
+  } else {
+    isLoading.value = true;
+    setTimeout(() => {
+      if (!isConnected.value) {
+        isLoading.value = false;
+        if (
+          messages.value.length === 1 &&
+          messages.value[0].content === defaultText
+        ) {
+          messages.value[0].content = errorText;
+        } else {
+          messages.value.push({ role: "assistant", content: errorText });
+        }
+      }
+    }, 5000);
+  }
+});
 function adjustHeight() {
   nextTick(() => {
     if (textareaRef.value) {
@@ -64,6 +101,7 @@ function adjustHeight() {
     }
   });
 }
+
 function handleKeydown(event) {
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
@@ -71,71 +109,19 @@ function handleKeydown(event) {
   }
 }
 
-async function loadChatHistory() {
-  try {
-    isLoading.value = true;
-    const { data } = await axios.get(
-      `http://localhost:3000/chat/history/${userId.value}`
-    );
-
-    if (data.messages && data.messages.length > 0) {
-      messages.value = data.messages;
-    } else {
-      messages.value = [{ role: "assistant", content: defaultText }];
-    }
-  } catch (err) {
-    console.error("Error loading chat history:", err);
-    messages.value = [{ role: "assistant", content: defaultText }];
-  } finally {
-    isLoading.value = false;
-  }
-}
-
 function renderMarkdown(text) {
   return marked.parse(text);
 }
 
-async function sendMessage() {
+function sendMessage() {
   if (!input.value.trim()) return;
-
-  const userMessage = { role: "user", content: input.value };
-  messages.value.push(userMessage);
-
-  const messageContent = input.value;
+  socketSendMessage(input.value);
   input.value = "";
-
   nextTick(() => {
     if (textareaRef.value) {
       textareaRef.value.style.height = "auto";
     }
   });
-
-  try {
-    const { data } = await axios.post("http://localhost:3000/chat", {
-      message: messageContent,
-      userId: userId.value,
-    });
-
-    const assistantMessage = { role: "assistant", content: data.reply };
-    messages.value.push(assistantMessage);
-  } catch (err) {
-    console.error(err);
-    const errorMessage = {
-      role: "assistant",
-      content: errorText,
-    };
-    messages.value.push(errorMessage);
-  }
-}
-
-async function saveChatMessage(message) {
-  try {
-    await axios.post(`http://localhost:3000/chat/history/${userId.value}`, {
-      message: message,
-    });
-  } catch (err) {
-    console.error("Error saving message:", err);
-  }
 }
 </script>
 
