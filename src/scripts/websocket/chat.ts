@@ -23,9 +23,18 @@ export function useChatSocket(userId: string) {
         client.value?.subscribe("/topic/chat", (message) => {
           const data = JSON.parse(message.body);
           console.log("Received message:", data);
-          if (data.message) {
-            messages.value.push({ role: "assistant", content: data.message });
+          if (data.error) {
+            messages.value.push({
+              role: "assistant",
+              content:
+                "Sorry, something went wrong. Please try again later. If the problem persists, contact support.",
+            });
             hasReply.value = true;
+          } else if (data.message) {
+            setTimeout(() => {
+              messages.value.push({ role: "assistant", content: data.message });
+              hasReply.value = true;
+            }, 1000);
           }
         });
       },

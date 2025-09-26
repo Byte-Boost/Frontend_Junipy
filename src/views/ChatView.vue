@@ -12,22 +12,44 @@
         />
         <div v-else class="plain-text">{{ msg.content }}</div>
       </div>
+      <!-- Loader for assistant reply -->
+      <div v-if="!hasReply" class="message assistant loader-message">
+        <div class="jumping-balls-loader">
+          <span class="ball"></span>
+          <span class="ball"></span>
+          <span class="ball"></span>
+        </div>
+      </div>
     </div>
 
-    <form @submit.prevent="sendMessage" class="input-container">
+    <form @submit.prevent="sendMessage" class="input-container input-relative">
       <textarea
-        :disabled="!hasReply"
+        :disabled="!hasReply || !isConnected"
         v-model="input"
         placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)"
         class="chat-input"
+        :class="{ blocked: !hasReply || !isConnected }"
         rows="1"
         @keydown="handleKeydown"
         @input="adjustHeight"
         ref="textareaRef"
       ></textarea>
-      <button type="submit" :disabled="!input.trim()">
+      <button
+        type="submit"
+        :disabled="!input.trim() || !hasReply || !isConnected"
+      >
         <IconSend :size="32" color="white" />
       </button>
+      <div v-if="!hasReply" class="input-blocked-overlay">
+        <div class="input-spinner"></div>
+        <span class="input-blocked-text">Waiting for assistant...</span>
+      </div>
+      <div v-if="!isConnected" class="input-blocked-overlay">
+        <span class="input-blocked-text"
+          >⚠️ Unable to connect to chat server. Please check your
+          connection.</span
+        >
+      </div>
     </form>
   </div>
 </template>
@@ -126,6 +148,45 @@ function sendMessage() {
 </script>
 
 <style scoped>
+.loader-message {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  color: #2a6f97;
+  box-shadow: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 20px;
+}
+
+.jumping-balls-loader {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 18px;
+}
+.ball {
+  width: 6px;
+  height: 6px;
+  background: #2a6f97;
+  border-radius: 50%;
+  display: inline-block;
+  animation: ball-jump 1s infinite;
+}
+.ball:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.ball:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes ball-jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -213,6 +274,11 @@ function sendMessage() {
   align-items: flex-end;
   min-height: 10px;
   box-sizing: border-box;
+  position: relative;
+}
+
+.input-relative {
+  position: relative;
 }
 
 .chat-input {
@@ -230,6 +296,45 @@ function sendMessage() {
   font-family: inherit;
   line-height: 1.4;
   overflow-y: auto;
+}
+
+.chat-input.blocked {
+  background: #f1f3f4;
+  color: #aaa;
+  cursor: not-allowed;
+  border: 2px solid #ccc;
+  opacity: 0.7;
+}
+
+.input-blocked-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 2;
+  border-radius: 25px;
+  pointer-events: none;
+}
+
+.input-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #2a6f97;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.input-blocked-text {
+  color: #2a6f97;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .chat-input::-webkit-scrollbar {
