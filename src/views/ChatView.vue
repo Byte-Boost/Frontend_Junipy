@@ -66,9 +66,7 @@ const errorText = "⚠️ Error contacting server.";
 const isLoading = ref(true);
 
 const userId = ref("2");
-const token = ref(
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJrb3NAZ21haWwuY29tIiwiaWF0IjoxNzU4NzYwNDY3LCJleHAiOjE3NTg3NjQwNjd9.ynByLaIMoIEsVzrIyad6CR0m0xYFzJv2vU8HmT8xbaw"
-);
+const token = ref("");
 
 const textareaRef = ref(null);
 const input = ref("");
@@ -83,9 +81,16 @@ const {
 } = useChatSocket(userId.value);
 
 onMounted(async () => {
-  if (messages.value.length === 0) {
-    messages.value.push({ role: "assistant", content: defaultText });
+  token.value = localStorage.getItem("token") || "";
+  if (token.value) {
+    if (messages.value.length === 0) {
+      messages.value.push({ role: "assistant", content: defaultText });
+    }
+  } else {
+    console.warn("No token found in localStorage.");
+    messages.value.push({ role: "assistant", content: errorText });
   }
+
   connect(token.value);
 });
 
