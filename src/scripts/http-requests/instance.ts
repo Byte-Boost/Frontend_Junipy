@@ -1,12 +1,22 @@
-import apiClient from "./endpoints";
-import type { User } from "@/models/models";
+import axios from "axios";
 
-export async function register(email: string, username: string, password: string, confirmPassword: string) {
-  const response = await apiClient.post("/api/auth/register", { email, username, password, confirmPassword });
-  return response.data;
+const axiosConfig: {
+  baseURL: string;
+  timeout: number;
+  headers?: Record<string, string>;
+} = {
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 10000,
+};
+
+const token = localStorage.getItem("token");
+if (token) {
+  axiosConfig.headers = {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
+  };
 }
 
-export async function login(email: string, password: string) {
-  const response = await apiClient.post("/api/auth/login", { email, password });
-  return response.data;
-}
+const apiClient = axios.create(axiosConfig);
+
+export default apiClient;

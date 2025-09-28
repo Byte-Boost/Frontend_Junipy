@@ -1,50 +1,49 @@
 <template class="login-container">
-    <div class="login-container">
-        <div class="login-card">
-          <h1>Login</h1>
-      
-          <form @submit.prevent="handleLogin" class="login-form">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input 
-                id="email" 
-                type="email" 
-                v-model="email" 
-                placeholder="Enter your email" 
-                required 
-              />
-            </div>
-      
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input 
-                id="password" 
-                type="password" 
-                v-model="password" 
-                placeholder="Enter your password" 
-                required 
-              />
-            </div>
-      
-            <button type="submit" :disabled="loading">
-              {{ loading ? "Logging in..." : "Login" }}
-            </button>
-          </form>
-      
-          <p class="extra">
-            Don't have an account?
-            <a href="/register">Register</a>
-          </p>
+  <div class="login-container">
+    <div class="login-card">
+      <h1>Login</h1>
 
+      <form @submit.prevent="handleLogin" class="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            v-model="email"
+            placeholder="Enter your email"
+            required
+          />
         </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            v-model="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <button type="submit" :disabled="loading">
+          {{ loading ? "Logging in..." : "Login" }}
+        </button>
+      </form>
+
+      <p class="extra">
+        Don't have an account?
+        <a href="/register">Register</a>
+      </p>
     </div>
+  </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { login } from "@/scripts/http-requests/instance";
-import Swal from 'sweetalert2';
+import { login } from "@/scripts/http-requests/endpoints";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 const email = ref("");
@@ -65,14 +64,14 @@ const handleLogin = async () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Algo de errado aconteceu com o servidor!"
+        text: "Algo de errado aconteceu com o servidor!",
       });
     }
   } catch (e) {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: e.response?.data?.message || "Login failed"
+      text: e.response?.data?.message || "Login failed",
     });
   } finally {
     loading.value = false;
@@ -81,11 +80,11 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-.login-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .login-card {

@@ -3,7 +3,7 @@
     <h1>All Users</h1>
 
     <table class="user-table">
-      <thead >
+      <thead>
         <tr>
           <th>#</th>
           <th>Username</th>
@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import { getAllUsers } from "@/scripts/http-requests/endpoints";
 
 // State
 const users = ref([]);
@@ -41,14 +41,8 @@ const fetchUsers = async () => {
   error.value = null;
 
   try {
-    users.value = (await axios.get(
-      `http://localhost:8080/api/user`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    )).data;
-
+    users.value = await getAllUsers();
+    console.log(users);
     console.log(users.value[0].email);
   } catch (e) {
     error.value = "Failed to load users";

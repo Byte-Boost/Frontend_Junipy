@@ -1,10 +1,27 @@
-import axios from "axios";
+import apiClient from "./instance";
+import type { User } from "@/models/models";
 
-const axiosConfig = {
-  baseURL: import.meta.env.VITE_API_URL,
-  timeout: 10000,
-};
+export async function register(
+  email: string,
+  username: string,
+  password: string,
+  confirmPassword: string
+) {
+  const response = await apiClient.post("/api/auth/register", {
+    email,
+    username,
+    password,
+    confirmPassword,
+  });
+  return response.data;
+}
 
-const apiClient = axios.create(axiosConfig);
+export async function login(email: string, password: string) {
+  const response = await apiClient.post("/api/auth/login", { email, password });
+  return response.data;
+}
 
-export default apiClient;
+export async function getAllUsers() {
+  const response = await apiClient.get("/api/user");
+  return response.data;
+}
