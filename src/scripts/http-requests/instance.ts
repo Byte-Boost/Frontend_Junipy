@@ -1,10 +1,8 @@
-import { Client } from "@stomp/stompjs";
 import apiClient from "./endpoints";
-import SockJS from "sockjs-client";
 import type { User } from "@/models/models";
 
-export async function register(newUser: User) {
-  const response = await apiClient.post("/api/auth/register", newUser);
+export async function register(email: string, username: string, password: string, confirmPassword: string) {
+  const response = await apiClient.post("/api/auth/register", { email, username, password, confirmPassword });
   return response.data;
 }
 

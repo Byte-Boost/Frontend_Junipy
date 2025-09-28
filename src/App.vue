@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import Sidebar from "./components/Sidebar.vue";
+  import { RouterView } from "vue-router";
+  import Sidebar from "./components/Sidebar.vue";
+  import { useRoute } from 'vue-router';
+  const routesWithoutSidebar = ['/login', '/register'];
+
+  const showSidebar = ()=>{
+    const route = useRoute();
+    return !routesWithoutSidebar.includes(route.path.toLowerCase());
+  };
 </script>
 
 <template>
-  <Sidebar />
-  <main class="main-content">
+  <Sidebar v-if="showSidebar()"/>
+  <main class="main-content" :class="{'using-sidebar': showSidebar()}">
     <RouterView />
   </main>
 </template>
+
 <style>
 .app-layout {
   display: flex;
@@ -17,9 +25,12 @@ import Sidebar from "./components/Sidebar.vue";
 
 .main-content {
   flex: 1;
-  margin-left: 250px;
   transition: margin-left 0.3s ease;
   overflow: hidden;
+}
+
+.using-sidebar {
+  margin-left: 250px;
 }
 
 /* Adjust for collapsed sidebar */
