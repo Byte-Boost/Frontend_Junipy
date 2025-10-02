@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "chat": "Chat",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "auth": {
+    "username":{
+      "text":"Username",
+      "placeholder":"Enter your username"
+    },
+    "login": {
+        "text":"Login",
+        "placeholder":"",
+        "noAccount": "Don't have an account?"
+    },
+    "register": {
+        "text":"Register",
+        "hasAccount": "Already have an account?"
+    },
+    "email": {
+        "text":"Email",
+        "placeholder":"Enter your email"
+    },
+    "password": {
+        "text":"Password",
+        "placeholder":"Enter your password"
+    }
+  },
+  "chat": {
+    "sendMessage": "Send message",
+    "placeholder": "Type your message... (Press Enter to send, Shift+Enter for new line)",
+    "grettingMessage":"Hi! I'm Junipy a virtual assistant. How can I help you today?",
+    "waitingForResponse":"Waiting for assistant..."
+  },
+  "errors":{
+    "404":"Sorry this page doesn't seem to be here",
+    "ai":{
+       "503":"Unable to connect to chat server. Please check your connection."
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading..."
+  }
+}

@@ -6,22 +6,26 @@ const router = createRouter({
     {
       path: "/",
       name: "Chat",
+      // @ts-ignore
       component: () => import("../views/ChatView.vue"),
     },
     {
       path: "/login",
       name: "Login",
+      // @ts-ignore
       component: () => import("../views/LoginView.vue"),
     },
     {
       path: "/register",
       name: "Register",
+      // @ts-ignore
       component: () => import("../views/RegisterView.vue"),
     },
     {
       path: "/users",
       name: "Users",
-      component: () => import("../views/UserListView.vue"),
+      // @ts-ignore
+      component: () => import("../views/admin/UserListView.vue"),
     }
   ],
 });

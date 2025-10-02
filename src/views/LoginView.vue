@@ -5,47 +5,50 @@
 
       <form @submit.prevent="handleLogin" class="login-form">
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">{{ $t('auth.email.text') }}</label>
           <input
             id="email"
             type="email"
             v-model="email"
-            placeholder="Enter your email"
+            :placeholder="$t('auth.email.placeholder')"
             required
           />
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">{{ $t('auth.password.text') }}</label>
           <input
             id="password"
             type="password"
             v-model="password"
-            placeholder="Enter your password"
+            :placeholder="$t('auth.password.placeholder')"
             required
           />
         </div>
 
         <button type="submit" :disabled="loading">
-          {{ loading ? "Logging in..." : "Login" }}
+          {{ loading ? $t('common.loading') : $t('auth.login.text') }}
         </button>
       </form>
 
       <p class="extra">
-        Don't have an account?
-        <a href="/register">Register</a>
+        {{ $t('auth.login.noAccount') }}
+        <a href="/register">{{ $t('auth.register.text') }}</a>
       </p>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { login } from "@/scripts/http-requests/endpoints";
+import { useTypedI18n } from "@/composables/useI18n";
 import Swal from "sweetalert2";
+import '../styles/views/LoginView.css'
 
 const router = useRouter();
+const { t } = useTypedI18n();
 const email = ref("");
 const password = ref("");
 const loading = ref(false);
@@ -67,7 +70,7 @@ const handleLogin = async () => {
         text: "Algo de errado aconteceu com o servidor!",
       });
     }
-  } catch (e) {
+  } catch (e: any) {
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -78,65 +81,3 @@ const handleLogin = async () => {
   }
 };
 </script>
-
-<style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.login-card {
-  width: 32rem;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border: 1px solid #000;
-  color: #fff;
-  border-radius: 8px;
-  background: #2f2f2f;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  background: #48b684;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:disabled {
-  background: #999;
-  cursor: not-allowed;
-}
-
-.extra {
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.error {
-  margin-top: 1rem;
-  color: red;
-  font-weight: bold;
-}
-</style>
