@@ -1,42 +1,61 @@
 {
   "nav": {
-    "chat": "Chat",
+    "title": "Navigation",
+    "chat": "Junipy",
     "users": "Users",
-    "settings": "Settings"
+    "settings": "Settings",
+    "logout": "Logout"
   },
   "auth": {
-    "username":{
-      "text":"Username",
-      "placeholder":"Enter your username"
+    "username": {
+      "text": "Username",
+      "placeholder": "Enter your username"
     },
     "login": {
-        "text":"Login",
-        "placeholder":"",
-        "noAccount": "Don't have an account?"
+      "text": "Login",
+      "placeholder": "",
+      "noAccount": "Don't have an account?"
     },
     "register": {
-        "text":"Register",
-        "hasAccount": "Already have an account?"
+      "text": "Register",
+      "hasAccount": "Already have an account?"
     },
     "email": {
-        "text":"Email",
-        "placeholder":"Enter your email"
+      "text": "Email",
+      "placeholder": "Enter your email"
     },
     "password": {
-        "text":"Password",
-        "placeholder":"Enter your password"
-    }
+      "text": "Password",
+      "placeholder": "Enter your password"
+    },
+    "confirmPassword": {
+      "text": "Confirm Password",
+      "placeholder": "Confirm your password"
+    },
+    "logout": "Logout"
   },
   "chat": {
     "sendMessage": "Send message",
     "placeholder": "Type your message... (Press Enter to send, Shift+Enter for new line)",
-    "grettingMessage":"Hi! I'm Junipy a virtual assistant. How can I help you today?",
-    "waitingForResponse":"Waiting for assistant..."
+    "greetingMessage": "Hi! I'm Junipy a virtual assistant. How can I help you today?",
+    "waitingForResponse": "Waiting for assistant..."
   },
-  "errors":{
-    "404":"Sorry this page doesn't seem to be here",
-    "ai":{
-       "503":"Unable to connect to chat server. Please check your connection."
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Invalid email or password",
+      "registrationFailed": "Registration failed. Please try again.",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address"
+    },
+    "404": "Sorry this page doesn't seem to be here",
+    "ai": {
+      "503": "Unable to connect to chat server. Please check your connection."
+    },
+    "server": {
+      "generic": "Something went wrong with the server!"
     }
   },
   "common": {
@@ -44,5 +63,16 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "loading": "Loading..."
+  },
+  "users": {
+    "title": "All Users",
+    "headers": {
+      "number": "#",
+      "username": "Username",
+      "email": "Email",
+      "role": "Role"
+    },
+    "loading": "Loading users...",
+    "error": "Failed to load users"
   }
 }

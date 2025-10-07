@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "title": "Navegação",
+    "chat": "Junipy",
+    "users": "Usuários",
+    "settings": "Configurações",
+    "logout": "Sair"
+  },
+  "auth": {
+    "username": {
+      "text": "Nome de usuário",
+      "placeholder": "Digite seu nome de usuário"
+    },
+    "login": {
+      "text": "Entrar",
+      "placeholder": "",
+      "noAccount": "Não tem uma conta?"
+    },
+    "register": {
+      "text": "Registrar",
+      "hasAccount": "Já tem uma conta?"
+    },
+    "email": {
+      "text": "Email",
+      "placeholder": "Digite seu email"
+    },
+    "password": {
+      "text": "Senha",
+      "placeholder": "Digite sua senha"
+    },
+    "confirmPassword": {
+      "text": "Confirmar Senha",
+      "placeholder": "Confirme sua senha"
+    },
+    "logout": "Sair"
+  },
+  "chat": {
+    "sendMessage": "Enviar mensagem",
+    "placeholder": "Digite sua mensagem... (Pressione Enter para enviar, Shift+Enter para nova linha)",
+    "greetingMessage": "Oi! Eu sou o Junipy, um assistente virtual. Como posso te ajudar hoje?",
+    "waitingForResponse": "Aguardando assistente..."
+  },
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Email ou senha inválidos",
+      "registrationFailed": "Falha no registro. Tente novamente.",
+      "passwordMismatch": "As senhas não coincidem"
+    },
+    "validation": {
+      "required": "Este campo é obrigatório",
+      "invalidEmail": "Por favor, digite um email válido"
+    },
+    "404": "Desculpe, esta página não parece estar aqui",
+    "ai": {
+      "503": "Não foi possível conectar ao servidor de chat. Verifique sua conexão."
+    },
+    "server": {
+      "generic": "Algo de errado aconteceu com o servidor!"
+    }
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "loading": "Carregando..."
+  },
+  "users": {
+    "title": "Todos os Usuários",
+    "headers": {
+      "number": "#",
+      "username": "Nome de usuário",
+      "email": "Email",
+      "role": "Função"
+    },
+    "loading": "Carregando usuários...",
+    "error": "Falha ao carregar usuários"
+  }
+}
