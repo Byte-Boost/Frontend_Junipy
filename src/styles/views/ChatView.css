@@ -218,7 +218,7 @@
   scrollbar-width: none;
 }
 
-button {
+.chat-container button {
   padding: 0;
   background: linear-gradient(135deg, #2a6f97 0%, #6bcb77 100%);
   color: white;
@@ -239,18 +239,18 @@ button {
   overflow: hidden;
 }
 
-button:disabled {
+.chat-container button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
-button:hover {
+.chat-container button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-button:active {
+.chat-container button:active {
   transform: translateY(0);
 }
 

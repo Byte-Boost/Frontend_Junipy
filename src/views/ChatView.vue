@@ -42,12 +42,12 @@
       </button>
       <div v-if="!hasReply" class="input-blocked-overlay">
         <div class="input-spinner"></div>
-        <span class="input-blocked-text">{{ $t('chat.waitingForResponse') }}</span>
+        <span class="input-blocked-text">{{
+          $t("chat.waitingForResponse")
+        }}</span>
       </div>
       <div v-if="!isConnected" class="input-blocked-overlay">
-        <span class="input-blocked-text"
-          >{{ $t('errors.ai.503') }}</span
-        >
+        <span class="input-blocked-text">{{ $t("errors.ai.503") }}</span>
       </div>
     </form>
   </div>
@@ -59,15 +59,15 @@ import { marked } from "marked";
 import IconSend from "@/components/icons/IconSend.vue";
 import { useChatSocket } from "@/scripts/websocket/chat";
 import { useTypedI18n } from "@/composables/useI18n";
-import '../styles/views/ChatView.css'
+import "../styles/views/ChatView.css";
 
 const { t } = useTypedI18n();
 
-const defaultText = t('chat.grettingMessage');
-const errorText = t('errors.ai.503');
+const defaultText = t("chat.grettingMessage");
+const errorText = t("errors.ai.503");
 const isLoading = ref(true);
 
-const userId = ref("2");
+const userId = ref("");
 const token = ref("");
 
 const textareaRef = ref(null);

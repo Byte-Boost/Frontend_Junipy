@@ -5,7 +5,7 @@
 
       <form @submit.prevent="handleLogin" class="login-form">
         <div class="form-group">
-          <label for="email">{{ $t('auth.email.text') }}</label>
+          <label for="email">{{ $t("auth.email.text") }}</label>
           <input
             id="email"
             type="email"
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-          <label for="password">{{ $t('auth.password.text') }}</label>
+          <label for="password">{{ $t("auth.password.text") }}</label>
           <input
             id="password"
             type="password"
@@ -27,13 +27,13 @@
         </div>
 
         <button type="submit" :disabled="loading">
-          {{ loading ? $t('common.loading') : $t('auth.login.text') }}
+          {{ loading ? $t("common.loading") : $t("auth.login.text") }}
         </button>
       </form>
 
       <p class="extra">
-        {{ $t('auth.login.noAccount') }}
-        <a href="/register">{{ $t('auth.register.text') }}</a>
+        {{ $t("auth.login.noAccount") }}
+        <a href="/register">{{ $t("auth.register.text") }}</a>
       </p>
     </div>
   </div>
@@ -45,7 +45,7 @@ import { useRouter } from "vue-router";
 import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
 import Swal from "sweetalert2";
-import '../styles/views/LoginView.css'
+import "../styles/views/LoginView.css";
 
 const router = useRouter();
 const { t } = useTypedI18n();
@@ -67,14 +67,14 @@ const handleLogin = async () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Algo de errado aconteceu com o servidor!",
+        text: t("errors.server.generic"),
       });
     }
   } catch (e: any) {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: e.response?.data?.message || "Login failed",
+      text: e.response?.data?.message || t("errors.server.generic"),
     });
   } finally {
     loading.value = false;
