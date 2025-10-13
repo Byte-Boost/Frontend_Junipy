@@ -1,5 +1,5 @@
 <template class="login-container">
-  <WavyBackground>
+  <CloudyBackground>
     <div class="login-container">
       <div class="login-card">
         <section class="logo-section">
@@ -65,7 +65,7 @@
         </p>
       </div>
     </div>
-  </WavyBackground>
+  </CloudyBackground>
 </template>
 
 <script setup lang="ts">
@@ -75,7 +75,7 @@ import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
 import Swal from "sweetalert2";
 import "../styles/views/LoginView.css";
-import WavyBackground from "@/components/WavyBackground.vue";
+import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconMail from "@/components/icons/IconMail.vue";
 import IconKey from "@/components/icons/IconKey.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
@@ -94,7 +94,7 @@ const handleLogin = async () => {
     const response = await login(email.value, password.value);
     if (response.token) {
       localStorage.setItem("token", response.token);
-      router.push("/");
+      router.push("/chat");
     } else {
       Swal.fire({
         icon: "error",

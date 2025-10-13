@@ -1,5 +1,5 @@
 <template>
-  <WavyBackground>
+  <CloudyBackground>
     <div class="register-container">
       <div class="register-card">
         <h1 class="text-2xl pb-5">{{ $t("auth.register.title") }}</h1>
@@ -106,7 +106,7 @@
         </p>
       </div>
     </div>
-  </WavyBackground>
+  </CloudyBackground>
 </template>
 
 <script setup>
@@ -115,7 +115,7 @@ import { register } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import "../styles/views/RegisterView.css";
-import WavyBackground from "@/components/WavyBackground.vue";
+import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconMail from "@/components/icons/IconMail.vue";
 import IconKey from "@/components/icons/IconKey.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";

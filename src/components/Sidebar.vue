@@ -48,7 +48,7 @@ const openSettings = () => {
         </div>
         <button
           class="sidebar-btn"
-          @click="navigateTo('/')"
+          @click="navigateTo('/chat')"
           :title="isCollapsed ? 'Chat' : ''"
         >
           <IconChat :size="20" color="white" class="btn-icon" />
