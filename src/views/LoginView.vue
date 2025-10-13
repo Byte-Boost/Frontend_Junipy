@@ -10,7 +10,7 @@
             <div class="form-group">
               <div class="iconified-input">
                 <label for="email" hidden>{{
-                  $t("auth.email.placeholder")
+                  $t("auth.login.fields.email.label")
                 }}</label>
                 <div class="relative flex items-center">
                   <input
@@ -18,7 +18,7 @@
                     v-model="email"
                     type="email"
                     class="peer pl-10"
-                    :placeholder="$t('auth.email.placeholder')"
+                    :placeholder="$t('auth.login.fields.email.placeholder')"
                   />
                   <IconMail
                     class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
@@ -27,7 +27,7 @@
               </div>
               <div class="iconified-input">
                 <label for="password" hidden>{{
-                  $t("auth.password.placeholder")
+                  $t("auth.login.fields.password.label")
                 }}</label>
                 <div class="relative flex items-center">
                   <input
@@ -36,7 +36,7 @@
                     type="password"
                     autocomplete="current-password"
                     class="peer pl-10"
-                    :placeholder="$t('auth.password.placeholder')"
+                    :placeholder="$t('auth.login.fields.password.placeholder')"
                   />
                   <IconKey
                     class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
@@ -49,15 +49,19 @@
               :disabled="loading"
               class="px-4 py-2 flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              {{ loading ? $t("common.loading") : $t("auth.login.text") }}
+              {{
+                loading ? $t("common.loading") : $t("auth.login.actions.submit")
+              }}
               <IconRightArrow class="w-5 h-5" />
             </button>
           </form>
         </section>
         <p class="flex content-center flex-wrap gap-3 justify-center">
-          <a href="/forgot-password">{{ $t("auth.password.forgot") }}</a>
+          <a href="/forgot-password">{{
+            $t("auth.login.actions.forgotPassword")
+          }}</a>
           <span class="font-extrabold text-gray-400">•</span>
-          <a href="/register">{{ $t("auth.register.text") }}</a>
+          <a href="/register">{{ $t("auth.register.actions.hasAccount") }}</a>
         </p>
       </div>
     </div>

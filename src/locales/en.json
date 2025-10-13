@@ -7,33 +7,199 @@
     "logout": "Logout"
   },
   "auth": {
-    "username": {
-      "text": "Username",
-      "placeholder": "Username"
-    },
     "login": {
-      "text": "Sign in",
-      "placeholder": "",
-      "noAccount": "Don't have an account?"
+      "title": "Login",
+      "fields": {
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        }
+      },
+      "actions": {
+        "submit": "Sign in",
+        "forgotPassword": "Forgot password?",
+        "noAccount": "Don't have an account?"
+      }
     },
     "register": {
-      "text": "Register",
-      "hasAccount": "Already have an account?"
-    },
-    "email": {
-      "text": "Email",
-      "placeholder": "Email"
-    },
-    "password": {
-      "text": "Password",
-      "placeholder": "Password",
-      "forgot": "Forgot password?"
-    },
-    "confirmPassword": {
-      "text": "Confirm Password",
-      "placeholder": "Confirm your password"
-    },
-    "logout": "Logout"
+      "title": "Register",
+      "fields": {
+        "anamnese": {
+          "title": "Anamnese",
+          "fields": {
+            "name": "Name",
+            "age": "Age",
+            "birthdate": "Birthdate",
+            "sex": "Sex",
+            "profession": "Profession",
+            "consultationReason": {
+              "label": "What is the reason for your consultation?",
+              "choices": {
+                "weightLoss": "Weight loss",
+                "muscleGain": "Muscle gain",
+                "diabetesControl": "Diabetes control",
+                "eatingReeducation": "Eating reeducation",
+                "physicalMentalPerformance": "Physical and mental performance"
+              },
+              "placeholder": "Select the reason for consultation"
+            },
+            "allergies": {
+              "label": "Do you have any allergies or intolerances?",
+              "choices": {
+                "no": "No",
+                "lactoseIntolerance": "Lactose intolerance",
+                "glutenIntolerance": "Gluten sensitivity / celiac disease",
+                "foodAllergies": "Food allergies",
+                "medicalAllergies": "Medical allergies"
+              },
+              "placeholder": "Select an option"
+            },
+            "surgeries": {
+              "label": "Have you undergone any surgeries?",
+              "choices": {
+                "no": "No",
+                "bariatric": "Bariatric",
+                "gallbladder": "Gallbladder",
+                "ortopedic": "Orthopedic",
+                "cesarean": "Cesarean / Gynecological"
+              },
+              "placeholder": "Select an option"
+            },
+            "physicalActivities": {
+              "title": "Physical activities",
+              "choices": {
+                "sedentary": "Sedentary",
+                "walking": "Walking",
+                "musculation": "Musculation",
+                "crossfit": "Crossfit",
+                "swimming": "Swimming"
+              },
+              "frequency": {
+                "title": "Frequency",
+                "choices": {
+                  "1-2": "1-2 times per week",
+                  "3-4": "3-4 times per week",
+                  "5+": "5 or more times per week"
+                }
+              },
+              "time": {
+                "title": "How many minutes per day of physical activity?",
+                "choices": {
+                  "30": "30 minutes",
+                  "60": "60 minutes",
+                  "90": "90 minutes"
+                }
+              },
+              "placeholder": "Select an option"
+            },
+            "sleepQuality": {
+              "description": "Tell me how you are sleeping, it will help a lot in your planning",
+              "title": "Sleep quality",
+              "choices": {
+                "good": "Good",
+                "average": "Regular",
+                "poor": "Poor"
+              },
+              "placeholder": "Select an option"
+            },
+            "nightInterruptions": {
+              "title": "Do you wake up during the night?",
+              "choices": {
+                "none": "No",
+                "once": "At least 1 time",
+                "multiple": "More than 1 time per night"
+              },
+              "placeholder": "Select an option"
+            },
+            "intestinalHabits": {
+              "description": "Understanding your routine will be valuable in this process",
+              "title": "How many times per week do you evacuate?",
+              "choices": {
+                "daily": "Every day",
+                "fivePerWeek": "5 times per week",
+                "threePerWeek": "3 times per week",
+                "oncePerWeek": "1 time per week"
+              },
+              "placeholder": "Select an option"
+            },
+            "dayToDay": {
+              "description": "Let's delve a little deeper into you!",
+              "fields": {
+                "stress": {
+                  "title": "Stress",
+                  "choices": {
+                    "low": "Low",
+                    "moderate": "Moderate",
+                    "high": "High"
+                  },
+                  "placeholder": "Select your stress level"
+                },
+                "alcoholConsumption": {
+                  "title": "Alcohol consumption",
+                  "choices": {
+                    "none": "Does not consume",
+                    "social": "Socially 1-2 times per week",
+                    "frequent": "Frequent 3-4 times per week",
+                    "daily": "Daily use"
+                  },
+                  "placeholder": "Select an option"
+                },
+                "smoking": {
+                  "title": "Smoking",
+                  "choices": {
+                    "yes": "Yes",
+                    "no": "No"
+                  },
+                  "placeholder": "Select an option"
+                },
+                "hydration": {
+                  "title": "Hydration (how many liters per day)",
+                  "choices": {
+                    "lessThan1L": "Less than 1L",
+                    "between1And2L": "Between 1L and 2L",
+                    "moreThan2L": "More than 2L"
+                  },
+                  "placeholder": "Select an option"
+                },
+                "medications": {
+                  "title": "Medications in use",
+                  "description": "Remember everything, including supplements, do you use continuous medications?",
+                  "choices": {
+                    "yes": "Yes",
+                    "no": "No"
+                  },
+                  "placeholder": "Select an option"
+                }
+              }
+            }
+          }
+        },
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm your password"
+        }
+      },
+      "actions": {
+        "submit": "Register",
+        "hasAccount": "Already have an account?"
+      }
+    }
   },
   "chat": {
     "sendMessage": "Send message",
@@ -63,7 +229,8 @@
     "save": "Save",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "other": "Other"
   },
   "users": {
     "title": "All Users",
