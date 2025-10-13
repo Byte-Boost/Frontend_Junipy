@@ -17,7 +17,7 @@ export async function register(
 }
 
 export async function login(email: string, password: string) {
-  const response = await apiClient.post("/api/auth/login", { email, password });
+  const response = await apiClient.post("/api/auth/login", { email, password} ,{headers: { skipAuth: true }});
   return response.data;
 }
 

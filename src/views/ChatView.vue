@@ -63,7 +63,7 @@ import "../styles/views/ChatView.css";
 
 const { t } = useTypedI18n();
 
-const defaultText = t("chat.grettingMessage");
+const defaultText = t("chat.greetingMessage");
 const errorText = t("errors.ai.503");
 const isLoading = ref(true);
 

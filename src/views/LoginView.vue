@@ -61,7 +61,7 @@
             $t("auth.login.actions.forgotPassword")
           }}</a>
           <span class="font-extrabold text-gray-400">•</span>
-          <a href="/register">{{ $t("auth.register.actions.hasAccount") }}</a>
+          <a href="/register">{{ $t("auth.login.actions.noAccount") }}</a>
         </p>
       </div>
     </div>
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
@@ -85,6 +85,10 @@ const email = ref("");
 const password = ref("");
 const loading = ref(false);
 const error = ref(null);
+
+onMounted(() => {
+  localStorage.removeItem("token");
+});
 
 const handleLogin = async () => {
   loading.value = true;
