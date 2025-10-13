@@ -1,11 +1,9 @@
-
-.register-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-
 .register-card {
   width: 32rem;
   margin: 2rem auto;
@@ -13,7 +11,7 @@
   border: 1px solid #000;
   color: #fff;
   border-radius: 8px;
-  background: #2f2f2f;
+  background: #27292e;
 }
 
 .register-form {

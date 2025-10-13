@@ -9,10 +9,10 @@
   "auth": {
     "username": {
       "text": "Username",
-      "placeholder": "Enter your username"
+      "placeholder": "Username"
     },
     "login": {
-      "text": "Login",
+      "text": "Sign in",
       "placeholder": "",
       "noAccount": "Don't have an account?"
     },
@@ -22,11 +22,12 @@
     },
     "email": {
       "text": "Email",
-      "placeholder": "Enter your email"
+      "placeholder": "Email"
     },
     "password": {
       "text": "Password",
-      "placeholder": "Enter your password"
+      "placeholder": "Password",
+      "forgot": "Forgot password?"
     },
     "confirmPassword": {
       "text": "Confirm Password",

@@ -6,7 +6,6 @@ import pt from "../locales/pt.json";
 const messages = {
   en,
   pt,
-  // fr,
 };
 
 const i18n = createI18n({

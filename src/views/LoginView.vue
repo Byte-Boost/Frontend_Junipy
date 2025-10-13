@@ -1,42 +1,67 @@
 <template class="login-container">
-  <div class="login-container">
-    <div class="login-card">
-      <h1>Login</h1>
-
-      <form @submit.prevent="handleLogin" class="login-form">
-        <div class="form-group">
-          <label for="email">{{ $t("auth.email.text") }}</label>
-          <input
-            id="email"
-            type="email"
-            v-model="email"
-            :placeholder="$t('auth.email.placeholder')"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="password">{{ $t("auth.password.text") }}</label>
-          <input
-            id="password"
-            type="password"
-            v-model="password"
-            :placeholder="$t('auth.password.placeholder')"
-            required
-          />
-        </div>
-
-        <button type="submit" :disabled="loading">
-          {{ loading ? $t("common.loading") : $t("auth.login.text") }}
-        </button>
-      </form>
-
-      <p class="extra">
-        {{ $t("auth.login.noAccount") }}
-        <a href="/register">{{ $t("auth.register.text") }}</a>
-      </p>
+  <WavyBackground>
+    <div class="login-container">
+      <div class="login-card">
+        <section class="logo-section">
+          <h1 class="app-name"></h1>
+        </section>
+        <section class="form-section">
+          <form @submit.prevent="handleLogin" class="login-form">
+            <div class="form-group">
+              <div class="iconified-input">
+                <label for="email" hidden>{{
+                  $t("auth.email.placeholder")
+                }}</label>
+                <div class="relative flex items-center">
+                  <input
+                    id="email"
+                    v-model="email"
+                    type="email"
+                    class="peer pl-10"
+                    :placeholder="$t('auth.email.placeholder')"
+                  />
+                  <IconMail
+                    class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                  />
+                </div>
+              </div>
+              <div class="iconified-input">
+                <label for="password" hidden>{{
+                  $t("auth.password.placeholder")
+                }}</label>
+                <div class="relative flex items-center">
+                  <input
+                    id="password"
+                    v-model="password"
+                    type="password"
+                    autocomplete="current-password"
+                    class="peer pl-10"
+                    :placeholder="$t('auth.password.placeholder')"
+                  />
+                  <IconKey
+                    class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              :disabled="loading"
+              class="px-4 py-2 flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              {{ loading ? $t("common.loading") : $t("auth.login.text") }}
+              <IconRightArrow class="w-5 h-5" />
+            </button>
+          </form>
+        </section>
+        <p class="flex content-center flex-wrap gap-3 justify-center">
+          <a href="/forgot-password">{{ $t("auth.password.forgot") }}</a>
+          <span class="font-extrabold text-gray-400">•</span>
+          <a href="/register">{{ $t("auth.register.text") }}</a>
+        </p>
+      </div>
     </div>
-  </div>
+  </WavyBackground>
 </template>
 
 <script setup lang="ts">
@@ -46,7 +71,10 @@ import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
 import Swal from "sweetalert2";
 import "../styles/views/LoginView.css";
-
+import WavyBackground from "@/components/WavyBackground.vue";
+import IconMail from "@/components/icons/IconMail.vue";
+import IconKey from "@/components/icons/IconKey.vue";
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 const router = useRouter();
 const { t } = useTypedI18n();
 const email = ref("");

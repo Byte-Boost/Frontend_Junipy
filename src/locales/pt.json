@@ -9,7 +9,7 @@
   "auth": {
     "username": {
       "text": "Nome de usuário",
-      "placeholder": "Digite seu nome de usuário"
+      "placeholder": "Nome de usuário"
     },
     "login": {
       "text": "Entrar",
@@ -17,7 +17,7 @@
       "noAccount": "Não tem uma conta?"
     },
     "register": {
-      "text": "Registrar",
+      "text": "Criar uma conta",
       "hasAccount": "Já tem uma conta?"
     },
     "email": {
@@ -26,7 +26,8 @@
     },
     "password": {
       "text": "Senha",
-      "placeholder": "Digite sua senha"
+      "placeholder": "Senha",
+      "forgot": "Esqueceu a senha?"
     },
     "confirmPassword": {
       "text": "Confirmar Senha",
