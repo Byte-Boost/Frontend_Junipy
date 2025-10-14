@@ -1,143 +1,163 @@
 <template>
-  <div class="config-container">
-    <div v-if="isLoading" class="loading-container">
-      <div class="loading-spinner"></div>
-    </div>
+  <div class="form-container">
+    <!-- Progress header -->
+    <header class="form-header">
+      <h2>User Information</h2>
+      <p>Step {{ currentStep + 1 }} of {{ steps.length }}</p>
+    </header>
 
-    <div v-else class="config-form rounded-3xl">
-      <form @submit.prevent="saveProfile" class="form">
-        <div class="form-group">
-          <label for="name">Nome</label>
-          <input
-            id="name"
-            type="text"
-            v-model="profile.name"
-            :disabled="true"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input
-            id="email"
-            type="email"
-            v-model="profile.email"
-            :disabled="true"
-            class="form-control"
-          />
-        </div>
+    <!-- Dynamic form step -->
+    <component
+      :is="steps[currentStep]"
+      v-model:userInfo="userInformation"
+      class="form-step"
+    />
 
-        <div class="form-group">
-          <label for="username">Nome de Usuário</label>
-          <input
-            id="username"
-            type="text"
-            v-model="profile.username"
-            :disabled="isSaving"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label for="birthday">Data de Nascimento</label>
-          <input
-            id="birthday"
-            type="date"
-            v-model="profile.birthday"
-            :disabled="isSaving"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label for="height">Altura</label>
-          <input
-            id="height"
-            type="number"
-            v-model="profile.height"
-            :disabled="isSaving"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label for="weight">Peso</label>
-          <input
-            id="weight"
-            type="number"
-            v-model="profile.weight"
-            :disabled="isSaving"
-            class="form-control"
-          />
-        </div>
+    <!-- Navigation buttons -->
+    <div class="form-navigation">
+      <button
+        v-if="currentStep > 0"
+        @click="prevStep"
+        class="btn back-btn"
+      >
+        Back
+      </button>
 
-        <div class="form-group">
-          <button
-            type="submit"
-            :disabled="!isFormChanged || isSaving"
-            class="save-btn"
-          >
-            Salvar
-          </button>
-        </div>
-      </form>
+      <button
+        v-if="currentStep < steps.length - 1"
+        @click="nextStep"
+        class="btn next-btn"
+      >
+        Next
+      </button>
+
+      <button
+        v-else
+        @click="submitForm"
+        class="btn submit-btn"
+      >
+        Submit
+      </button>
     </div>
   </div>
 </template>
 
-<script setup>
-  import "../styles/views/ConfigView.css";
-  import { ref, onMounted, watch } from "vue";
-  import { getProfileData } from "@/scripts/http-requests/endpoints";
-  import { patchProfileData } from "@/scripts/http-requests/endpoints";
+<script setup lang="ts">
+import "../styles/views/ConfigView.css";
+import { ref } from "vue";
 
-  const originalProfile = ref(null);
-  const profile = ref({
-    name: "",
-    email: "",
-    username: "",
-    birthday: null,
-    weight: null,
-  });
+// Step components
+import Step1PersonalInfo from "@/components/forms/Step1PersonalInfo.vue";
+import Step2HealthHistory from "@/components/forms/Step2HealthHistory.vue";
+import Step3Activity from "@/components/forms/Step3Activity.vue";
+import Step4Lifestyle from "@/components/forms/Step4Lifestyle.vue";
+import Step5Habits from "@/components/forms/Step5Habits.vue";
+import type { UserInformation } from "@/models/models";
 
-  const isLoading = ref(true);
-  const isSaving = ref(false);
-  const isFormChanged = ref(false);
+// Steps list
+const steps = [
+  Step1PersonalInfo,
+  Step2HealthHistory,
+  Step3Activity,
+  Step4Lifestyle,
+  Step5Habits,
+];
 
-  onMounted(async () => {
-    await fetchProfileData();
-  });
+// State
+const currentStep = ref(0);
+const userInformation = ref<UserInformation>({
+  // Page 1
+  name: "",
+  birthDate: new Date(),
+  age: 0,
+  gender: "",
+  occupation: "",
+  consultationReason: "",
 
-  async function fetchProfileData() {
-    isLoading.value = true;
-    try {
-      const { data } = await getProfileData();
-      
-      originalProfile.value = JSON.parse(JSON.stringify(data));
-      profile.value = data;
+  // Page 2
+  healthConditions: [],
+  allergies: [],
+  surgeries: [],
 
-    } catch (error) {
-      console.error("Failed to fetch profile:", error);
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Page 3
+  activityType: "",
+  activityFrequency: "",
+  activityDuration: "",
 
-  watch(profile, (newVal) => {
-    if (!originalProfile.value) return;
+  // Page 4
+  sleepQuality: "",
+  wakeDuringNight: "",
+  bowelFrequency: "",
+  stressLevel: "",
 
-    isFormChanged.value = JSON.stringify(newVal) !== JSON.stringify(originalProfile.value);
-  }, { deep: true });
+  // Page 5
+  alcoholConsumption: "",
+  smoking: "",
+  hydrationLevel: "",
+  takesMedication: "",
+  medicationDetails: "",
+});
 
-  async function saveProfile() {
-    if (!isFormChanged.value || isSaving.value) return;
+// Navigation
+function nextStep() {
+  if (currentStep.value < steps.length - 1) currentStep.value++;
+}
 
-    isSaving.value = true;
+function prevStep() {
+  if (currentStep.value > 0) currentStep.value--;
+}
 
-    try {
-      await patchProfileData(profile.value);
-      isFormChanged.value = false;
-    } catch (error) {
-      console.error("Failed to save profile:", error);
-    } finally {
-      isSaving.value = false;
-    }
-  }
+async function submitForm() {
+  console.log("Submitting form:", userInformation.value);
+  // Replace with actual API call later
+  alert("Form submitted successfully!");
+}
 </script>
+
+<style scoped>
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.back-btn {
+  background-color: #f2f2f2;
+}
+
+.next-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.form-step {
+  margin-top: 1rem;
+}
+</style>
