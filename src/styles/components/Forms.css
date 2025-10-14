@@ -1,0 +1,25 @@
+input[type=date] {
+  color-scheme: dark;
+}
+
+label {
+    color: var(--label-color);
+}
+select {
+    background-color: var(--input-background-color);
+    color: var(--input-color);
+    padding: .5rem;
+    border-radius: .6rem;
+}
+option {
+    color: var(--input-color);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.form-element { 
+    flex-grow: 1;
+}

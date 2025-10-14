@@ -1,5 +1,5 @@
 import apiClient from "./instance";
-import type { User } from "@/models/models";
+import type { UserInformation } from "@/models/models";
 
 export async function register(
   email: string,
@@ -28,16 +28,32 @@ export async function getProfileData() {
   //PLACEHOLDER (no endpoints on backend yet)
   return {
     data: {
-      name: "teste",
-      email: "teste@example.com",
-      username: "teste-example",
-      birthday: "2000-01-01",
-      weight: 70,
-      height: 165
+      name: "Nome de Teste",
+      birthDate: new Date("2000-10-09"),
+      age: 25,
+      gender: 'M', 
+      occupation: "Pedreiro",
+      consultationReason: "Emagrecimento",
+      healthConditions: ["Diabetes"],
+      allergies: ["Nozes"],
+      surgeries: [],
+      activityType: "caminhada",
+      activityFrequency: "1",
+      activityDuration: "30",
+      sleepQuality: "2",
+      wakeDuringNight: "0",
+      bowelFrequency: "1",
+      stressLevel: "1",
+      alcoholConsumption: "0",
+      smoking: "0",
+      hydrationLevel: "1",
+      takesMedication: "0",
+      medicationDetails: "0"
     }
+
   }
 }
-export async function patchProfileData(){
+export async function patchProfileData(userInfo: UserInformation){
   // const response = await apiClient.patch("/api/profile-data");
   // return response.data;
 

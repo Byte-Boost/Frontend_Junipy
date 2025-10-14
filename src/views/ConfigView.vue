@@ -15,28 +15,30 @@
 
     <!-- Navigation buttons -->
     <div class="form-navigation">
-      <button
-        v-if="currentStep > 0"
-        @click="prevStep"
-        class="btn back-btn"
-      >
-        Back
-      </button>
+      <div class="flex gap-2">
+        <button
+          @click="prevStep"
+          :disabled="currentStep <= 0"
+          class="btn back-btn"
+        >
+          Voltar
+        </button>
+  
+        <button
+          @click="nextStep"
+          :disabled="currentStep >= 4"
+          class="btn next-btn"
+        >
+          Próximo
+        </button>
+      </div>
 
       <button
-        v-if="currentStep < steps.length - 1"
-        @click="nextStep"
-        class="btn next-btn"
+        @click="saveProfile"
+        :disabled="!isFormChanged"
+        class="btn save-btn"
       >
-        Next
-      </button>
-
-      <button
-        v-else
-        @click="submitForm"
-        class="btn submit-btn"
-      >
-        Submit
+        Salvar
       </button>
     </div>
   </div>
@@ -44,17 +46,17 @@
 
 <script setup lang="ts">
 import "../styles/views/ConfigView.css";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
-// Step components
 import Step1PersonalInfo from "@/components/forms/Step1PersonalInfo.vue";
 import Step2HealthHistory from "@/components/forms/Step2HealthHistory.vue";
 import Step3Activity from "@/components/forms/Step3Activity.vue";
 import Step4Lifestyle from "@/components/forms/Step4Lifestyle.vue";
 import Step5Habits from "@/components/forms/Step5Habits.vue";
+import { getProfileData } from "@/scripts/http-requests/endpoints"; 
+import { patchProfileData } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
 
-// Steps list
 const steps = [
   Step1PersonalInfo,
   Step2HealthHistory,
@@ -63,8 +65,13 @@ const steps = [
   Step5Habits,
 ];
 
-// State
 const currentStep = ref(0);
+
+const isLoading = ref(true); 
+const isSaving = ref(false); 
+const isFormChanged = ref(false);
+
+const originalUserInformation = ref(null);
 const userInformation = ref<UserInformation>({
   // Page 1
   name: "",
@@ -98,7 +105,42 @@ const userInformation = ref<UserInformation>({
   medicationDetails: "",
 });
 
-// Navigation
+onMounted(async () => { 
+  await fetchProfileData(); 
+});
+
+async function fetchProfileData() { 
+  isLoading.value = true; 
+  try { 
+    const { data } = await getProfileData(); 
+    originalUserInformation.value = JSON.parse(JSON.stringify(data)); 
+    userInformation.value = data; 
+  } catch (error) { 
+    console.error("Failed to fetch profile:", error); 
+  } finally { 
+    isLoading.value = false; 
+  } 
+}
+
+watch(userInformation, (newVal) => { 
+    if (!originalUserInformation.value) return; 
+    isFormChanged.value = JSON.stringify(newVal) !== JSON.stringify(originalUserInformation.value); 
+  }, { deep: true }
+); 
+
+async function saveProfile() { 
+  if (!isFormChanged.value || isSaving.value) return; 
+  isSaving.value = true; 
+  try { 
+    await patchProfileData(userInformation.value); 
+    isFormChanged.value = false; 
+  } catch (error) { 
+    console.error("Failed to save profile:", error); 
+  } finally { 
+    isSaving.value = false; 
+  } 
+}
+
 function nextStep() {
   if (currentStep.value < steps.length - 1) currentStep.value++;
 }
@@ -107,57 +149,4 @@ function prevStep() {
   if (currentStep.value > 0) currentStep.value--;
 }
 
-async function submitForm() {
-  console.log("Submitting form:", userInformation.value);
-  // Replace with actual API call later
-  alert("Form submitted successfully!");
-}
 </script>
-
-<style scoped>
-.form-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.form-navigation {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-}
-
-.btn {
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.back-btn {
-  background-color: #f2f2f2;
-}
-
-.next-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.submit-btn {
-  background-color: #28a745;
-  color: white;
-}
-
-.form-step {
-  margin-top: 1rem;
-}
-</style>
