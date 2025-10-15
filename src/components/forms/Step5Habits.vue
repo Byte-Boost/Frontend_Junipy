@@ -1,35 +1,87 @@
 <template>
   <div class="step-container">
-    <!-- Step content goes here -->
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.stressLevel"
+        :title="'Estresse diário'"
+        :options="stressLevel"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.alcoholConsumption"
+        :title="'Consumo de álcool'"
+        :options="alcoholConsumption"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.smoking"
+        :title="'Tabagismo'"
+        :options="smoking"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.hydrationLevel"
+        :title="'Hidratação (quantos litros por dia)'"
+        :options="hydrationLevel"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.takesMedication"
+        :title="'Faz uso de medicações contínuas?'"
+        :options="takesMedication"
+      />
+    </div>
+    <div class="form-row">
+      <div class="form-element">
+        <label>Quais medicações/suplementos?</label>
+        <input v-model="userInfo.medicationDetails" type="text" />
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
+import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
-import { computed } from "vue";
+import RadioGroup from "../RadioGroup.vue";
 
-// Props — receives the full user information object
-const props = defineProps<{
-  userInfo: UserInformation;
-}>();
+const props = defineProps<{ userInfo: UserInformation }>();
+const emit = defineEmits<{ (e: "update:userInfo", value: UserInformation): void }>();
 
-// Emits — updates the userInfo object in the parent component
-const emit = defineEmits<{
-  (e: "update:userInfo", value: UserInformation): void;
-}>();
 
-// Local computed binding for two-way data flow
-// This makes v-model bindings inside the template simple
-const localUserInfo = computed({
-  get: () => props.userInfo,
-  set: (value) => emit("update:userInfo", value),
-});
+const stressLevel = [
+  { text: "Baixo", value: "low" },
+  { text: "Moderado", value: "medium" },
+  { text: "Alto", value: "high" },
+]
+const alcoholConsumption = [
+  { text: "Não consome", value: "0" },
+  { text: "Socialmente 1-2 x por semana", value: "1-2" },
+  { text: "Frequente 3-4 x por semana", value: "3-4" },
+  { text: "Uso diário", value: "7" },
+]
+const smoking = [
+  { text: "Sim", value: "yes" },
+  { text: "Não", value: "no" },
+]
+const hydrationLevel = [
+  { text: "Menos de 1L", value: "1" },
+  { text: "Entre 1L e 2L", value: "1-2" },
+  { text: "Mais de 2L", value: "2+" },
+]
+const takesMedication = [
+  { text: "Sim", value: "yes" },
+  { text: "Não", value: "no" },
+]
+
 </script>
-
-<style scoped>
-.step-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-</style>

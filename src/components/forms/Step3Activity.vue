@@ -1,35 +1,61 @@
 <template>
   <div class="step-container">
-    <!-- Step content goes here -->
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.activityType"
+        :title="'Qual atividade mais te descreve?'"
+        :options="activityOptions"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.activityFrequency"
+        :title="'Com que frequência pratica Atividade física?'"
+        :options="activityFrequency"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.activityDuration"
+        :title="'Quantos minutos por dia de Atividade fisica?'"
+        :options="activityDuration"
+      />
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
+import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
-import { computed } from "vue";
+import RadioGroup from "../RadioGroup.vue";
 
-// Props — receives the full user information object
-const props = defineProps<{
-  userInfo: UserInformation;
-}>();
+const props = defineProps<{ userInfo: UserInformation }>();
+const emit = defineEmits<{ (e: "update:userInfo", value: UserInformation): void }>();
 
-// Emits — updates the userInfo object in the parent component
-const emit = defineEmits<{
-  (e: "update:userInfo", value: UserInformation): void;
-}>();
 
-// Local computed binding for two-way data flow
-// This makes v-model bindings inside the template simple
-const localUserInfo = computed({
-  get: () => props.userInfo,
-  set: (value) => emit("update:userInfo", value),
-});
+const activityOptions = [
+  { text: "Sedentário(a)", value: "sedentario" },
+  { text: "Caminhada", value: "caminhada" },
+  { text: "Musculação", value: "musculacao" },
+  { text: "Corrida", value: "corrida" },
+  { text: "Crossfit", value: "crossfit" },
+  { text: "Natação", value: "natacao" },
+  { text: "Outro", value: "outro" },
+];
+const activityFrequency = [
+  { text: "Nunca", value: "0" },
+  { text: "1-2x por semana", value: "1-2" },
+  { text: "3-4x por semana", value: "3-4" },
+  { text: "5 ou mais vezes por semana", value: "5+" },
+]
+const activityDuration = [
+  { text: "Não pratico", value: "0" },
+  { text: "30 minutos", value: "30" },
+  { text: "60 minutos", value: "60" },
+  { text: "90 minutos", value: "90" },
+]
 </script>
-
-<style scoped>
-.step-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-</style>

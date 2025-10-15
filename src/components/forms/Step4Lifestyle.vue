@@ -1,35 +1,56 @@
 <template>
   <div class="step-container">
-    <!-- Step content goes here -->
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.sleepQuality"
+        :title="'Qual a qualidade do seu sono'"
+        :options="sleepQuality"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.wakeDuringNight"
+        :title="'Acorda durante a noite?'"
+        :options="wakeDuringNight"
+      />
+    </div>
+
+    <div class="form-row">
+      <RadioGroup
+        v-model="userInfo.bowelFrequency"
+        :title="'Quantas vezes por semana você evacua?'"
+        :options="bowelFrequency"
+      />
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
+import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
-import { computed } from "vue";
+import RadioGroup from "../RadioGroup.vue";
 
-// Props — receives the full user information object
-const props = defineProps<{
-  userInfo: UserInformation;
-}>();
+const props = defineProps<{ userInfo: UserInformation }>();
+const emit = defineEmits<{ (e: "update:userInfo", value: UserInformation): void }>();
 
-// Emits — updates the userInfo object in the parent component
-const emit = defineEmits<{
-  (e: "update:userInfo", value: UserInformation): void;
-}>();
 
-// Local computed binding for two-way data flow
-// This makes v-model bindings inside the template simple
-const localUserInfo = computed({
-  get: () => props.userInfo,
-  set: (value) => emit("update:userInfo", value),
-});
+const sleepQuality = [
+  { text: "Boa", value: "boa" },
+  { text: "Regular", value: "regular" },
+  { text: "Ruim", value: "ruim" },
+];
+const wakeDuringNight = [
+  { text: "Não", value: "0" },
+  { text: "Pelo menos 1 x", value: "1" },
+  { text: "Mais que 1 x por noite", value: "2+" },
+]
+const bowelFrequency = [
+  { text: "Todo dia", value: "7" },
+  { text: "5 x por semana", value: "5" },
+  { text: "3 x por semana", value: "3" },
+  { text: "1 x por semana", value: "1" },
+]
 </script>
-
-<style scoped>
-.step-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-</style>
