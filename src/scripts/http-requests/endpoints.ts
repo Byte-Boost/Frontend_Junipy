@@ -21,7 +21,7 @@ export async function login(email: string, password: string) {
   return response.data;
 }
 
-export async function getProfileData() {
+export async function getProfileData(): Promise<{data: UserInformation}> {
   // const response = await apiClient.get("/api/profile-data");
   // return response.data;
 
@@ -29,31 +29,31 @@ export async function getProfileData() {
   return {
     data: {
       name: "Nome de Teste",
-      birthDate: new Date("2000-10-09"),
-      age: 25,
-      gender: 'M', 
+      email: "email@exemplo.com",
+      birthDate: "2000-10-09",
+      gender: 'Masculino', 
       occupation: "Pedreiro",
-      consultationReason: "Emagrecimento",
-      healthConditions: ["Diabetes"],
-      allergies: ["Nozes"],
-      surgeries: [],
+      consultationReason: "emagrecimento",
+      healthConditions: ["diabetes1"],
+      allergies: ["lactose"],
+      surgeries: [""],
       activityType: "caminhada",
-      activityFrequency: "1",
+      activityFrequency: "1-2",
       activityDuration: "30",
-      sleepQuality: "2",
+      sleepQuality: "boa",
       wakeDuringNight: "0",
       bowelFrequency: "1",
-      stressLevel: "1",
+      stressLevel: "low",
       alcoholConsumption: "0",
-      smoking: "0",
+      smoking: "no",
       hydrationLevel: "1",
-      takesMedication: "0",
-      medicationDetails: "0"
+      takesMedication: "yes",
+      medicationDetails: "Insulina"
     }
-
   }
 }
 export async function patchProfileData(userInfo: UserInformation){
+  console.log(userInfo);
   // const response = await apiClient.patch("/api/profile-data");
   // return response.data;
 

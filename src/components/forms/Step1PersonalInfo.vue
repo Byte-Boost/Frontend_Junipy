@@ -9,21 +9,30 @@
 
     <div class="form-row">
       <div class="form-element">
-        <label>Data de Nascimento</label>
-        <input v-model="localUserInfo.birthDate" type="date" />
+        <label>Profissão</label>
+        <input v-model="localUserInfo.occupation" type="text" />
       </div>
-
       <div class="form-element">
-        <label>Idade</label>
-        <input type="text" value="20 anos" disabled>
+        <label>Email</label>
+        <input disabled v-model="localUserInfo.email" type="text" />
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-element">
+        <label>Data de Nascimento</label>
+        <input disabled v-model="localUserInfo.birthDate" type="date" />
+      </div>
+
+      <div class="form-element">
+        <label>Idade</label>
+        <input type="text" v-model="localUserInfo.age" disabled>
+      </div>
+
+      <div class="form-element">
         <label style="display: block;">Sexo</label>
-        <select v-model="localUserInfo.gender">
-          <option value="">Selecione</option>
+        <select disabled v-model="localUserInfo.gender">
+          <option disabled value="">Selecione</option>
           <option value="Masculino">Masculino</option>
           <option value="Feminino">Feminino</option>
         </select>

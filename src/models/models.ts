@@ -7,8 +7,9 @@ export interface User {
 
 export interface UserInformation {
   name: string,
-  birthDate: Date,
-  age: number,
+  email: string,
+  birthDate: string,
+  age?: number,
   gender: string, 
   occupation: string,
   consultationReason: string,

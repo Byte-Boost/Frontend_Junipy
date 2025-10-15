@@ -2,8 +2,8 @@
   <div class="form-container">
     <!-- Progress header -->
     <header class="form-header">
-      <h2>User Information</h2>
-      <p>Step {{ currentStep + 1 }} of {{ steps.length }}</p>
+      <h2>Informações de Usuário</h2>
+      <p>Passo {{ currentStep + 1 }} de {{ steps.length }}</p>
     </header>
 
     <!-- Dynamic form step -->
@@ -75,13 +75,14 @@ const originalUserInformation = ref(null);
 const userInformation = ref<UserInformation>({
   // Page 1
   name: "",
-  birthDate: new Date(),
+  email: "",
+  birthDate: "",
   age: 0,
   gender: "",
   occupation: "",
-  consultationReason: "",
-
+  
   // Page 2
+  consultationReason: "",
   healthConditions: [],
   allergies: [],
   surgeries: [],
@@ -95,9 +96,9 @@ const userInformation = ref<UserInformation>({
   sleepQuality: "",
   wakeDuringNight: "",
   bowelFrequency: "",
-  stressLevel: "",
 
   // Page 5
+  stressLevel: "",
   alcoholConsumption: "",
   smoking: "",
   hydrationLevel: "",
@@ -113,6 +114,7 @@ async function fetchProfileData() {
   isLoading.value = true; 
   try { 
     const { data } = await getProfileData(); 
+    data.age = Math.floor((Date.now().valueOf() - (new Date(data.birthDate)).valueOf()) / (1000 * 60 * 60 * 24 * 365));
     originalUserInformation.value = JSON.parse(JSON.stringify(data)); 
     userInformation.value = data; 
   } catch (error) { 

@@ -1,18 +1,26 @@
+label {
+    color: var(--label-color);
+    font-weight: bold;
+}
+
 input[type=date] {
   color-scheme: dark;
 }
 
-label {
-    color: var(--label-color);
-}
 select {
     background-color: var(--input-background-color);
     color: var(--input-color);
     padding: .5rem;
     border-radius: .6rem;
 }
-option {
-    color: var(--input-color);
+
+input[disabled], select[disabled], option[disabled]{
+    background-color: var(--disabled-input-background-color) !important;
+    color: var(--disabled-input-color) !important;
+}
+input[type=radio], input[type=checkbox] {
+    width: auto !important;
+    margin-right: .5rem;
 }
 
 .form-row {
@@ -22,4 +30,7 @@ option {
 }
 .form-element { 
     flex-grow: 1;
+}
+.form-element:has(select) {
+    flex-grow: 0;
 }
