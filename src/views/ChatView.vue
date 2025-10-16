@@ -1,58 +1,84 @@
 <template>
-  <div class="chat-container">
-    <div v-if="isLoading" class="loading-container">
-      <div class="loading-spinner"></div>
-    </div>
-
-    <div v-else class="messages">
-      <div v-for="(msg, i) in messages" :key="i" :class="['message', msg.role]">
+  <CloudyBackground>
+    <div class="chat-container">
+      <div v-if="isLoading" class="loading-container">
         <div
-          v-if="msg.role === 'assistant'"
-          v-html="renderMarkdown(msg.content)"
-        />
-        <div v-else class="plain-text">{{ msg.content }}</div>
+          class="w-6 h-6 border-4 border-gray-300 border-t-white rounded-full animate-spin"
+        ></div>
       </div>
-      <!-- Loader for assistant reply -->
-      <div v-if="!hasReply" class="message assistant loader-message">
-        <div class="jumping-balls-loader">
-          <span class="ball"></span>
-          <span class="ball"></span>
-          <span class="ball"></span>
-        </div>
+      <div v-else class="chat-layout w-full h-full flex-row flex">
+        <!-- Sidebar (Black) -->
+        <section class="chat-selector-sidebar w-1/5 bg-black">
+          <div class="chat-sidebar">
+            <div class="chat-selector-header">
+              <button class="new-chat-button">New Chat</button>
+              <button class="new-chat-button">Another Button</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="chat flex flex-col w-4/5">
+          <div class="messages">
+            <div
+              v-for="(msg, i) in messages"
+              :key="i"
+              :class="['message', msg.role]"
+            >
+              <div
+                v-if="msg.role === 'assistant'"
+                v-html="renderMarkdown(msg.content)"
+              />
+              <div v-else class="plain-text">{{ msg.content }}</div>
+            </div>
+            <div v-if="!hasReply" class="assistant loader-message">
+              <div class="jumping-balls-loader">
+                <span class="ball"></span>
+                <span class="ball"></span>
+                <span class="ball"></span>
+              </div>
+            </div>
+          </div>
+          <section class="chat-box">
+            <form
+              @submit.prevent="sendMessage"
+              class="input-container input-relative"
+            >
+              <textarea
+                :disabled="!hasReply || !isConnected"
+                v-model="input"
+                :placeholder="$t('chat.placeholder')"
+                class="chat-input"
+                :class="{ blocked: !hasReply || !isConnected }"
+                rows="1"
+                @keydown="handleKeydown"
+                @input="adjustHeight"
+                ref="textareaRef"
+              ></textarea>
+              <button
+                type="submit"
+                :disabled="!input.trim() || !hasReply || !isConnected"
+              >
+                <IconSend :size="32" color="white" />
+              </button>
+              <!-- 
+              <div v-if="!hasReply" class="input-blocked-overlay">
+                <div class="input-spinner"></div>
+                <span class="input-blocked-text">{{
+                  $t("chat.waitingForResponse")
+                }}</span>
+              </div> -->
+              <!-- <div v-if="!isConnected" class="input-blocked-overlay">
+                <span class="input-blocked-text">{{
+                  $t("errors.ai.503")
+                }}</span>
+              </div> -->
+            </form>
+          </section>
+        </section>
       </div>
     </div>
-
-    <form @submit.prevent="sendMessage" class="input-container input-relative">
-      <textarea
-        :disabled="!hasReply || !isConnected"
-        v-model="input"
-        :placeholder="$t('chat.placeholder')"
-        class="chat-input"
-        :class="{ blocked: !hasReply || !isConnected }"
-        rows="1"
-        @keydown="handleKeydown"
-        @input="adjustHeight"
-        ref="textareaRef"
-      ></textarea>
-      <button
-        type="submit"
-        :disabled="!input.trim() || !hasReply || !isConnected"
-      >
-        <IconSend :size="32" color="white" />
-      </button>
-      <div v-if="!hasReply" class="input-blocked-overlay">
-        <div class="input-spinner"></div>
-        <span class="input-blocked-text">{{
-          $t("chat.waitingForResponse")
-        }}</span>
-      </div>
-      <div v-if="!isConnected" class="input-blocked-overlay">
-        <span class="input-blocked-text">{{ $t("errors.ai.503") }}</span>
-      </div>
-    </form>
-  </div>
+  </CloudyBackground>
 </template>
-
 <script setup>
 import { ref, onMounted, nextTick, watch } from "vue";
 import { marked } from "marked";
@@ -60,6 +86,7 @@ import IconSend from "@/components/icons/IconSend.vue";
 import { useChatSocket } from "@/scripts/websocket/chat";
 import { useTypedI18n } from "@/composables/useI18n";
 import "../styles/views/ChatView.css";
+import CloudyBackground from "@/components/CloudyBackground.vue";
 
 const { t } = useTypedI18n();
 
@@ -92,7 +119,7 @@ onMounted(async () => {
     console.warn("No token found in localStorage.");
     messages.value.push({ role: "assistant", content: errorText });
   }
-
+  isLoading.value = false;
   connect(token.value);
 });
 

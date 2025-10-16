@@ -90,13 +90,16 @@
           <button
             type="submit"
             :disabled="loading"
-            class="px-4 py-2 flex items-center justify-center gap-2 disabled:opacity-50"
+            class="px-4 py-2 flex items-center justify-center gap-2"
           >
-            {{
-              loading
-                ? $t("common.loading")
-                : $t("auth.register.actions.submit")
-            }}
+            <template v-if="loading">
+              <div
+                class="w-6 h-6 border-4 border-gray-300 border-t-[#48b684] rounded-full animate-spin"
+              ></div>
+            </template>
+            <template v-else>
+              {{ $t("auth.register.actions.submit") }}
+            </template>
             <IconRightArrow class="w-5 h-5" />
           </button>
         </form>

@@ -77,7 +77,7 @@ input {
 }
 
 .form-section button:disabled {
-  background: #999;
+  background: #9999997a;
   cursor: not-allowed;
 }
 
