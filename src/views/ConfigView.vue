@@ -8,9 +8,25 @@
 
     <!-- Dynamic form step -->
     <component
+      v-if="currentStep === 1"
       :is="steps[currentStep]"
       v-model:userInfo="userInformation"
-      class="form-step"
+      v-model:otherHealthConditions="otherHealthConditions"
+      v-model:otherAllergies="otherAllergies"
+      v-model:otherSurgeries="otherSurgeries"
+    />
+
+    <component
+      v-else-if="currentStep === 2"
+      :is="steps[currentStep]"
+      v-model:userInfo="userInformation"
+      v-model:otherActivities="otherActivities"
+    />
+
+    <component
+      v-else
+      :is="steps[currentStep]"
+      v-model:userInfo="userInformation"
     />
 
     <!-- Navigation buttons -->
@@ -106,6 +122,11 @@ const userInformation = ref<UserInformation>({
   medicationDetails: "",
 });
 
+const otherHealthConditions = ref("");
+const otherAllergies = ref("");
+const otherSurgeries = ref("");
+const otherActivities = ref("");
+
 onMounted(async () => { 
   await fetchProfileData(); 
 });
@@ -133,8 +154,26 @@ watch(userInformation, (newVal) => {
 async function saveProfile() { 
   if (!isFormChanged.value || isSaving.value) return; 
   isSaving.value = true; 
+
+  let localUserInfo = { ...userInformation.value };
+  if (localUserInfo.healthConditions.includes('outra')){
+    localUserInfo.healthConditions = localUserInfo.healthConditions.filter(item => item !== 'outra');
+    localUserInfo.healthConditions.push(otherHealthConditions.value);
+  }
+  if (localUserInfo.allergies.includes('outra')){
+    localUserInfo.allergies = localUserInfo.allergies.filter(item => item !== 'outra');
+    localUserInfo.allergies.push(otherAllergies.value);
+  }
+  if (localUserInfo.surgeries.includes('outra')){
+    localUserInfo.surgeries = localUserInfo.surgeries.filter(item => item !== 'outra');
+    localUserInfo.surgeries.push(otherSurgeries.value);
+  }
+  if (localUserInfo.activityType === 'outro'){
+    localUserInfo.activityType = otherActivities.value;
+  }
+
   try { 
-    await patchProfileData(userInformation.value); 
+    await patchProfileData(localUserInfo); 
     isFormChanged.value = false; 
   } catch (error) { 
     console.error("Failed to save profile:", error); 

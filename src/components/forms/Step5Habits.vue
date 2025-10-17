@@ -40,7 +40,8 @@
         :options="takesMedication"
       />
     </div>
-    <div class="form-row">
+    
+    <div class="form-row" v-if="userInfo.takesMedication === 'yes'">
       <div class="form-element">
         <label>Quais medicações/suplementos?</label>
         <input v-model="userInfo.medicationDetails" type="text" />

@@ -16,6 +16,9 @@
         :options="healthConditionsOptions"
       />
     </div>
+    <div class="form-row" v-if="localUserInfo.healthConditions.includes('outra')">
+      <input v-model="localOtherHealthConditions" type="text" />
+    </div>
 
     <div class="form-row">
       <CheckboxGroup
@@ -24,6 +27,9 @@
         :options="allergiesOptions"
       />
     </div>
+    <div class="form-row" v-if="localUserInfo.allergies.includes('outra')">
+      <input v-model="localOtherAllergies" type="text" />
+    </div>
 
     <div class="form-row"> 
       <CheckboxGroup
@@ -31,6 +37,9 @@
         :title="'Você já realizou alguma cirurgia?'"
         :options="surgeriesOptions"
       />
+    </div>
+    <div class="form-row" v-if="localUserInfo.surgeries.includes('outra')">
+      <input v-model="localOtherSurgeries" type="text" />
     </div>
 
   </div>
@@ -43,12 +52,34 @@ import { computed } from "vue";
 import RadioGroup from "../RadioGroup.vue";
 import CheckboxGroup from "../CheckboxGroup.vue";
 
-const props = defineProps<{ userInfo: UserInformation }>();
-const emit = defineEmits<{ (e: "update:userInfo", value: UserInformation): void }>();
+const props = defineProps<{ 
+  userInfo: UserInformation;
+  otherHealthConditions: string;
+  otherAllergies: string;
+  otherSurgeries: string;
+}>();
+const emit = defineEmits<{ 
+  (e: "update:userInfo", value: UserInformation): void;
+  (e: "update:otherHealthConditions", value: string): void;
+  (e: "update:otherAllergies", value: string): void;
+  (e: "update:otherSurgeries", value: string): void;
+}>();
 
 const localUserInfo = computed({
   get: () => props.userInfo,
   set: (value) => emit("update:userInfo", value),
+});
+const localOtherHealthConditions = computed({
+  get: () => props.otherHealthConditions,
+  set: (val) => emit("update:otherHealthConditions", val),
+});
+const localOtherAllergies = computed({
+  get: () => props.otherAllergies,
+  set: (val) => emit("update:otherAllergies", val),
+});
+const localOtherSurgeries = computed({
+  get: () => props.otherSurgeries,
+  set: (val) => emit("update:otherSurgeries", val),
 });
 
 const consultationOptions = [
@@ -73,7 +104,7 @@ const healthConditionsOptions = [
   { text: "Câncer", value: "cancer" },
   { text: "Depressão / Ansiedade", value: "depressao" },
   { text: "Doenças autoimunes", value: "autoimunes" },
-  { text: "Outra", value: "outra" },
+  { text: "Outra: ", value: "outra" },
 ];
 const allergiesOptions = [
   { text: "Não", value: "" },
@@ -81,7 +112,7 @@ const allergiesOptions = [
   { text: "Sensibilidade ao glúten / doença celíaca", value: "gluten" },
   { text: "Alergia alimentar", value: "alimentar" },
   { text: "Alergia medicamentosa", value: "medicamentosa" },
-  { text: "Outra", value: "outra" },
+  { text: "Outra:", value: "outra" },
 ];
 const surgeriesOptions = [
   { text: "Não", value: "" },
@@ -90,6 +121,6 @@ const surgeriesOptions = [
   { text: "Hérnia de hiato (cirurgia do refluxo)", value: "hernia_hiato" },
   { text: "Ortopédica", value: "ortopedica" },
   { text: "Cesárea / Ginecológica", value: "cesarea" },
-  { text: "Outra", value: "outra" },
+  { text: "Outra:", value: "outra" },
 ];
 </script>

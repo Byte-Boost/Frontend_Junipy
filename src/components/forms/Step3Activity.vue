@@ -8,6 +8,9 @@
         :options="activityOptions"
       />
     </div>
+    <div class="form-row" v-if="userInfo.activityType.includes('outro')">
+      <input v-model="localOtherActivities" type="text" />
+    </div>
 
     <div class="form-row">
       <RadioGroup
@@ -32,10 +35,22 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
+import { computed, watch } from "vue";
 
-const props = defineProps<{ userInfo: UserInformation }>();
-const emit = defineEmits<{ (e: "update:userInfo", value: UserInformation): void }>();
+const props = defineProps<{ 
+  userInfo: UserInformation;
+  otherActivities: string; 
+}>();
 
+const emit = defineEmits<{ 
+  (e: "update:userInfo", value: UserInformation): void;
+  (e: "update:otherActivities", value: string): void;
+}>();
+
+const localOtherActivities = computed({
+  get: () => props.otherActivities,
+  set: (val) => emit("update:otherActivities", val),
+});
 
 const activityOptions = [
   { text: "Sedentário(a)", value: "sedentario" },
@@ -44,7 +59,7 @@ const activityOptions = [
   { text: "Corrida", value: "corrida" },
   { text: "Crossfit", value: "crossfit" },
   { text: "Natação", value: "natacao" },
-  { text: "Outro", value: "outro" },
+  { text: "Outro:", value: "outro" },
 ];
 const activityFrequency = [
   { text: "Nunca", value: "0" },
@@ -58,4 +73,5 @@ const activityDuration = [
   { text: "60 minutos", value: "60" },
   { text: "90 minutos", value: "90" },
 ]
+
 </script>
