@@ -22,43 +22,13 @@ export async function login(email: string, password: string) {
 }
 
 export async function getProfileData(): Promise<{data: UserInformation}> {
-  // const response = await apiClient.get("/api/profile-data");
-  // return response.data;
-
-  //PLACEHOLDER (no endpoints on backend yet)
-  return {
-    data: {
-      name: "Nome de Teste",
-      email: "email@exemplo.com",
-      birthDate: "2000-10-09",
-      gender: 'Masculino', 
-      occupation: "Pedreiro",
-      consultationReason: "emagrecimento",
-      healthConditions: ["diabetes1"],
-      allergies: ["lactose"],
-      surgeries: [""],
-      activityType: "caminhada",
-      activityFrequency: "1-2",
-      activityDuration: "30",
-      sleepQuality: "boa",
-      wakeDuringNight: "0",
-      bowelFrequency: "1",
-      stressLevel: "low",
-      alcoholConsumption: "0",
-      smoking: "no",
-      hydrationLevel: "1",
-      takesMedication: "yes",
-      medicationDetails: "Insulina"
-    }
-  }
+  const response = await apiClient.get("/api/user/profile-data");
+  return response;
 }
 export async function patchProfileData(userInfo: UserInformation){
   console.log(userInfo);
-  // const response = await apiClient.patch("/api/profile-data");
-  // return response.data;
-
-  //PLACEHOLDER (no endpoints on backend yet)
-  return null;
+  const response = await apiClient.post("/api/user/profile-data", userInfo);
+  return response.data;
 }
 
 export async function getAllUsers() {
