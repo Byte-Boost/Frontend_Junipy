@@ -19,9 +19,6 @@ const navigateTo = (path: string) => {
   router.push(path);
 };
 
-const openSettings = () => {
-  console.log("Opening settings...");
-};
 </script>
 <template>
   <div class="sidebar" :class="{ collapsed: isCollapsed }">
@@ -79,7 +76,7 @@ const openSettings = () => {
         <hr v-if="isCollapsed" />
         <button
           class="sidebar-btn"
-          @click="openSettings"
+          @click="navigateTo('/config')"
           :title="isCollapsed ? $t('nav.settings') : ''"
         >
           <span class="btn-icon"><IconCog :size="20" color="white" /></span>
