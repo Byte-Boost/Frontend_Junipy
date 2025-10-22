@@ -3,31 +3,56 @@
     <div class="chat-container">
       <div v-if="isLoading" class="loading-container">
         <div
-          class="w-6 h-6 border-4 border-gray-300 border-t-white rounded-full animate-spin"
+          class="w-6 h-6 border-4 border-gray-300 border-t-[#48b684] rounded-full animate-spin"
         ></div>
       </div>
       <div v-else class="chat-layout w-full h-full flex-row flex">
-        <!-- Sidebar (Black) -->
-        <section class="chat-selector-sidebar w-1/5 bg-black">
-          <div class="chat-sidebar">
-            <div class="chat-selector-header">
-              <button class="new-chat-button">New Chat</button>
-              <button class="new-chat-button">Another Button</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="chat flex flex-col w-4/5">
+        <section class="chat flex flex-col w-5/5">
           <div class="messages">
             <div
               v-for="(msg, i) in messages"
               :key="i"
-              :class="['message', msg.role]"
+              class="message-container"
             >
-              <div
-                v-if="msg.role === 'assistant'"
-                v-html="renderMarkdown(msg.content)"
-              />
+              <div v-if="msg.role === 'assistant'">
+                <div
+                  :class="['message', msg.role]"
+                  v-html="renderMarkdown(msg.content)"
+                />
+                <div
+                  v-if="msg.role === 'assistant'"
+                  class="message-toolbar-container flex flex-cols-4"
+                >
+                  <div class="flex flex-row w-2/4">
+                    <div class="toolbar-icons">
+                      <div class="toolbar-icon copy-icon-container">
+                        <button
+                          @click="copyToClipboard(msg.content, toast, t)"
+                          class="toolbar-button group"
+                          :aria-label="$t('common.actions.copy.label')"
+                          :title="$t('common.actions.copy.label')"
+                        >
+                          <IconCopy
+                            :size="24"
+                            class="fill-black group-hover:fill-green-500"
+                          />
+                        </button>
+                      </div>
+                      <!-- <div class="toolbar-icon download-icon-container">
+                        <button
+                          @click="downloadPDF(msg.content, toast, t)"
+                          class="toolbar-button"
+                        >
+                          <IconDownload :size="24" color="#007bff" />
+                        </button>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="message-time">
+                    <span>{{ formatTimestamp(Date.now()) }}</span>
+                  </div>
+                </div>
+              </div>
               <div v-else class="plain-text">{{ msg.content }}</div>
             </div>
             <div v-if="!hasReply" class="assistant loader-message">
@@ -58,20 +83,8 @@
                 type="submit"
                 :disabled="!input.trim() || !hasReply || !isConnected"
               >
-                <IconSend :size="32" color="white" />
+                <IconSend :size="64" color="white" />
               </button>
-              <!-- 
-              <div v-if="!hasReply" class="input-blocked-overlay">
-                <div class="input-spinner"></div>
-                <span class="input-blocked-text">{{
-                  $t("chat.waitingForResponse")
-                }}</span>
-              </div> -->
-              <!-- <div v-if="!isConnected" class="input-blocked-overlay">
-                <span class="input-blocked-text">{{
-                  $t("errors.ai.503")
-                }}</span>
-              </div> -->
             </form>
           </section>
         </section>
@@ -87,7 +100,11 @@ import { useChatSocket } from "@/scripts/websocket/chat";
 import { useTypedI18n } from "@/composables/useI18n";
 import "../styles/views/ChatView.css";
 import CloudyBackground from "@/components/CloudyBackground.vue";
+import { copyToClipboard, formatTimestamp } from "@/scripts/utils/utils";
+import IconCopy from "@/components/icons/IconCopy.vue";
+import { useToast } from "vue-toastification";
 
+const toast = useToast();
 const { t } = useTypedI18n();
 
 const defaultText = t("chat.greetingMessage");
@@ -119,7 +136,6 @@ onMounted(async () => {
     console.warn("No token found in localStorage.");
     messages.value.push({ role: "assistant", content: errorText });
   }
-  isLoading.value = false;
   connect(token.value);
 });
 
@@ -166,6 +182,10 @@ function handleKeydown(event) {
 }
 
 function renderMarkdown(text) {
+  marked.setOptions({
+    breaks: true,
+    gfm: true,
+  });
   return marked.parse(text);
 }
 

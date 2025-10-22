@@ -231,7 +231,19 @@
     "cancel": "Cancelar",
     "confirm": "Confirmar",
     "loading": "Carregando...",
-    "other": "Outro"
+    "other": "Outro",
+    "actions": {
+      "copy": {
+        "label": "Copiar",
+        "success": "Texto copiado com sucesso!",
+        "error": "Falha ao copiar o texto."
+      },
+      "download": {
+        "label": "Baixar",
+        "success": "Download iniciado com sucesso!",
+        "error": "Falha ao iniciar o download."
+      }
+    }
   },
   "users": {
     "title": "Todos os Usuários",

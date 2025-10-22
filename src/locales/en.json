@@ -211,7 +211,8 @@
     "auth": {
       "invalidCredentials": "Invalid email or password",
       "registrationFailed": "Registration failed. Please try again.",
-      "passwordMismatch": "Passwords do not match"
+      "passwordMismatch": "Passwords do not match",
+      "anamneseIncomplete": "Please complete all anamnese fields"
     },
     "validation": {
       "required": "This field is required",
@@ -230,7 +231,19 @@
     "cancel": "Cancel",
     "confirm": "Confirm",
     "loading": "Loading...",
-    "other": "Other"
+    "other": "Other",
+    "actions": {
+      "copy": {
+        "label": "Copy",
+        "success": "Text copied successfully!",
+        "error": "Failed to copy text."
+      },
+      "download": {
+        "label": "Download",
+        "success": "Download started successfully!",
+        "error": "Failed to start download."
+      }
+    }
   },
   "users": {
     "title": "All Users",

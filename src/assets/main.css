@@ -11,6 +11,11 @@ h1 {
   font-weight: 700;
 }
 
+.hanken-font {
+  font-family: "Hanken Grotesk", sans-serif;
+  font-optical-sizing: auto;
+}
+
 a {
   color: #4f9cff;
   text-decoration: none;
