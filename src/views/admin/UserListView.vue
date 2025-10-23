@@ -29,13 +29,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getAllUsers } from "@/scripts/http-requests/endpoints";
+import '../../styles/views/UserListView.css'
 
-// State
 const users = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
-// Mock fetching function
 const fetchUsers = async () => {
   loading.value = true;
   error.value = null;
@@ -51,37 +50,7 @@ const fetchUsers = async () => {
   }
 };
 
-// Load users on mount
 onMounted(() => {
   fetchUsers();
 });
 </script>
-
-<style scoped>
-.user-list-page {
-  padding: 1rem;
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.user-table th,
-.user-table td {
-  border: 1px solid #ddd;
-  padding: 0.5rem 1rem;
-  text-align: left;
-}
-
-.user-table th {
-  background-color: #444444;
-  font-weight: bold;
-}
-
-.error {
-  color: red;
-  margin-top: 1rem;
-}
-</style>

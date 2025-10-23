@@ -1,72 +1,128 @@
-<template class="register-container">
+<template>
+  <CloudyBackground>
     <div class="register-container">
-        <div class="register-card">
-          <h1>Register</h1>
-      
-          <form @submit.prevent="handleRegister" class="register-form">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input 
-                id="username" 
-                type="username" 
-                v-model="username" 
-                placeholder="Enter your username" 
-                required 
+      <div class="register-card">
+        <h1 class="text-2xl pb-5">{{ $t("auth.register.title") }}</h1>
+        <form @submit.prevent="handleRegister" class="register-form">
+          <div class="iconified-input">
+            <label for="username" hidden>{{
+              $t("auth.register.fields.username.label")
+            }}</label>
+            <div class="relative flex items-center">
+              <input
+                id="username"
+                type="username"
+                v-model="username"
+                class="peer pl-10"
+                :placeholder="$t('auth.register.fields.username.placeholder')"
+                required
+              />
+              <IconUser
+                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
               />
             </div>
+          </div>
 
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input 
-                id="email" 
-                type="email" 
-                v-model="email" 
-                placeholder="Enter your email" 
-                required 
+          <div class="iconified-input">
+            <label for="email" hidden>{{
+              $t("auth.register.fields.email.label")
+            }}</label>
+            <div class="relative flex items-center">
+              <input
+                id="email"
+                v-model="email"
+                type="email"
+                class="peer pl-10"
+                :placeholder="$t('auth.register.fields.email.placeholder')"
+              />
+              <IconMail
+                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
               />
             </div>
-      
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input 
-                id="password" 
-                type="password" 
-                v-model="password" 
-                placeholder="Enter your password" 
-                required 
+          </div>
+          <div class="iconified-input">
+            <label for="password" hidden>{{
+              $t("auth.register.fields.password.label")
+            }}</label>
+            <div class="relative flex items-center">
+              <input
+                id="password"
+                v-model="password"
+                type="password"
+                autocomplete="current-password"
+                class="peer pl-10"
+                :placeholder="$t('auth.register.fields.password.placeholder')"
+              />
+              <IconKey
+                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
               />
             </div>
+          </div>
 
-            <div class="form-group">
-              <label for="confirm-password">Confirm Password</label>
-              <input 
-                id="confirm-password" 
-                type="password" 
-                v-model="confirmPassword" 
-                placeholder="Confirm your password" 
-                required 
+          <div class="iconified-input">
+            <label for="confirm-password" hidden>{{
+              $t("auth.register.fields.confirmPassword.label")
+            }}</label>
+            <div class="relative flex items-center">
+              <input
+                id="confirm-password"
+                v-model="confirmPassword"
+                type="password"
+                autocomplete="current-password"
+                class="peer pl-10"
+                :placeholder="
+                  $t('auth.register.fields.confirmPassword.placeholder')
+                "
+                required
+              />
+              <IconKey
+                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
               />
             </div>
-      
-            <button type="submit" :disabled="loading">
-              {{ loading ? "Logging in..." : "Register" }}
-            </button>
-          </form>
-      
-          <p class="extra">
-            Already have an account?
-            <a href="/login">Login</a>
-          </p>
+          </div>
+          <!-- <h1 class="text-2xl">
+            {{ $t("auth.register.fields.anamnese.title") }}
+          </h1> -->
 
-        </div>
+          <section></section>
+
+          <p class="error">{{ error }}</p>
+          <button
+            type="submit"
+            :disabled="loading"
+            class="px-4 py-2 flex items-center justify-center gap-2"
+          >
+            <template v-if="loading">
+              <div
+                class="w-6 h-6 border-4 border-gray-300 border-t-[#48b684] rounded-full animate-spin"
+              ></div>
+            </template>
+            <template v-else>
+              {{ $t("auth.register.actions.submit") }}
+            </template>
+            <IconRightArrow class="w-5 h-5" />
+          </button>
+        </form>
+
+        <p class="extra">
+          <a href="/login">{{ $t("auth.register.actions.hasAccount") }}</a>
+        </p>
+      </div>
     </div>
+  </CloudyBackground>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { register } from "@/scripts/http-requests/instance";
+import { register } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import "../styles/views/RegisterView.css";
+import CloudyBackground from "@/components/CloudyBackground.vue";
+import IconMail from "@/components/icons/IconMail.vue";
+import IconKey from "@/components/icons/IconKey.vue";
+import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import IconUser from "@/components/icons/IconUser.vue";
 
 const router = useRouter();
 const email = ref("");
@@ -79,80 +135,32 @@ const error = ref(null);
 const handleRegister = async () => {
   loading.value = true;
   error.value = null;
-
+  if (
+    email.value === "" ||
+    username.value === "" ||
+    password.value === "" ||
+    confirmPassword.value === ""
+  ) {
+    error.value = "All fields are required";
+    loading.value = false;
+    return;
+  }
   try {
-    const response = await register(email.value, username.value, password.value, confirmPassword.value);
+    const response = await register(
+      email.value,
+      username.value,
+      password.value,
+      confirmPassword.value
+    );
     router.push("/login");
   } catch (e) {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: e.response?.data?.message || "Register failed"
+      text: e.response?.data?.message || t("errors.server.generic"),
     });
   } finally {
     loading.value = false;
   }
 };
 </script>
-
-<style scoped>
-.register-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.register-card {
-  width: 32rem;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border: 1px solid #000;
-  color: #fff;
-  border-radius: 8px;
-  background: #2f2f2f;
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  background: #48b684;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:disabled {
-  background: #999;
-  cursor: not-allowed;
-}
-
-.extra {
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.error {
-  margin-top: 1rem;
-  color: red;
-  font-weight: bold;
-}
-</style>

@@ -1,18 +1,28 @@
 <script setup lang="ts">
-  import { RouterView } from "vue-router";
-  import Sidebar from "./components/Sidebar.vue";
-  import { useRoute } from 'vue-router';
-  const routesWithoutSidebar = ['/login', '/register'];
+import { RouterView } from "vue-router";
+import Sidebar from "./components/Sidebar.vue";
+import { useRoute } from "vue-router";
 
-  const showSidebar = ()=>{
-    const route = useRoute();
-    return !routesWithoutSidebar.includes(route.path.toLowerCase());
-  };
+const routesWithoutSidebar = ["/login", "/register"];
+const routesFullScreen = ["/login", "/register"]; // Routes that need full-screen styling
+
+const showSidebar = () => {
+  const route = useRoute();
+  return !routesWithoutSidebar.includes(route.path.toLowerCase());
+};
+
+const isFullScreen = () => {
+  const route = useRoute();
+  return routesFullScreen.includes(route.path.toLowerCase());
+};
 </script>
 
 <template>
-  <Sidebar v-if="showSidebar()"/>
-  <main class="main-content" :class="{'using-sidebar': showSidebar()}">
+  <Sidebar v-if="showSidebar()" />
+  <main
+    class="main-content"
+    :class="{ 'using-sidebar': showSidebar(), 'full-screen': isFullScreen() }"
+  >
     <RouterView />
   </main>
 </template>
@@ -33,9 +43,15 @@
   margin-left: 250px;
 }
 
-/* Adjust for collapsed sidebar */
 .sidebar.collapsed + .main-content {
   margin-left: 60px;
+}
+
+.full-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 768px) {

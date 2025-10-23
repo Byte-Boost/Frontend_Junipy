@@ -1,0 +1,259 @@
+{
+  "nav": {
+    "title": "Navegação",
+    "chat": "Junipy",
+    "users": "Usuários",
+    "settings": "Configurações",
+    "logout": "Sair"
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar",
+      "fields": {
+        "email": {
+          "label": "Email",
+          "placeholder": "Digite seu email"
+        },
+        "password": {
+          "label": "Senha",
+          "placeholder": "Digite sua senha"
+        }
+      },
+      "actions": {
+        "submit": "Entrar",
+        "forgotPassword": "Esqueceu a senha?",
+        "noAccount": "Não tem uma conta?"
+      }
+    },
+    "register": {
+      "title": "Criar uma conta",
+      "fields": {
+        "anamnese": {
+          "title": "Anamnese",
+          "fields": {
+            "name": "Nome",
+            "age": "Idade",
+            "birthdate": "Data de Nascimento",
+            "sex": "Sexo",
+            "profession": "Profissão",
+            "consultationReason": {
+              "label": "Qual o motivo da sua consulta?",
+              "choices": {
+                "weightLoss": "Perda de peso",
+                "muscleGain": "Ganho de massa muscular",
+                "diabetesControl": "Controle de diabetes",
+                "eatingReeducation": "Reeducação alimentar",
+                "physicalMentalPerformance": "Performance física e mental"
+              },
+              "placeholder": "Selecione o motivo da consulta"
+            },
+            "allergies": {
+              "label": "Você possui alguma alergia ou intolerância?",
+              "choices": {
+                "no": "Não",
+                "lactoseIntolerance": "Intolerância à lactose",
+                "glutenIntolerance": "Sensibilidade ao glúten / doença celíaca",
+                "foodAllergies": "Alergias alimentar",
+                "medicalAllergies": "Alergias medicamentosas"
+              },
+              "placeholder": "Selecione uma opção"
+            },
+            "surgeries": {
+              "label": "Você já passou por alguma cirurgia?",
+              "choices": {
+                "no": "Não",
+                "bariatric": "Bariátrica",
+                "gallbladder": "Vesícula",
+                "ortopedic": "Ortopédica",
+                "cesarean": "Cesárea / Ginecológica"
+              },
+              "placeholder": "Selecione uma opção"
+            },
+            "physicalActivities": {
+              "title": "Atividades físicas",
+              "choices": {
+                "sedentary": "Sedentário",
+                "walking": "Caminhada",
+                "musculation": "Musculação",
+                "crossfit": "Crossfit",
+                "swimming": "Natação"
+              },
+              "frequency": {
+                "title": "Frequência",
+                "choices": {
+                  "1-2": "1-2 vezes por semana",
+                  "3-4": "3-4 vezes por semana",
+                  "5+": "5 ou mais vezes por semana"
+                }
+              },
+              "time": {
+                "title": "Quantos minutos por dia de atividade física?",
+                "choices": {
+                  "30": "30 minutos",
+                  "60": "60 minutos",
+                  "90": "90 minutos"
+                }
+              },
+              "placeholder": "Selecione uma opção"
+            },
+            "sleepQuality": {
+              "description": "Me conte como você está dormindo, vai ajudar muito no seu planejamento",
+              "title": "Qualidade do sono",
+              "choices": {
+                "good": "Boa",
+                "average": "Regular",
+                "poor": "Ruim"
+              },
+              "placeholder": "Selecione uma opção"
+            },
+            "nightInterruptions": {
+              "title": "Acorda durante a noite?",
+              "choices": {
+                "none": "Não",
+                "once": "Pelo menos 1 x",
+                "multiple": "Mais que 1 x por noite"
+              },
+              "placeholder": "Selecione uma opção"
+            },
+            "intestinalHabits": {
+              "description": "Entender como é sua rotina vai ser valioso nesse processo",
+              "title": "Quantas vezes por semana você evacua?",
+              "choices": {
+                "daily": "Todo dia",
+                "fivePerWeek": "5 x por semana",
+                "threePerWeek": "3 x por semana",
+                "oncePerWeek": "1 x por semana"
+              },
+              "placeholder": "Selecione uma opção"
+            },
+            "dayToDay": {
+              "description": "Vamos aprofundar um pouco sobre você!",
+              "fields": {
+                "stress": {
+                  "title": "Estresse",
+                  "choices": {
+                    "low": "Baixo",
+                    "moderate": "Moderado",
+                    "high": "Alto"
+                  },
+                  "placeholder": "Selecione seu nível de estresse"
+                },
+                "alcoholConsumption": {
+                  "title": "Consumo de álcool",
+                  "choices": {
+                    "none": "Não consome",
+                    "social": "Socialmente 1-2 x por semana",
+                    "frequent": "Frequente 3-4 x por semana",
+                    "daily": "Uso diário"
+                  },
+                  "placeholder": "Selecione uma opção"
+                },
+                "smoking": {
+                  "title": "Tabagismo",
+                  "choices": {
+                    "yes": "Sim",
+                    "no": "Não"
+                  },
+                  "placeholder": "Selecione uma opção"
+                },
+                "hydration": {
+                  "title": "Hidratação (quantos litros por dia)",
+                  "choices": {
+                    "lessThan1L": "Menos de 1L",
+                    "between1And2L": "Entre 1L e 2L",
+                    "moreThan2L": "Mais de 2L"
+                  },
+                  "placeholder": "Selecione uma opção"
+                },
+                "medications": {
+                  "title": "Medicações em uso",
+                  "description": "Lembre de tudo, inclusive suplementos, você usa medicações contínuas?",
+                  "choices": {
+                    "yes": "Sim",
+                    "no": "Não"
+                  },
+                  "placeholder": "Selecione uma opção"
+                }
+              }
+            }
+          }
+        },
+        "username": {
+          "label": "Nome de usuário",
+          "placeholder": "Digite seu nome de usuário"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Digite seu email"
+        },
+        "password": {
+          "label": "Senha",
+          "placeholder": "Digite sua senha"
+        },
+        "confirmPassword": {
+          "label": "Confirmar Senha",
+          "placeholder": "Confirme sua senha"
+        }
+      },
+      "actions": {
+        "submit": "Registrar",
+        "hasAccount": "Já tem uma conta?"
+      }
+    }
+  },
+  "chat": {
+    "sendMessage": "Enviar mensagem",
+    "placeholder": "Digite sua mensagem... (Pressione Enter para enviar, Shift+Enter para nova linha)",
+    "greetingMessage": "Oi! Eu sou o Junipy, um assistente virtual. Como posso te ajudar hoje?",
+    "waitingForResponse": "Aguardando assistente..."
+  },
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Email ou senha inválidos",
+      "registrationFailed": "Falha no registro. Tente novamente.",
+      "passwordMismatch": "As senhas não coincidem",
+      "anamneseIncomplete": "Por favor, complete todos os campos da anamnese"
+    },
+    "validation": {
+      "required": "Este campo é obrigatório",
+      "invalidEmail": "Por favor, digite um email válido"
+    },
+    "404": "Desculpe, esta página não parece estar aqui",
+    "ai": {
+      "503": "Não foi possível conectar ao servidor de chat. Verifique sua conexão."
+    },
+    "server": {
+      "generic": "Algo de errado aconteceu com o servidor!"
+    }
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "loading": "Carregando...",
+    "other": "Outro",
+    "actions": {
+      "copy": {
+        "label": "Copiar",
+        "success": "Texto copiado com sucesso!",
+        "error": "Falha ao copiar o texto."
+      },
+      "download": {
+        "label": "Baixar",
+        "success": "Download iniciado com sucesso!",
+        "error": "Falha ao iniciar o download."
+      }
+    }
+  },
+  "users": {
+    "title": "Todos os Usuários",
+    "headers": {
+      "number": "#",
+      "username": "Nome de usuário",
+      "email": "Email",
+      "role": "Função"
+    },
+    "loading": "Carregando usuários...",
+    "error": "Falha ao carregar usuários"
+  }
+}

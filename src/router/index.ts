@@ -1,29 +1,21 @@
+import UserListView from "@/views/admin/UserListView.vue";
+import ChatView from "@/views/ChatView.vue";
+import ConfigView from "@/views/ConfigView.vue";
+import RegisterView from "@/views/RegisterView.vue";
 import { createRouter, createWebHistory } from "vue-router";
+import LoginView from "../views/LoginView.vue";
 
+const routes = [
+  { path: "/login", name: "login", component: LoginView },
+  { path: "/register", name: "register", component: RegisterView },
+  { path: "/users", name: "users", component: UserListView },
+  { path: "/config", name: "config", component: ConfigView },
+  { path: "/chat", name: "chat", component: ChatView },
+  { path: "/:pathMatch(.*)*", redirect: "/login" }, // Catch-all route to redirect to /login
+];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/",
-      name: "Chat",
-      component: () => import("../views/ChatView.vue"),
-    },
-    {
-      path: "/login",
-      name: "Login",
-      component: () => import("../views/LoginView.vue"),
-    },
-    {
-      path: "/register",
-      name: "Register",
-      component: () => import("../views/RegisterView.vue"),
-    },
-    {
-      path: "/users",
-      name: "Users",
-      component: () => import("../views/UserListView.vue"),
-    }
-  ],
+  routes,
 });
 
 export default router;

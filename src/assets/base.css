@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
   --vt-c-white: #ffffff;
@@ -33,6 +35,10 @@
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
 
+  --label-color: black;
+  --input-background-color: #d1d1d1;
+  --input-color: rgba(117, 117, 117, 0.64);
+
   --section-gap: 160px;
 }
 
@@ -47,6 +53,12 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
+
+    --label-color: white;
+    --input-background-color: #34363c;
+    --input-color: #ebebeba3;
+    --disabled-input-background-color: #2e2e2e;
+    --disabled-input-color: #6d6d6d;
   }
 }
 
