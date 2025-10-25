@@ -33,8 +33,14 @@
           "fields": {
             "name": "Name",
             "age": "Age",
-            "birthdate": "Birthdate",
-            "sex": "Sex",
+            "birthDate": "Birthdate",
+            "sex": {
+              "label": "Sex",
+              "choices": {
+                "male": "Male",
+                "female": "Female"
+              }
+            },
             "profession": "Profession",
             "consultationReason": {
               "label": "What is the reason for your consultation?",
@@ -54,7 +60,8 @@
                 "lactoseIntolerance": "Lactose intolerance",
                 "glutenIntolerance": "Gluten sensitivity / celiac disease",
                 "foodAllergies": "Food allergies",
-                "medicalAllergies": "Medical allergies"
+                "medicalAllergies": "Medical allergies",
+                "other": "Other"
               },
               "placeholder": "Select an option"
             },
@@ -64,8 +71,10 @@
                 "no": "No",
                 "bariatric": "Bariatric",
                 "gallbladder": "Gallbladder",
-                "ortopedic": "Orthopedic",
-                "cesarean": "Cesarean / Gynecological"
+                "hiatalHernia": "Hiatal hernia (reflux surgery)",
+                "orthopedic": "Orthopedic",
+                "cesarean": "Cesarean / Gynecological",
+                "other": "Other"
               },
               "placeholder": "Select an option"
             },
@@ -175,6 +184,25 @@
                   "placeholder": "Select an option"
                 }
               }
+            },
+            "conditions": {
+              "label": "Do you have or have you had any of the conditions below?",
+              "placeholder": "Select one or more options",
+              "choices": {
+                "type1Diabetes": "Type 1 Diabetes",
+                "type2Diabetes": "Type 2 Diabetes",
+                "hypertension": "Hypertension",
+                "dyslipidemia": "Dyslipidemia (cholesterol, triglycerides)",
+                "kidneyDisease": "Kidney disease",
+                "liverDisease": "Liver disease",
+                "gastritisReflux": "Gastritis / reflux",
+                "intestinalIssues": "Constipation / diarrhea",
+                "osteoporosis": "Osteoporosis",
+                "cardiovascularDisease": "Cardiovascular disease (heart attack, heart failure)",
+                "cancer": "Cancer",
+                "depressionAnxiety": "Depression / Anxiety",
+                "autoimmuneDiseases": "Autoimmune diseases"
+              }
             }
           }
         },
@@ -232,6 +260,12 @@
     "confirm": "Confirm",
     "loading": "Loading...",
     "other": "Other",
+    "yes": "Yes",
+    "no": "No",
+    "continue": "Next",
+    "select": {
+      "placeholder": "Select an option"
+    },
     "actions": {
       "copy": {
         "label": "Copy",

@@ -1,0 +1,67 @@
+<template>
+  <svg
+    :width="size"
+    :height="size"
+    :fill="fill"
+    :stroke="color"
+    viewBox="0 0 512 512"
+    :class="className"
+  >
+    >
+    <rect
+      x="32"
+      y="128"
+      width="448"
+      height="320"
+      rx="48"
+      ry="48"
+      style="fill: none; stroke-linejoin: round; stroke-width: 32px"
+    />
+    <path
+      d="M144,128V96a32,32,0,0,1,32-32H336a32,32,0,0,1,32,32v32"
+      style="
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 32px;
+      "
+    />
+    <line
+      x1="480"
+      y1="240"
+      x2="32"
+      y2="240"
+      style="
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 32px;
+      "
+    />
+    <path
+      d="M320,240v24a8,8,0,0,1-8,8H200a8,8,0,0,1-8-8V240"
+      style="
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 32px;
+      "
+    />
+  </svg>
+</template>
+
+<script setup lang="ts">
+interface Props {
+  size?: string | number;
+  fill?: string;
+  color?: string;
+  className?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  size: 24,
+  fill: "none",
+  color: "currentColor",
+  className: "",
+});
+</script>

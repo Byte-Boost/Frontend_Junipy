@@ -17,15 +17,19 @@ export async function register(
 }
 
 export async function login(email: string, password: string) {
-  const response = await apiClient.post("/api/auth/login", { email, password} ,{headers: { skipAuth: true }});
+  const response = await apiClient.post(
+    "/api/auth/login",
+    { email, password },
+    { headers: { skipAuth: true } }
+  );
   return response.data;
 }
 
-export async function getProfileData(): Promise<{data: UserInformation}> {
+export async function getProfileData(): Promise<{ data: UserInformation }> {
   const response = await apiClient.get("/api/user/profile-data");
   return response;
 }
-export async function patchProfileData(userInfo: UserInformation){
+export async function patchProfileData(userInfo: UserInformation) {
   console.log(userInfo);
   const response = await apiClient.post("/api/user/profile-data", userInfo);
   return response.data;

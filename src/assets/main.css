@@ -40,6 +40,26 @@ a:hover {
   box-shadow: 0 0 0 3px #48b684;
 }
 
+input[type="radio"] {
+  width: auto;
+  height: auto;
+  accent-color: #48b684;
+}
+input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  accent-color: #48b684;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* For Firefox */
+}
+
 .iconified-input {
   width: 100%;
   flex-basis: 100%;
