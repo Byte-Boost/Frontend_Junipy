@@ -25,6 +25,22 @@ export async function getProfileData(): Promise<{data: UserInformation}> {
   const response = await apiClient.get("/api/user/profile-data");
   return response;
 }
+
+export async function getDietData() {
+  const response = await apiClient.get("/api/user/daily-diet");
+  return response.data;
+}
+
+export async function getAnalisysRequests() { 
+  const response = await apiClient.get("/api/user/diet-analysis-requests"); 
+  return response.data; 
+}
+
+export async function dietRequestAnalisys(dietId: string) { 
+  const response = await apiClient.post(`api/user/request-diet-analysis/${dietId}`); 
+  return response.data;
+}
+
 export async function patchProfileData(userInfo: UserInformation){
   console.log(userInfo);
   const response = await apiClient.post("/api/user/profile-data", userInfo);
