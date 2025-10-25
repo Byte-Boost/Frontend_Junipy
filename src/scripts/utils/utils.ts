@@ -26,5 +26,14 @@ function formatTimestamp(timestamp: number): string {
     minute: "2-digit",
   });
 }
+function hasNullValues(obj: Record<string, any>): boolean {
+  for (const key in obj) {
+    if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
+      console.log(`Property "${key}" is null.`);
+      return true;
+    }
+  }
+  return false;
+}
 
-export { copyToClipboard, formatTimestamp };
+export { copyToClipboard, formatTimestamp, hasNullValues };

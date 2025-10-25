@@ -10,6 +10,7 @@
         :type="props.type"
         class="peer pl-10"
         :placeholder="t(props.placeholderText)"
+        @input="onInput"
       />
       <slot />
     </div>
@@ -25,7 +26,7 @@ const props = withDefaults(
   defineProps<{
     id?: string;
     type: InputTypeHTMLAttribute;
-    inputModel: string;
+    inputModel: any;
     labelText: I18nKeys;
     placeholderText: I18nKeys;
     labelHidden?: boolean;
@@ -34,4 +35,9 @@ const props = withDefaults(
     labelHidden: true,
   }
 );
+const emit = defineEmits(["update:inputModel"]);
+
+function onInput(event: Event) {
+  emit("update:inputModel", (event.target as HTMLInputElement).value);
+}
 </script>

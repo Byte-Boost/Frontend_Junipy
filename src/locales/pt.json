@@ -99,6 +99,7 @@
               "placeholder": "Selecione uma ou mais opções"
             },
             "physicalActivities": {
+              "label": "Qual atividade física te descreve mais?",
               "title": "Atividades físicas",
               "choices": {
                 "sedentary": "Sedentário",
@@ -108,8 +109,9 @@
                 "swimming": "Natação"
               },
               "frequency": {
-                "title": "Frequência",
+                "title": "Frequência de Atividade Física",
                 "choices": {
+                  "never": "Nunca",
                   "1-2": "1-2 vezes por semana",
                   "3-4": "3-4 vezes por semana",
                   "5+": "5 ou mais vezes por semana"
@@ -118,6 +120,7 @@
               "time": {
                 "title": "Quantos minutos por dia de atividade física?",
                 "choices": {
+                  "none": "Nenhum",
                   "30": "30 minutos",
                   "60": "60 minutos",
                   "90": "90 minutos"

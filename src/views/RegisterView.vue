@@ -12,7 +12,7 @@
           <fieldset v-if="currentStep === 0" class="iconified-input-group">
             <IconifiedInput
               id="name"
-              v-model="name"
+              v-model:inputModel="name"
               type="text"
               :label-text="'auth.register.fields.anamnese.fields.name'"
               :placeholder-text="'auth.register.fields.anamnese.fields.name'"
@@ -24,7 +24,7 @@
 
             <IconifiedInput
               id="profession"
-              v-model="profession"
+              v-model:inputModel="profession"
               type="text"
               :label-text="'auth.register.fields.anamnese.fields.profession'"
               :placeholder-text="'auth.register.fields.anamnese.fields.profession'"
@@ -33,22 +33,11 @@
                 class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
               />
             </IconifiedInput>
-            <IconifiedInput
-              id="age"
-              v-model="age"
-              type="number"
-              :label-text="'auth.register.fields.anamnese.fields.age'"
-              :placeholder-text="'auth.register.fields.anamnese.fields.age'"
-              :labelHidden="false"
-            >
-              <IconHourglass
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
-              />
-            </IconifiedInput>
+
             <IconifiedInput
               id="birthdate"
               :labelHidden="false"
-              v-model="birthdate"
+              v-model:inputModel="birthdate"
               type="date"
               :label-text="'auth.register.fields.anamnese.fields.birthDate'"
               :placeholder-text="'auth.register.fields.anamnese.fields.birthDate'"
@@ -60,7 +49,7 @@
             <label>
               {{ $t("auth.register.fields.anamnese.fields.sex.label") }}
             </label>
-            <select>
+            <select v-model="sex">
               <option disabled value="">
                 {{ $t("common.select.placeholder") }}
               </option>
@@ -205,7 +194,7 @@
                 )
               }}
             </label>
-            <select>
+            <select v-model="sleepQuality">
               <option disabled value="">
                 {{ $t("common.select.placeholder") }}
               </option>
@@ -238,7 +227,7 @@
                 )
               }}
             </label>
-            <select>
+            <select v-model="wakeDuringNight">
               <option disabled value="">
                 {{ $t("common.select.placeholder") }}
               </option>
@@ -271,32 +260,32 @@
                 )
               }}
             </label>
-            <select>
+            <select v-model="activityType">
               <option disabled value="">
                 {{ $t("common.select.placeholder") }}
               </option>
-              <option value="none">
+              <option value="crossfit">
                 {{
                   $t(
                     "auth.register.fields.anamnese.fields.physicalActivities.choices.crossfit"
                   )
                 }}
               </option>
-              <option value="once">
+              <option value="musculation">
                 {{
                   $t(
                     "auth.register.fields.anamnese.fields.physicalActivities.choices.musculation"
                   )
                 }}
               </option>
-              <option value="multiple">
+              <option value="sedentary">
                 {{
                   $t(
                     "auth.register.fields.anamnese.fields.physicalActivities.choices.sedentary"
                   )
                 }}
               </option>
-              <option value="">
+              <option value="swimming">
                 {{
                   $t(
                     "auth.register.fields.anamnese.fields.physicalActivities.choices.swimming"
@@ -312,10 +301,336 @@
               </option>
             </select>
           </fieldset>
+          <fieldset v-else-if="currentStep === 4" class="iconified-input-group">
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.physicalActivities.frequency.title"
+                )
+              }}
+            </label>
+            <select v-model="activityFrequency">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="never">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.frequency.choices.never"
+                  )
+                }}
+              </option>
+              <option value="1-2 times/week">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.frequency.choices.1-2"
+                  )
+                }}
+              </option>
+              <option value="3-4 times/week">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.frequency.choices.3-4"
+                  )
+                }}
+              </option>
+              <option value="5-6 times/week">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.frequency.choices.5+"
+                  )
+                }}
+              </option>
+            </select>
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.physicalActivities.time.title"
+                )
+              }}
+            </label>
+            <select v-model="activityDuration">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="0min">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.time.choices.none"
+                  )
+                }}
+              </option>
+              <option value="30min">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.time.choices.30"
+                  )
+                }}
+              </option>
+              <option value="60min">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.time.choices.60"
+                  )
+                }}
+              </option>
+              <option value="90min">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.physicalActivities.time.choices.90"
+                  )
+                }}
+              </option>
+            </select>
+
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.dayToDay.fields.alcoholConsumption.title"
+                )
+              }}
+            </label>
+            <select v-model="alcoholConsumption">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="none">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.alcoholConsumption.choices.none"
+                  )
+                }}
+              </option>
+              <option value="social">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.alcoholConsumption.choices.social"
+                  )
+                }}
+              </option>
+              <option value="frequent">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.alcoholConsumption.choices.frequent"
+                  )
+                }}
+              </option>
+              <option value="daily">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.alcoholConsumption.choices.daily"
+                  )
+                }}
+              </option>
+            </select>
+          </fieldset>
           <fieldset v-else-if="currentStep === 5" class="iconified-input-group">
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.dayToDay.fields.hydration.title"
+                )
+              }}
+            </label>
+            <select v-model="hydrationLevel">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="less than 1L">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.hydration.choices.lessThan1L"
+                  )
+                }}
+              </option>
+              <option value="1-2L">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.hydration.choices.between1And2L"
+                  )
+                }}
+              </option>
+              <option value="more than 2L">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.hydration.choices.moreThan2L"
+                  )
+                }}
+              </option>
+            </select>
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.dayToDay.fields.stress.title"
+                )
+              }}
+            </label>
+            <select v-model="stressLevel">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="low">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.stress.choices.low"
+                  )
+                }}
+              </option>
+              <option value="moderate">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.stress.choices.moderate"
+                  )
+                }}
+              </option>
+              <option value="high">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.dayToDay.fields.stress.choices.high"
+                  )
+                }}
+              </option>
+            </select>
+
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.dayToDay.fields.smoking.title"
+                )
+              }}
+            </label>
+            <select v-model="smoking">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="yes">
+                {{ $t("common.yes") }}
+              </option>
+              <option value="no">
+                {{ $t("common.no") }}
+              </option>
+            </select>
+          </fieldset>
+          <fieldset v-else-if="currentStep === 6" class="iconified-input-group">
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.intestinalHabits.title"
+                )
+              }}
+            </label>
+            <select v-model="intestinalHabits">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="everyday">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.intestinalHabits.choices.daily"
+                  )
+                }}
+              </option>
+              <option value="five per week">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.intestinalHabits.choices.fivePerWeek"
+                  )
+                }}
+              </option>
+              <option value="three per week">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.intestinalHabits.choices.threePerWeek"
+                  )
+                }}
+              </option>
+              <option value="once per week">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.intestinalHabits.choices.oncePerWeek"
+                  )
+                }}
+              </option>
+            </select>
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.consultationReason.label"
+                )
+              }}
+            </label>
+            <select v-model="consultationReason">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="diabetesControl">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.consultationReason.choices.diabetesControl"
+                  )
+                }}
+              </option>
+              <option value="eatingReeducation">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.consultationReason.choices.eatingReeducation"
+                  )
+                }}
+              </option>
+              <option value="weightLoss">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.consultationReason.choices.weightLoss"
+                  )
+                }}
+              </option>
+              <option value="physicalMentalPerformance">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.consultationReason.choices.physicalMentalPerformance"
+                  )
+                }}
+              </option>
+              <option value="muscleGain">
+                {{
+                  $t(
+                    "auth.register.fields.anamnese.fields.consultationReason.choices.muscleGain"
+                  )
+                }}
+              </option>
+            </select>
+            <label>
+              {{
+                $t(
+                  "auth.register.fields.anamnese.fields.dayToDay.fields.medications.description"
+                )
+              }}
+            </label>
+            <select v-model="takesMedication">
+              <option disabled value="">
+                {{ $t("common.select.placeholder") }}
+              </option>
+              <option value="yes">
+                {{ $t("common.yes") }}
+              </option>
+              <option value="no">
+                {{ $t("common.no") }}
+              </option>
+            </select>
+            <div v-if="takesMedication === 'yes'" class="mt-2">
+              <input
+                id="medicationDetailsInput"
+                v-model="medicationDetails"
+                type="text"
+                placeholder=""
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+              />
+            </div>
+          </fieldset>
+          <fieldset v-else-if="currentStep === 7" class="iconified-input-group">
             <IconifiedInput
               id="email"
-              v-model="email"
+              v-model:inputModel="email"
               type="email"
               :label-text="'auth.register.fields.email.label'"
               :placeholder-text="'auth.register.fields.email.placeholder'"
@@ -325,7 +640,7 @@
             /></IconifiedInput>
             <IconifiedInput
               id="password"
-              v-model="password"
+              v-model:inputModel="password"
               type="password"
               :label-text="'auth.register.fields.password.label'"
               :placeholder-text="'auth.register.fields.password.placeholder'"
@@ -336,7 +651,7 @@
             </IconifiedInput>
             <IconifiedInput
               id="confirm-password"
-              v-model="confirmPassword"
+              v-model:inputModel="confirmPassword"
               type="password"
               :label-text="'auth.register.fields.confirmPassword.label'"
               :placeholder-text="'auth.register.fields.confirmPassword.placeholder'"
@@ -346,11 +661,13 @@
               />
             </IconifiedInput>
           </fieldset>
+
           <div class="form-buttons">
             <button
               v-if="currentStep > 0"
               @click="prevStep"
               :disabled="loading"
+              type="button"
               class="px-4 py-2 flex items-center justify-center gap-2"
             >
               <template v-if="loading">
@@ -363,9 +680,10 @@
               </template>
             </button>
             <button
-              v-if="!lastStep"
+              v-if="currentStep < steps.length - 1"
               @click="nextStep"
               :disabled="loading"
+              type="button"
               class="px-4 py-2 flex items-center justify-center gap-2"
             >
               <template v-if="loading">
@@ -405,8 +723,8 @@
   </CloudyBackground>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref, watch } from "vue";
 import { register } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
 import "../styles/views/RegisterView.css";
@@ -420,16 +738,18 @@ import IconifiedInput from "@/components/IconifiedInput.vue";
 import IconBriefcase from "@/components/icons/IconBriefcase.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
 import IconHourglass from "@/components/icons/IconHourglass.vue";
+import type { User, UserInformation } from "@/models/models";
+import { useTypedI18n } from "@/composables/useI18n";
+import { hasNullValues } from "@/scripts/utils/utils";
 
-const lastStep = ref(false);
+const { t } = useTypedI18n();
 
 const router = useRouter();
 const loading = ref(false);
-const error = ref(null);
 
 const isSaving = ref(false);
 const currentStep = ref(0);
-const steps = [0, 1, 2, 3, 4, 5];
+const steps = [0, 1, 2, 3, 4, 5, 6, 7];
 
 const toast = useToast();
 
@@ -447,7 +767,9 @@ const password = ref("");
 const confirmPassword = ref("");
 const profession = ref("");
 const birthdate = ref("");
-const age = ref("");
+const age = ref(0);
+const sex = ref("");
+
 const conditionChoices = {
   no: "common.no",
   type1Diabetes:
@@ -501,14 +823,29 @@ const surgeriesChoices = {
   cesarean: "auth.register.fields.anamnese.fields.surgeries.choices.cesarean",
   other: "common.other",
 };
-const selectedConditions = ref([]);
-const selectedAllergies = ref([]);
-const selectedSurgeries = ref([]);
+
+const activityType = ref("");
+const activityFrequency = ref("");
+const activityDuration = ref("");
+const sleepQuality = ref("");
+const wakeDuringNight = ref("");
+const intestinalHabits = ref("");
+const stressLevel = ref("");
+const alcoholConsumption = ref("");
+const smoking = ref("");
+const hydrationLevel = ref("");
+const takesMedication = ref("");
+const medicationDetails = ref("");
+const consultationReason = ref("");
+
+const selectedConditions = ref<string[]>([]);
+const selectedAllergies = ref<string[]>([]);
+const selectedSurgeries = ref<string[]>([]);
 const otherCondition = ref("");
 const otherSurgeries = ref("");
 const otherAllergies = ref("");
 
-function handleSelectorChange(key, list) {
+function handleSelectorChange(key: string, list: any) {
   if (key === "no") {
     list.value = ["no"];
   } else {
@@ -522,15 +859,45 @@ function handleSelectorChange(key, list) {
 }
 
 const handleRegister = async () => {
+  selectedAllergies.value.push(otherAllergies.value);
+  selectedSurgeries.value.push(otherSurgeries.value);
+  selectedConditions.value.push(otherCondition.value);
+  age.value =
+    new Date().getFullYear() - new Date(birthdate.value).getFullYear();
+  let user: User = {
+    username: name.value,
+    email: email.value,
+    password: password.value,
+  };
+  let userInfo: UserInformation = {
+    name: name.value,
+    email: email.value,
+    sex: sex.value,
+    age: age.value,
+    birthDate: birthdate.value,
+    occupation: profession.value,
+    healthConditions: selectedConditions.value,
+    allergies: selectedAllergies.value,
+    surgeries: selectedSurgeries.value,
+    activityType: activityType.value,
+    activityFrequency: activityFrequency.value,
+    activityDuration: activityDuration.value,
+    sleepQuality: sleepQuality.value,
+    wakeDuringNight: wakeDuringNight.value,
+    bowelFrequency: intestinalHabits.value,
+    stressLevel: stressLevel.value,
+    alcoholConsumption: alcoholConsumption.value,
+    smoking: smoking.value,
+    hydrationLevel: hydrationLevel.value,
+    takesMedication: takesMedication.value,
+    medicationDetails: medicationDetails.value || "N/A",
+    consultationReason: consultationReason.value,
+  };
   loading.value = true;
-  error.value = null;
-  if (
-    email.value === "" ||
-    name.value === "" ||
-    password.value === "" ||
-    confirmPassword.value === ""
-  ) {
-    error.value = "All fields are required";
+  console.log(user);
+  console.log(userInfo);
+  if (hasNullValues(user) || hasNullValues(userInfo)) {
+    toast.error(t("errors.auth.anamneseIncomplete"));
     loading.value = false;
     return;
   }
@@ -543,7 +910,7 @@ const handleRegister = async () => {
     );
     router.push("/login");
   } catch (e) {
-    toast.error("Registration failed. Please try again.");
+    toast.error(t("errors.server.generic"));
   } finally {
     loading.value = false;
   }

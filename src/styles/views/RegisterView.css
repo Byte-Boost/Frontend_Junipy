@@ -27,7 +27,16 @@
   gap: 1rem;
   justify-content: center;
 }
+.iconified-input-group select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
+.register-card {
+  overflow: hidden;
+  padding: 1rem;
+}
 input {
   padding: 0.5rem;
   border: 1px solid #ccc;
