@@ -53,7 +53,7 @@
                   </div>
                 </div>
               </div>
-              <div v-else class="plain-text">{{ msg.content }}</div>
+              <div v-else :class="['message', 'user']">{{ msg.content }}</div>
             </div>
             <div v-if="!hasReply" class="assistant loader-message">
               <div class="jumping-balls-loader">

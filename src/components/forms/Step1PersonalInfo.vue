@@ -2,7 +2,7 @@
   <div class="step-container">
     <div class="form-row">
       <div class="form-element">
-        <div class="iconified-input">
+        <!-- <div class="iconified-input">
           <label for="name">{{
             $t("auth.register.fields.anamnese.fields.name")
           }}</label>
@@ -19,7 +19,7 @@
               class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -30,10 +30,10 @@
         }}</label>
         <input v-model="localUserInfo.occupation" type="text" />
       </div>
-      <div class="form-element">
+      <!-- <div class="form-element">
         <label>{{ t("auth.register.fields.email.label") }}</label>
         <input disabled v-model="localUserInfo.email" type="text" />
-      </div>
+      </div> -->
     </div>
 
     <div class="form-row">
@@ -51,14 +51,14 @@
         <label style="display: block">{{
           t("auth.register.fields.anamnese.fields.sex.label")
         }}</label>
-        <select disabled v-model="localUserInfo.gender">
+        <select disabled v-model="localUserInfo.sex">
           <option disabled value="">
             {{ t("common.select.placeholder") }}
           </option>
-          <option value="Masculino">
+          <option value="male">
             {{ t("auth.register.fields.anamnese.fields.sex.choices.male") }}
           </option>
-          <option value="Feminino">
+          <option value="female">
             {{ t("auth.register.fields.anamnese.fields.sex.choices.female") }}
           </option>
         </select>

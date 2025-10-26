@@ -271,7 +271,7 @@
                   )
                 }}
               </option>
-              <option value="musculation">
+              <option value="weightlifting">
                 {{
                   $t(
                     "auth.register.fields.anamnese.fields.physicalActivities.choices.musculation"
@@ -299,7 +299,19 @@
                   )
                 }}
               </option>
+              <!-- <option value="other">
+                {{ $t("common.other") }}
+              </option> -->
             </select>
+            <!-- <div v-if="activityType.includes('other')" class="mt-1">
+              <input
+                id="otherActivity"
+                v-model="otherActivities"
+                type="text"
+                placeholder=""
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
+              />
+            </div> -->
           </fieldset>
           <fieldset v-else-if="currentStep === 4" class="iconified-input-group">
             <label>
@@ -844,6 +856,7 @@ const selectedSurgeries = ref<string[]>([]);
 const otherCondition = ref("");
 const otherSurgeries = ref("");
 const otherAllergies = ref("");
+const otherActivities = ref("");
 
 function handleSelectorChange(key: string, list: any) {
   if (key === "no") {
@@ -864,10 +877,11 @@ const handleRegister = async () => {
   selectedConditions.value.push(otherCondition.value);
   age.value =
     new Date().getFullYear() - new Date(birthdate.value).getFullYear();
-  let user: User = {
+  let user = {
     username: name.value,
     email: email.value,
     password: password.value,
+    confirmPassword: confirmPassword.value,
   };
   let userInfo: UserInformation = {
     name: name.value,
@@ -901,13 +915,10 @@ const handleRegister = async () => {
     loading.value = false;
     return;
   }
+  userInfo = sanitizeAndValidatePayload(userInfo);
+  user = sanitizeAndValidatePayload(user);
   try {
-    const response = await register(
-      email.value,
-      name.value,
-      password.value,
-      confirmPassword.value
-    );
+    const response = await register(user, userInfo);
     router.push("/login");
   } catch (e) {
     toast.error(t("errors.server.generic"));
@@ -915,4 +926,42 @@ const handleRegister = async () => {
     loading.value = false;
   }
 };
+function sanitizeAndValidatePayload<T extends Record<string, any>>(
+  payload: T
+): T {
+  const sanitizedPayload = { ...payload };
+
+  for (const key in sanitizedPayload) {
+    const value = sanitizedPayload[key];
+
+    if (Array.isArray(value)) {
+      const filtered = Array.from(new Set(value)).filter((item) => {
+        if (item === null || item === undefined) return false;
+        return typeof item === "string"
+          ? item.trim() !== ""
+          : String(item).trim() !== "";
+      });
+      sanitizedPayload[key] = filtered as unknown as T[Extract<
+        keyof T,
+        string
+      >];
+    }
+
+    if (key === "birthDate" && sanitizedPayload["age"] !== undefined) {
+      const birthDate = new Date(value);
+      const today = new Date();
+      let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        calculatedAge--;
+      }
+      sanitizedPayload["age"] = calculatedAge;
+    }
+  }
+
+  return sanitizedPayload;
+}
 </script>

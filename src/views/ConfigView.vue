@@ -94,7 +94,7 @@ const userInformation = ref<UserInformation>({
   email: "",
   birthDate: "",
   age: 0,
-  gender: "",
+  sex: "",
   occupation: "",
 
   // Page 2
@@ -140,7 +140,77 @@ async function fetchProfileData() {
         (1000 * 60 * 60 * 24 * 365)
     );
     originalUserInformation.value = JSON.parse(JSON.stringify(data));
+    if (originalUserInformation.value === null) {
+      throw new Error("No user data found");
+    }
+    otherHealthConditions.value = originalUserInformation.value[
+      "healthConditions"
+    ]
+      .filter(
+        (item: string) =>
+          ![
+            "no",
+            "type1Diabetes",
+            "type2Diabetes",
+            "hypertension",
+            "dyslipidemia",
+            "kidneyDisease",
+            "liverDisease",
+            "gastritisReflux",
+            "intestinalIssues",
+            "osteoporose",
+            "cardiovascularDisease",
+            "cancer",
+            "depressionAnxiety",
+            "autoimmuneDiseases",
+            "other",
+          ].includes(item)
+      )
+      .join(", ");
+    otherAllergies.value = originalUserInformation.value["allergies"]
+      .filter(
+        (item: string) =>
+          ![
+            "no",
+            "lactoseIntolerance",
+            "glutenIntolerance",
+            "foodAllergies",
+            "medicalAllergies",
+            "other",
+          ].includes(item)
+      )
+      .join(", ");
+    otherSurgeries.value = originalUserInformation.value["surgeries"]
+      .filter(
+        (item: string) =>
+          ![
+            "no",
+            "bariatric",
+            "gallbladder",
+            "hiatalHernia",
+            "orthopedic",
+            "cesarean",
+            "other",
+          ].includes(item)
+      )
+      .join(", ");
+    // otherActivities.value = originalUserInformation.value["activityType"]
+    //   .split(", ")
+    //   .filter(
+    //     (item: string) =>
+    //       ![
+    //         "sedentary",
+    //         "walking",
+    //         "weightlifting",
+    //         "running",
+    //         "crossfit",
+    //         "swimming",
+    //         "other",
+    //       ].includes(item)
+    //   )
+    //   .join(", ");
     userInformation.value = data;
+    console.log(userInformation);
   } catch (error) {
     console.error("Failed to fetch profile:", error);
   } finally {

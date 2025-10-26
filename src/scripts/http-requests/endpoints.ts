@@ -2,16 +2,18 @@ import apiClient from "./instance";
 import type { UserInformation } from "@/models/models";
 
 export async function register(
-  email: string,
-  username: string,
-  password: string,
-  confirmPassword: string
+  user: {
+    email: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+  },
+  userInfo: UserInformation
 ) {
+  console.log(user, userInfo);
   const response = await apiClient.post("/api/auth/register", {
-    email,
-    username,
-    password,
-    confirmPassword,
+    ...user,
+    userProfile: userInfo,
   });
   return response.data;
 }
