@@ -1,0 +1,293 @@
+{
+  "nav": {
+    "title": "Navigation",
+    "chat": "Junipy",
+    "users": "Users",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "fields": {
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        }
+      },
+      "actions": {
+        "submit": "Sign in",
+        "forgotPassword": "Forgot password?",
+        "noAccount": "Don't have an account?"
+      }
+    },
+    "register": {
+      "title": "Register",
+      "fields": {
+        "anamnese": {
+          "title": "Anamnese",
+          "fields": {
+            "name": "Name",
+            "age": "Age",
+            "birthDate": "Birthdate",
+            "sex": {
+              "label": "Sex",
+              "choices": {
+                "male": "Male",
+                "female": "Female"
+              }
+            },
+            "profession": "Profession",
+            "consultationReason": {
+              "label": "What is the reason for your consultation?",
+              "choices": {
+                "weightLoss": "Weight loss",
+                "muscleGain": "Muscle gain",
+                "diabetesControl": "Diabetes control",
+                "eatingReeducation": "Eating reeducation",
+                "physicalMentalPerformance": "Physical and mental performance"
+              },
+              "placeholder": "Select the reason for consultation"
+            },
+            "allergies": {
+              "label": "Do you have any allergies or intolerances?",
+              "choices": {
+                "no": "No",
+                "lactoseIntolerance": "Lactose intolerance",
+                "glutenIntolerance": "Gluten sensitivity / celiac disease",
+                "foodAllergies": "Food allergies",
+                "medicalAllergies": "Medical allergies",
+                "other": "Other"
+              },
+              "placeholder": "Select an option"
+            },
+            "surgeries": {
+              "label": "Have you undergone any surgeries?",
+              "choices": {
+                "no": "No",
+                "bariatric": "Bariatric",
+                "gallbladder": "Gallbladder",
+                "hiatalHernia": "Hiatal hernia (reflux surgery)",
+                "orthopedic": "Orthopedic",
+                "cesarean": "Cesarean / Gynecological",
+                "other": "Other"
+              },
+              "placeholder": "Select an option"
+            },
+            "physicalActivities": {
+              "title": "Physical activities",
+              "choices": {
+                "sedentary": "Sedentary",
+                "walking": "Walking",
+                "musculation": "Musculation",
+                "crossfit": "Crossfit",
+                "swimming": "Swimming"
+              },
+              "frequency": {
+                "title": "Frequency",
+                "choices": {
+                  "1-2": "1-2 times per week",
+                  "3-4": "3-4 times per week",
+                  "5+": "5 or more times per week"
+                }
+              },
+              "time": {
+                "title": "How many minutes per day of physical activity?",
+                "choices": {
+                  "30": "30 minutes",
+                  "60": "60 minutes",
+                  "90": "90 minutes"
+                }
+              },
+              "placeholder": "Select an option"
+            },
+            "sleepQuality": {
+              "description": "Tell me how you are sleeping, it will help a lot in your planning",
+              "title": "Sleep quality",
+              "choices": {
+                "good": "Good",
+                "average": "Regular",
+                "poor": "Poor"
+              },
+              "placeholder": "Select an option"
+            },
+            "nightInterruptions": {
+              "title": "Do you wake up during the night?",
+              "choices": {
+                "none": "No",
+                "once": "At least 1 time",
+                "multiple": "More than 1 time per night"
+              },
+              "placeholder": "Select an option"
+            },
+            "intestinalHabits": {
+              "description": "Understanding your routine will be valuable in this process",
+              "title": "How many times per week do you evacuate?",
+              "choices": {
+                "daily": "Every day",
+                "fivePerWeek": "5 times per week",
+                "threePerWeek": "3 times per week",
+                "oncePerWeek": "1 time per week"
+              },
+              "placeholder": "Select an option"
+            },
+            "dayToDay": {
+              "description": "Let's delve a little deeper into you!",
+              "fields": {
+                "stress": {
+                  "title": "Stress",
+                  "choices": {
+                    "low": "Low",
+                    "moderate": "Moderate",
+                    "high": "High"
+                  },
+                  "placeholder": "Select your stress level"
+                },
+                "alcoholConsumption": {
+                  "title": "Alcohol consumption",
+                  "choices": {
+                    "none": "Does not consume",
+                    "social": "Socially 1-2 times per week",
+                    "frequent": "Frequent 3-4 times per week",
+                    "daily": "Daily use"
+                  },
+                  "placeholder": "Select an option"
+                },
+                "smoking": {
+                  "title": "Smoking",
+                  "choices": {
+                    "yes": "Yes",
+                    "no": "No"
+                  },
+                  "placeholder": "Select an option"
+                },
+                "hydration": {
+                  "title": "Hydration (how many liters per day)",
+                  "choices": {
+                    "lessThan1L": "Less than 1L",
+                    "between1And2L": "Between 1L and 2L",
+                    "moreThan2L": "More than 2L"
+                  },
+                  "placeholder": "Select an option"
+                },
+                "medications": {
+                  "title": "Medications in use",
+                  "description": "Remember everything, including supplements, do you use continuous medications?",
+                  "choices": {
+                    "yes": "Yes",
+                    "no": "No"
+                  },
+                  "placeholder": "Select an option"
+                }
+              }
+            },
+            "conditions": {
+              "label": "Do you have or have you had any of the conditions below?",
+              "placeholder": "Select one or more options",
+              "choices": {
+                "type1Diabetes": "Type 1 Diabetes",
+                "type2Diabetes": "Type 2 Diabetes",
+                "hypertension": "Hypertension",
+                "dyslipidemia": "Dyslipidemia (cholesterol, triglycerides)",
+                "kidneyDisease": "Kidney disease",
+                "liverDisease": "Liver disease",
+                "gastritisReflux": "Gastritis / reflux",
+                "intestinalIssues": "Constipation / diarrhea",
+                "osteoporosis": "Osteoporosis",
+                "cardiovascularDisease": "Cardiovascular disease (heart attack, heart failure)",
+                "cancer": "Cancer",
+                "depressionAnxiety": "Depression / Anxiety",
+                "autoimmuneDiseases": "Autoimmune diseases"
+              }
+            }
+          }
+        },
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Confirm your password"
+        }
+      },
+      "actions": {
+        "submit": "Register",
+        "hasAccount": "Already have an account?"
+      }
+    }
+  },
+  "chat": {
+    "sendMessage": "Send message",
+    "placeholder": "Type your message... (Press Enter to send, Shift+Enter for new line)",
+    "greetingMessage": "Hi! I'm Junipy a virtual assistant. How can I help you today?",
+    "waitingForResponse": "Waiting for assistant..."
+  },
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Invalid email or password",
+      "registrationFailed": "Registration failed. Please try again.",
+      "passwordMismatch": "Passwords do not match",
+      "anamneseIncomplete": "Please complete all anamnese fields"
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address"
+    },
+    "404": "Sorry this page doesn't seem to be here",
+    "ai": {
+      "503": "Unable to connect to chat server. Please check your connection."
+    },
+    "server": {
+      "generic": "Something went wrong with the server!"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading...",
+    "other": "Other",
+    "yes": "Yes",
+    "no": "No",
+    "continue": "Next",
+    "select": {
+      "placeholder": "Select an option"
+    },
+    "actions": {
+      "copy": {
+        "label": "Copy",
+        "success": "Text copied successfully!",
+        "error": "Failed to copy text."
+      },
+      "download": {
+        "label": "Download",
+        "success": "Download started successfully!",
+        "error": "Failed to start download."
+      }
+    }
+  },
+  "users": {
+    "title": "All Users",
+    "headers": {
+      "number": "#",
+      "username": "Username",
+      "email": "Email",
+      "role": "Role"
+    },
+    "loading": "Loading users...",
+    "error": "Failed to load users"
+  }
+}

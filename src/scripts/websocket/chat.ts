@@ -2,14 +2,17 @@ import { ref } from "vue";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import type { Ref } from "vue";
+import { useTypedI18n } from "@/composables/useI18n";
 
 export function useChatSocket(userId: string) {
   const messages = ref<{ role: string; content: string }[]>([]);
   const isConnected = ref(false);
   const hasReply = ref(true);
   const client: Ref<Client | null> = ref(null);
-
+  let localtoken: string = "";
+  const { t } = useTypedI18n();
   function connect(token: string) {
+    localtoken = token;
     client.value = new Client({
       brokerURL: `${import.meta.env.VITE_API_URL.replace(
         /^http/,
@@ -26,8 +29,7 @@ export function useChatSocket(userId: string) {
           if (data.error) {
             messages.value.push({
               role: "assistant",
-              content:
-                "Sorry, something went wrong. Please try again later. If the problem persists, contact support.",
+              content: t("errors.ai.503"),
             });
             hasReply.value = true;
           } else if (data.message) {
@@ -55,7 +57,11 @@ export function useChatSocket(userId: string) {
     if (!client.value || !isConnected.value) return;
     client.value.publish({
       destination: "/app/chat",
-      body: JSON.stringify({ message: content, userId }),
+      body: JSON.stringify({
+        message: content,
+        token: localtoken,
+        userId,
+      }),
     });
     messages.value.push({ role: "user", content });
     hasReply.value = false;

@@ -1,0 +1,15 @@
+.checkbox-title, .radio-title {
+    color: var(--label-color);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.checkbox-option, .radio-option {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 0.25rem;
+}
+
+.checkbox-option label, .radio-option label {
+    color: var(--input-color);
+}
