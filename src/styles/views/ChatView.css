@@ -193,6 +193,11 @@
   color: black;
   align-self: flex-end;
   border-bottom-right-radius: 5px;
+  border-top-left-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 70%;
+  word-wrap: break-word;
 }
 
 .message.assistant {

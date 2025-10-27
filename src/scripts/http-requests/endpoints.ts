@@ -2,26 +2,32 @@ import apiClient from "./instance";
 import type { UserInformation } from "@/models/models";
 
 export async function register(
-  email: string,
-  username: string,
-  password: string,
-  confirmPassword: string
+  user: {
+    email: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+  },
+  userInfo: UserInformation
 ) {
+  console.log(user, userInfo);
   const response = await apiClient.post("/api/auth/register", {
-    email,
-    username,
-    password,
-    confirmPassword,
+    ...user,
+    userProfile: userInfo,
   });
   return response.data;
 }
 
 export async function login(email: string, password: string) {
-  const response = await apiClient.post("/api/auth/login", { email, password} ,{headers: { skipAuth: true }});
+  const response = await apiClient.post(
+    "/api/auth/login",
+    { email, password },
+    { headers: { skipAuth: true } }
+  );
   return response.data;
 }
 
-export async function getProfileData(): Promise<{data: UserInformation}> {
+export async function getProfileData(): Promise<{ data: UserInformation }> {
   const response = await apiClient.get("/api/user/profile-data");
   return response;
 }

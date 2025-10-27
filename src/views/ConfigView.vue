@@ -39,7 +39,7 @@
         >
           Voltar
         </button>
-  
+
         <button
           @click="nextStep"
           :disabled="currentStep >= 4"
@@ -69,7 +69,7 @@ import Step2HealthHistory from "@/components/forms/Step2HealthHistory.vue";
 import Step3Activity from "@/components/forms/Step3Activity.vue";
 import Step4Lifestyle from "@/components/forms/Step4Lifestyle.vue";
 import Step5Habits from "@/components/forms/Step5Habits.vue";
-import { getProfileData } from "@/scripts/http-requests/endpoints"; 
+import { getProfileData } from "@/scripts/http-requests/endpoints";
 import { patchProfileData } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
 
@@ -83,8 +83,8 @@ const steps = [
 
 const currentStep = ref(0);
 
-const isLoading = ref(true); 
-const isSaving = ref(false); 
+const isLoading = ref(true);
+const isSaving = ref(false);
 const isFormChanged = ref(false);
 
 const originalUserInformation = ref(null);
@@ -94,9 +94,9 @@ const userInformation = ref<UserInformation>({
   email: "",
   birthDate: "",
   age: 0,
-  gender: "",
+  sex: "",
   occupation: "",
-  
+
   // Page 2
   consultationReason: "",
   healthConditions: [],
@@ -127,59 +127,142 @@ const otherAllergies = ref("");
 const otherSurgeries = ref("");
 const otherActivities = ref("");
 
-onMounted(async () => { 
-  await fetchProfileData(); 
+onMounted(async () => {
+  await fetchProfileData();
 });
 
-async function fetchProfileData() { 
-  isLoading.value = true; 
-  try { 
-    const { data } = await getProfileData(); 
-    data.age = Math.floor((Date.now().valueOf() - (new Date(data.birthDate)).valueOf()) / (1000 * 60 * 60 * 24 * 365));
-    originalUserInformation.value = JSON.parse(JSON.stringify(data)); 
-    userInformation.value = data; 
-  } catch (error) { 
-    console.error("Failed to fetch profile:", error); 
-  } finally { 
-    isLoading.value = false; 
-  } 
+async function fetchProfileData() {
+  isLoading.value = true;
+  try {
+    const { data } = await getProfileData();
+    data.age = Math.floor(
+      (Date.now().valueOf() - new Date(data.birthDate).valueOf()) /
+        (1000 * 60 * 60 * 24 * 365)
+    );
+    originalUserInformation.value = JSON.parse(JSON.stringify(data));
+    if (originalUserInformation.value === null) {
+      throw new Error("No user data found");
+    }
+    otherHealthConditions.value = originalUserInformation.value[
+      "healthConditions"
+    ]
+      .filter(
+        (item: string) =>
+          ![
+            "no",
+            "type1Diabetes",
+            "type2Diabetes",
+            "hypertension",
+            "dyslipidemia",
+            "kidneyDisease",
+            "liverDisease",
+            "gastritisReflux",
+            "intestinalIssues",
+            "osteoporose",
+            "cardiovascularDisease",
+            "cancer",
+            "depressionAnxiety",
+            "autoimmuneDiseases",
+            "other",
+          ].includes(item)
+      )
+      .join(", ");
+    otherAllergies.value = originalUserInformation.value["allergies"]
+      .filter(
+        (item: string) =>
+          ![
+            "no",
+            "lactoseIntolerance",
+            "glutenIntolerance",
+            "foodAllergies",
+            "medicalAllergies",
+            "other",
+          ].includes(item)
+      )
+      .join(", ");
+    otherSurgeries.value = originalUserInformation.value["surgeries"]
+      .filter(
+        (item: string) =>
+          ![
+            "no",
+            "bariatric",
+            "gallbladder",
+            "hiatalHernia",
+            "orthopedic",
+            "cesarean",
+            "other",
+          ].includes(item)
+      )
+      .join(", ");
+    // otherActivities.value = originalUserInformation.value["activityType"]
+    //   .split(", ")
+    //   .filter(
+    //     (item: string) =>
+    //       ![
+    //         "sedentary",
+    //         "walking",
+    //         "weightlifting",
+    //         "running",
+    //         "crossfit",
+    //         "swimming",
+    //         "other",
+    //       ].includes(item)
+    //   )
+    //   .join(", ");
+    userInformation.value = data;
+    console.log(userInformation);
+  } catch (error) {
+    console.error("Failed to fetch profile:", error);
+  } finally {
+    isLoading.value = false;
+  }
 }
 
-watch(userInformation, (newVal) => { 
-    if (!originalUserInformation.value) return; 
-    isFormChanged.value = JSON.stringify(newVal) !== JSON.stringify(originalUserInformation.value); 
-  }, { deep: true }
-); 
+watch(
+  userInformation,
+  (newVal) => {
+    if (!originalUserInformation.value) return;
+    isFormChanged.value =
+      JSON.stringify(newVal) !== JSON.stringify(originalUserInformation.value);
+  },
+  { deep: true }
+);
 
-async function saveProfile() { 
-  if (!isFormChanged.value || isSaving.value) return; 
-  isSaving.value = true; 
+async function saveProfile() {
+  if (!isFormChanged.value || isSaving.value) return;
+  isSaving.value = true;
 
   let localUserInfo = { ...userInformation.value };
-  if (localUserInfo.healthConditions.includes('outra')){
-    localUserInfo.healthConditions = localUserInfo.healthConditions.filter(item => item !== 'outra');
+  if (localUserInfo.healthConditions.includes("outra")) {
+    localUserInfo.healthConditions = localUserInfo.healthConditions.filter(
+      (item) => item !== "outra"
+    );
     localUserInfo.healthConditions.push(otherHealthConditions.value);
   }
-  if (localUserInfo.allergies.includes('outra')){
-    localUserInfo.allergies = localUserInfo.allergies.filter(item => item !== 'outra');
+  if (localUserInfo.allergies.includes("outra")) {
+    localUserInfo.allergies = localUserInfo.allergies.filter(
+      (item) => item !== "outra"
+    );
     localUserInfo.allergies.push(otherAllergies.value);
   }
-  if (localUserInfo.surgeries.includes('outra')){
-    localUserInfo.surgeries = localUserInfo.surgeries.filter(item => item !== 'outra');
+  if (localUserInfo.surgeries.includes("outra")) {
+    localUserInfo.surgeries = localUserInfo.surgeries.filter(
+      (item) => item !== "outra"
+    );
     localUserInfo.surgeries.push(otherSurgeries.value);
   }
-  if (localUserInfo.activityType === 'outro'){
+  if (localUserInfo.activityType === "outro") {
     localUserInfo.activityType = otherActivities.value;
   }
 
-  try { 
-    await patchProfileData(localUserInfo); 
-    isFormChanged.value = false; 
-  } catch (error) { 
-    console.error("Failed to save profile:", error); 
-  } finally { 
-    isSaving.value = false; 
-  } 
+  try {
+    await patchProfileData(localUserInfo);
+    isFormChanged.value = false;
+  } catch (error) {
+    console.error("Failed to save profile:", error);
+  } finally {
+    isSaving.value = false;
+  }
 }
 
 function nextStep() {
@@ -189,5 +272,4 @@ function nextStep() {
 function prevStep() {
   if (currentStep.value > 0) currentStep.value--;
 }
-
 </script>
