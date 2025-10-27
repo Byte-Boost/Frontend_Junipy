@@ -33,8 +33,14 @@
           "fields": {
             "name": "Nome",
             "age": "Idade",
-            "birthdate": "Data de Nascimento",
-            "sex": "Sexo",
+            "birthDate": "Data de Nascimento",
+            "sex": {
+              "label": "Sexo",
+              "choices": {
+                "male": "Masculino",
+                "female": "Feminino"
+              }
+            },
             "profession": "Profissão",
             "consultationReason": {
               "label": "Qual o motivo da sua consulta?",
@@ -47,6 +53,26 @@
               },
               "placeholder": "Selecione o motivo da consulta"
             },
+            "conditions": {
+              "label": "Você possui ou já teve alguma das condições abaixo?",
+              "choices": {
+                "type1Diabetes": "Diabetes tipo 1",
+                "type2Diabetes": "Diabetes tipo 2",
+                "hypertension": "Hipertensão arterial",
+                "dyslipidemia": "Dislipidemia (colesterol, triglicerídeos)",
+                "kidneyDisease": "Doença renal",
+                "liverDisease": "Doença hepática",
+                "gastritisReflux": "Gastrite / refluxo",
+                "intestinalIssues": "Intestino preso / diarreia",
+                "osteoporosis": "Osteoporose",
+                "cardiovascularDisease": "Doença cardiovascular (infarto, insuficiência cardíaca)",
+                "cancer": "Câncer",
+                "depressionAnxiety": "Depressão / Ansiedade",
+                "autoimmuneDiseases": "Doenças autoimunes",
+                "other": "Outro"
+              },
+              "placeholder": "Selecione uma ou mais opções"
+            },
             "allergies": {
               "label": "Você possui alguma alergia ou intolerância?",
               "choices": {
@@ -54,9 +80,10 @@
                 "lactoseIntolerance": "Intolerância à lactose",
                 "glutenIntolerance": "Sensibilidade ao glúten / doença celíaca",
                 "foodAllergies": "Alergias alimentar",
-                "medicalAllergies": "Alergias medicamentosas"
+                "medicalAllergies": "Alergias medicamentosas",
+                "other": "Outro"
               },
-              "placeholder": "Selecione uma opção"
+              "placeholder": "Selecione uma ou mais opções"
             },
             "surgeries": {
               "label": "Você já passou por alguma cirurgia?",
@@ -64,12 +91,15 @@
                 "no": "Não",
                 "bariatric": "Bariátrica",
                 "gallbladder": "Vesícula",
-                "ortopedic": "Ortopédica",
-                "cesarean": "Cesárea / Ginecológica"
+                "hiatalHernia": "Hérnia de hiato (cirurgia do refluxo)",
+                "orthopedic": "Ortopédica",
+                "cesarean": "Cesárea / Ginecológica",
+                "other": "Outro"
               },
-              "placeholder": "Selecione uma opção"
+              "placeholder": "Selecione uma ou mais opções"
             },
             "physicalActivities": {
+              "label": "Qual atividade física te descreve mais?",
               "title": "Atividades físicas",
               "choices": {
                 "sedentary": "Sedentário",
@@ -79,8 +109,9 @@
                 "swimming": "Natação"
               },
               "frequency": {
-                "title": "Frequência",
+                "title": "Frequência de Atividade Física",
                 "choices": {
+                  "never": "Nunca",
                   "1-2": "1-2 vezes por semana",
                   "3-4": "3-4 vezes por semana",
                   "5+": "5 ou mais vezes por semana"
@@ -89,6 +120,7 @@
               "time": {
                 "title": "Quantos minutos por dia de atividade física?",
                 "choices": {
+                  "none": "Nenhum",
                   "30": "30 minutos",
                   "60": "60 minutos",
                   "90": "90 minutos"
@@ -232,6 +264,14 @@
     "confirm": "Confirmar",
     "loading": "Carregando...",
     "other": "Outro",
+    "yes": "Sim",
+    "no": "Não",
+    "continue": "Continuar",
+    "next": "Próximo",
+    "back": "Voltar",
+    "select": {
+      "placeholder": "Selecione uma opção"
+    },
     "actions": {
       "copy": {
         "label": "Copiar",

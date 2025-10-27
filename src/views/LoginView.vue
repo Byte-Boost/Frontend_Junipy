@@ -86,6 +86,7 @@ import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconMail from "@/components/icons/IconMail.vue";
 import IconKey from "@/components/icons/IconKey.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
+import { useToast } from "vue-toastification";
 const router = useRouter();
 const { t } = useTypedI18n();
 const email = ref("");
@@ -97,6 +98,8 @@ onMounted(() => {
   localStorage.removeItem("token");
 });
 
+const toast = useToast();
+
 const handleLogin = async () => {
   loading.value = true;
   error.value = null;
@@ -107,18 +110,10 @@ const handleLogin = async () => {
       localStorage.setItem("token", response.token);
       router.push("/chat");
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: t("errors.server.generic"),
-      });
+      toast.error(t("errors.server.generic"));
     }
   } catch (e: any) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: e.response?.data?.message || t("errors.server.generic"),
-    });
+    toast.error(e.response?.data?.message || t("errors.server.generic"));
   } finally {
     loading.value = false;
   }

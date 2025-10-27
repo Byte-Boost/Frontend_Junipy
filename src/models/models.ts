@@ -6,26 +6,26 @@ export interface User {
 }
 
 export interface UserInformation {
-  name: string,
-  email: string,
-  birthDate: string,
-  age?: number,
-  gender: string, 
-  occupation: string,
-  consultationReason: string,
-  healthConditions: Array<string>,
-  allergies: Array<string>,
-  surgeries: Array<string>,
-  activityType: string,
-  activityFrequency: string,
-  activityDuration: string,
-  sleepQuality: string,
-  wakeDuringNight: string,
-  bowelFrequency: string,
-  stressLevel: string,
-  alcoholConsumption: string,
-  smoking: string,
-  hydrationLevel: string,
-  takesMedication: string,
-  medicationDetails: string
+  name: string;
+  email: string;
+  birthDate: string;
+  age?: number;
+  sex: string;
+  occupation: string;
+  consultationReason: string;
+  healthConditions: Array<string>;
+  allergies: Array<string>;
+  surgeries: Array<string>;
+  activityType: string;
+  activityFrequency: string;
+  activityDuration: string;
+  sleepQuality: string;
+  wakeDuringNight: string;
+  bowelFrequency: string;
+  stressLevel: string;
+  alcoholConsumption: string;
+  smoking: string;
+  hydrationLevel: string;
+  takesMedication: string;
+  medicationDetails: string;
 }

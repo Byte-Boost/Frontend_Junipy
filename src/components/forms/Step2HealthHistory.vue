@@ -1,10 +1,11 @@
 <template>
   <div class="step-container">
-
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.consultationReason"
-        :title="'Qual o principal motivo da sua consulta?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.consultationReason.label')
+        "
         :options="consultationOptions"
       />
     </div>
@@ -16,32 +17,34 @@
         :options="healthConditionsOptions"
       />
     </div>
-    <div class="form-row" v-if="localUserInfo.healthConditions.includes('outra')">
+    <div
+      class="form-row"
+      v-if="localUserInfo.healthConditions.includes('other')"
+    >
       <input v-model="localOtherHealthConditions" type="text" />
     </div>
 
     <div class="form-row">
       <CheckboxGroup
         v-model="userInfo.allergies"
-        :title="'Possui alguma alergia ou intolerância'"
+        :title="$t('auth.register.fields.anamnese.fields.allergies.label')"
         :options="allergiesOptions"
       />
     </div>
-    <div class="form-row" v-if="localUserInfo.allergies.includes('outra')">
+    <div class="form-row" v-if="localUserInfo.allergies.includes('other')">
       <input v-model="localOtherAllergies" type="text" />
     </div>
 
-    <div class="form-row"> 
+    <div class="form-row">
       <CheckboxGroup
         v-model="localUserInfo.surgeries"
-        :title="'Você já realizou alguma cirurgia?'"
+        :title="$t('auth.register.fields.anamnese.fields.surgeries.label')"
         :options="surgeriesOptions"
       />
     </div>
-    <div class="form-row" v-if="localUserInfo.surgeries.includes('outra')">
+    <div class="form-row" v-if="localUserInfo.surgeries.includes('other')">
       <input v-model="localOtherSurgeries" type="text" />
     </div>
-
   </div>
 </template>
 
@@ -51,14 +54,16 @@ import type { UserInformation } from "@/models/models";
 import { computed } from "vue";
 import RadioGroup from "../RadioGroup.vue";
 import CheckboxGroup from "../CheckboxGroup.vue";
+import { useTypedI18n } from "@/composables/useI18n";
 
-const props = defineProps<{ 
+const { t } = useTypedI18n();
+const props = defineProps<{
   userInfo: UserInformation;
   otherHealthConditions: string;
   otherAllergies: string;
   otherSurgeries: string;
 }>();
-const emit = defineEmits<{ 
+const emit = defineEmits<{
   (e: "update:userInfo", value: UserInformation): void;
   (e: "update:otherHealthConditions", value: string): void;
   (e: "update:otherAllergies", value: string): void;
@@ -83,44 +88,176 @@ const localOtherSurgeries = computed({
 });
 
 const consultationOptions = [
-  { text: "Emagrecimento", value: "emagrecimento" },
-  { text: "Ganho de massa muscular", value: "ganho_massa" },
-  { text: "Controle de diabetes", value: "controle_diabetes" },
-  { text: "Reeducação alimentar", value: "reeducacao_alimentar" },
-  { text: "Performance física e mental", value: "performance_fisica" },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.consultationReason.choices.weightLoss"
+    ),
+    value: "weightLoss",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.consultationReason.choices.muscleGain"
+    ),
+    value: "muscleGain",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.consultationReason.choices.diabetesControl"
+    ),
+    value: "diabetesControl",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.consultationReason.choices.eatingReeducation"
+    ),
+    value: "eatingReeducation",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.consultationReason.choices.physicalMentalPerformance"
+    ),
+    value: "physicalMentalPerformance",
+  },
 ];
 const healthConditionsOptions = [
-  { text: "Não", value: "" },
-  { text: "Diabetes tipo 1", value: "diabetes1" },
-  { text: "Diabetes tipo 2", value: "diabetes2" },
-  { text: "Hipertensão arterial", value: "hipertensao" },
-  { text: "Dislipidemia (colesterol, triglicerídeos)", value: "dislipidemia" },
-  { text: "Doença renal", value: "doenca_renal" },
-  { text: "Doença hepática", value: "doenca_hepatica" },
-  { text: "Gastrite / refluxo", value: "gastrite" },
-  { text: "Intestino preso / diarreia", value: "intestino" },
-  { text: "Osteoporose", value: "osteoporose" },
-  { text: "Doença cardiovascular (infarto, insuficiência cardíaca)", value: "cardiovascular" },
-  { text: "Câncer", value: "cancer" },
-  { text: "Depressão / Ansiedade", value: "depressao" },
-  { text: "Doenças autoimunes", value: "autoimunes" },
-  { text: "Outra: ", value: "outra" },
+  { text: t("common.no"), value: "no" },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.type1Diabetes"
+    ),
+    value: "type1Diabetes",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.type2Diabetes"
+    ),
+    value: "type2Diabetes",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.hypertension"
+    ),
+    value: "hypertension",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.dyslipidemia"
+    ),
+    value: "dyslipidemia",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.kidneyDisease"
+    ),
+    value: "kidneyDisease",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.liverDisease"
+    ),
+    value: "liverDisease",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.gastritisReflux"
+    ),
+    value: "gastritisReflux",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.intestinalIssues"
+    ),
+    value: "intestinalIssues",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.osteoporosis"
+    ),
+    value: "osteoporose",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.cardiovascularDisease"
+    ),
+    value: "cardiovascularDisease",
+  },
+  {
+    text: t("auth.register.fields.anamnese.fields.conditions.choices.cancer"),
+    value: "cancer",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.depressionAnxiety"
+    ),
+    value: "depressionAnxiety",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.conditions.choices.autoimmuneDiseases"
+    ),
+    value: "autoimmuneDiseases",
+  },
+  {
+    text: t("common.other"),
+    value: "other",
+  },
 ];
 const allergiesOptions = [
-  { text: "Não", value: "" },
-  { text: "Intolerância à lactose", value: "lactose" },
-  { text: "Sensibilidade ao glúten / doença celíaca", value: "gluten" },
-  { text: "Alergia alimentar", value: "alimentar" },
-  { text: "Alergia medicamentosa", value: "medicamentosa" },
-  { text: "Outra:", value: "outra" },
+  { text: t("common.no"), value: "no" },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.allergies.choices.lactoseIntolerance"
+    ),
+    value: "lactoseIntolerance",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.allergies.choices.glutenIntolerance"
+    ),
+    value: "glutenIntolerance",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.allergies.choices.foodAllergies"
+    ),
+    value: "foodAllergies",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.allergies.choices.medicalAllergies"
+    ),
+    value: "medicalAllergies",
+  },
+  { text: t("common.other"), value: "other" },
 ];
 const surgeriesOptions = [
-  { text: "Não", value: "" },
-  { text: "Bariátrica", value: "bariatrica" },
-  { text: "Vesícula", value: "vesicula" },
-  { text: "Hérnia de hiato (cirurgia do refluxo)", value: "hernia_hiato" },
-  { text: "Ortopédica", value: "ortopedica" },
-  { text: "Cesárea / Ginecológica", value: "cesarea" },
-  { text: "Outra:", value: "outra" },
+  { text: t("common.no"), value: "no" },
+  {
+    text: t("auth.register.fields.anamnese.fields.surgeries.choices.bariatric"),
+    value: "bariatric",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.surgeries.choices.gallbladder"
+    ),
+    value: "gallbladder",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.surgeries.choices.hiatalHernia"
+    ),
+    value: "hiatalHernia",
+  },
+  {
+    text: t(
+      "auth.register.fields.anamnese.fields.surgeries.choices.orthopedic"
+    ),
+    value: "orthopedic",
+  },
+  {
+    text: t("auth.register.fields.anamnese.fields.surgeries.choices.cesarean"),
+    value: "cesarean",
+  },
+  { text: t("common.other"), value: "other" },
 ];
 </script>

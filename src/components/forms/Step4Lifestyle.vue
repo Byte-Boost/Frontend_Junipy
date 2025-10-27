@@ -1,6 +1,5 @@
 <template>
   <div class="step-container">
-
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.sleepQuality"
@@ -24,7 +23,6 @@
         :options="bowelFrequency"
       />
     </div>
-
   </div>
 </template>
 
@@ -34,23 +32,24 @@ import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
 
 const props = defineProps<{ userInfo: UserInformation }>();
-const emit = defineEmits<{ (e: "update:userInfo", value: UserInformation): void }>();
-
+const emit = defineEmits<{
+  (e: "update:userInfo", value: UserInformation): void;
+}>();
 
 const sleepQuality = [
-  { text: "Boa", value: "boa" },
-  { text: "Regular", value: "regular" },
-  { text: "Ruim", value: "ruim" },
+  { text: "Boa", value: "good" },
+  { text: "Regular", value: "average" },
+  { text: "Ruim", value: "bad" },
 ];
 const wakeDuringNight = [
-  { text: "Não", value: "0" },
-  { text: "Pelo menos 1 x", value: "1" },
-  { text: "Mais que 1 x por noite", value: "2+" },
-]
+  { text: "Não", value: "no" },
+  { text: "Pelo menos 1 x", value: "once" },
+  { text: "Mais que 1 x por noite", value: "multiple" },
+];
 const bowelFrequency = [
-  { text: "Todo dia", value: "7" },
-  { text: "5 x por semana", value: "5" },
-  { text: "3 x por semana", value: "3" },
-  { text: "1 x por semana", value: "1" },
-]
+  { text: "Todo dia", value: "everyday" },
+  { text: "5 x por semana", value: "five per week" },
+  { text: "3 x por semana", value: "three per week" },
+  { text: "1 x por semana", value: "once per week" },
+];
 </script>
