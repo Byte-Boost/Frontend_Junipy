@@ -9,8 +9,10 @@ export function useChatSocket(userId: string) {
   const isConnected = ref(false);
   const hasReply = ref(true);
   const client: Ref<Client | null> = ref(null);
+  let localtoken: string = "";
   const { t } = useTypedI18n();
   function connect(token: string) {
+    localtoken = token;
     client.value = new Client({
       brokerURL: `${import.meta.env.VITE_API_URL.replace(
         /^http/,
@@ -55,7 +57,11 @@ export function useChatSocket(userId: string) {
     if (!client.value || !isConnected.value) return;
     client.value.publish({
       destination: "/app/chat",
-      body: JSON.stringify({ message: content, userId }),
+      body: JSON.stringify({
+        message: content,
+        token: localtoken,
+        userId,
+      }),
     });
     messages.value.push({ role: "user", content });
     hasReply.value = false;
