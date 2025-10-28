@@ -6,6 +6,7 @@ import IconCog from "./icons/IconCog.vue";
 import IconChevronLeft from "./icons/IconChevronLeft.vue";
 import IconChevronRight from "./icons/IconChevronRight.vue";
 import "../styles/components/Sidebar.css";
+import IconLogout from "./icons/IconLogout.vue";
 
 const router = useRouter();
 
@@ -18,7 +19,6 @@ const toggleSidebar = () => {
 const navigateTo = (path: string) => {
   router.push(path);
 };
-
 </script>
 <template>
   <div class="sidebar" :class="{ collapsed: isCollapsed }">
@@ -82,6 +82,16 @@ const navigateTo = (path: string) => {
           <span class="btn-icon"><IconCog :size="20" color="white" /></span>
           <span v-if="!isCollapsed" class="btn-text">{{
             $t("nav.settings")
+          }}</span>
+        </button>
+        <button
+          class="sidebar-btn"
+          @click="navigateTo('/login')"
+          :title="isCollapsed ? $t('nav.logout') : ''"
+        >
+          <span class="btn-icon"><IconLogout color="white" /></span>
+          <span v-if="!isCollapsed" class="btn-text">{{
+            $t("nav.logout")
           }}</span>
         </button>
       </div>

@@ -64,9 +64,9 @@
           </form>
         </section>
         <p class="flex content-center flex-wrap gap-3 justify-center">
-          <a href="/forgot-password">{{
+          <!-- <a href="/forgot-password">{{
             $t("auth.login.actions.forgotPassword")
-          }}</a>
+          }}</a> -->
           <span class="font-extrabold text-gray-400">•</span>
           <a href="/register">{{ $t("auth.login.actions.noAccount") }}</a>
         </p>
