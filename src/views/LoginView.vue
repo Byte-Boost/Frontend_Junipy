@@ -21,7 +21,7 @@
                     :placeholder="$t('auth.login.fields.email.placeholder')"
                   />
                   <IconMail
-                    class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                    class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
                   />
                 </div>
               </div>
@@ -39,7 +39,7 @@
                     :placeholder="$t('auth.login.fields.password.placeholder')"
                   />
                   <IconKey
-                    class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                    class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
                   />
                 </div>
               </div>

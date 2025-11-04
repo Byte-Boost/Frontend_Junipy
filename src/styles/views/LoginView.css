@@ -16,7 +16,7 @@
   border: 1px solid #000;
   color: #fff;
   border-radius: 8px;
-  background: #27292e;
+  background: var(--color-background-mute);
   border: none;
   display: flex;
   flex-direction: column;
@@ -70,7 +70,6 @@ input {
   border: none;
   border-radius: 15px;
   background: #48b684;
-  color: black;
   cursor: pointer;
   font-weight: bolder;
   width: 25%;

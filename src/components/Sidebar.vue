@@ -32,13 +32,13 @@ const navigateTo = (path: string) => {
             <IconChevronLeft
               v-if="!isCollapsed"
               :size="20"
-              color="white"
+              color="black"
               class="toggle-icon"
             />
             <IconChevronRight
               v-else
               :size="20"
-              color="white"
+              color="black"
               class="toggle-icon"
             />
           </button>
@@ -48,7 +48,7 @@ const navigateTo = (path: string) => {
           @click="navigateTo('/chat')"
           :title="isCollapsed ? 'Chat' : ''"
         >
-          <IconChat :size="20" color="white" class="btn-icon" />
+          <IconChat :size="20" color="black" class="btn-icon" />
           <span v-if="!isCollapsed" class="btn-text">{{ $t("nav.chat") }}</span>
         </button>
       </div>
@@ -79,7 +79,7 @@ const navigateTo = (path: string) => {
           @click="navigateTo('/config')"
           :title="isCollapsed ? $t('nav.settings') : ''"
         >
-          <span class="btn-icon"><IconCog :size="20" color="white" /></span>
+          <span class="btn-icon"><IconCog :size="20" color="black" /></span>
           <span v-if="!isCollapsed" class="btn-text">{{
             $t("nav.settings")
           }}</span>
@@ -89,7 +89,7 @@ const navigateTo = (path: string) => {
           @click="navigateTo('/login')"
           :title="isCollapsed ? $t('nav.logout') : ''"
         >
-          <span class="btn-icon"><IconLogout color="white" /></span>
+          <span class="btn-icon"><IconLogout color="black" /></span>
           <span v-if="!isCollapsed" class="btn-text">{{
             $t("nav.logout")
           }}</span>

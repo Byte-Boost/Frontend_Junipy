@@ -37,6 +37,7 @@
     transform: translateY(-8px);
   }
 }
+
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -119,7 +120,7 @@
 
 .message-time {
   animation: fadeIn 0.3s ease-in;
-  color: white;
+  color: var(--label-color);
   font-style: italic;
   padding-left: 3rem;
 }
@@ -234,7 +235,7 @@
   border-radius: 10px;
   outline: none;
   font-size: 16px;
-  background: #34363c;
+  background: var(--input-background-soft);
   transition: all 0.3s ease;
   resize: none;
   min-height: 60px;

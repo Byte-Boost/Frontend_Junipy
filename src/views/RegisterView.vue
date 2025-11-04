@@ -18,7 +18,7 @@
               :placeholder-text="'auth.register.fields.anamnese.fields.name'"
             >
               <IconUser
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
               />
             </IconifiedInput>
 
@@ -30,7 +30,7 @@
               :placeholder-text="'auth.register.fields.anamnese.fields.profession'"
             >
               <IconBriefcase
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
               />
             </IconifiedInput>
 
@@ -43,7 +43,7 @@
               :placeholder-text="'auth.register.fields.anamnese.fields.birthDate'"
             >
               <IconCalendar
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
               />
             </IconifiedInput>
             <label>
@@ -648,7 +648,7 @@
               :placeholder-text="'auth.register.fields.email.placeholder'"
             >
               <IconMail
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
             /></IconifiedInput>
             <IconifiedInput
               id="password"
@@ -658,7 +658,7 @@
               :placeholder-text="'auth.register.fields.password.placeholder'"
             >
               <IconKey
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
               />
             </IconifiedInput>
             <IconifiedInput
@@ -669,7 +669,7 @@
               :placeholder-text="'auth.register.fields.confirmPassword.placeholder'"
             >
               <IconKey
-                class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
               />
             </IconifiedInput>
           </fieldset>
@@ -736,7 +736,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { register } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
 import "../styles/views/RegisterView.css";
@@ -749,8 +749,7 @@ import IconUser from "@/components/icons/IconUser.vue";
 import IconifiedInput from "@/components/IconifiedInput.vue";
 import IconBriefcase from "@/components/icons/IconBriefcase.vue";
 import IconCalendar from "@/components/icons/IconCalendar.vue";
-import IconHourglass from "@/components/icons/IconHourglass.vue";
-import type { User, UserInformation } from "@/models/models";
+import type { UserInformation } from "@/models/models";
 import { useTypedI18n } from "@/composables/useI18n";
 import { hasNullValues } from "@/scripts/utils/utils";
 
