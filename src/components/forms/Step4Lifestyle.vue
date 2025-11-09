@@ -3,7 +3,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.sleepQuality"
-        :title="'Qual a qualidade do seu sono'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.sleepQuality.description')
+        "
         :options="sleepQuality"
       />
     </div>
@@ -11,7 +13,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.wakeDuringNight"
-        :title="'Acorda durante a noite?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.nightInterruptions.title')
+        "
         :options="wakeDuringNight"
       />
     </div>
@@ -19,7 +23,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.bowelFrequency"
-        :title="'Quantas vezes por semana você evacua?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.intestinalHabits.description')
+        "
         :options="bowelFrequency"
       />
     </div>

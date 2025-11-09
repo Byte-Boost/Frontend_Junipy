@@ -3,7 +3,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.activityType"
-        :title="'Qual atividade mais te descreve?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.physicalActivities.label')
+        "
         :options="activityOptions"
       />
     </div>
@@ -14,7 +16,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.activityFrequency"
-        :title="'Com que frequência pratica Atividade física?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.physicalActivities.frequency.title')
+        "
         :options="activityFrequency"
       />
     </div>
@@ -22,7 +26,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.activityDuration"
-        :title="'Quantos minutos por dia de Atividade fisica?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.physicalActivities.time.title')
+        "
         :options="activityDuration"
       />
     </div>

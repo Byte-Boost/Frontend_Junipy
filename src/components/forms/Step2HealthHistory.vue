@@ -13,7 +13,9 @@
     <div class="form-row">
       <CheckboxGroup
         v-model="userInfo.healthConditions"
-        :title="'Você possui ou já teve alguma das condições abaixo?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.conditions.label')
+        "
         :options="healthConditionsOptions"
         exclusive-value="no"
       />

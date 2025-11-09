@@ -3,7 +3,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.stressLevel"
-        :title="'Estresse diário'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.dayToDay.fields.stress.title')
+        "
         :options="stressLevel"
       />
     </div>
@@ -11,7 +13,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.alcoholConsumption"
-        :title="'Consumo de álcool'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.dayToDay.fields.alcoholConsumption.title')
+        "
         :options="alcoholConsumption"
       />
     </div>
@@ -19,7 +23,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.smoking"
-        :title="'Tabagismo'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.dayToDay.fields.smoking.title')
+        "
         :options="smoking"
       />
     </div>
@@ -27,7 +33,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.hydrationLevel"
-        :title="'Hidratação (quantos litros por dia)'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.dayToDay.fields.hydration.title')
+        "
         :options="hydrationLevel"
       />
     </div>
@@ -35,7 +43,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.takesMedication"
-        :title="'Faz uso de medicações contínuas?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.dayToDay.fields.medications.title')
+        "
         :options="takesMedication"
       />
     </div>
