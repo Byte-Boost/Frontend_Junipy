@@ -39,7 +39,7 @@
     <div class="form-row">
       <div class="form-element">
         <label>{{ t("auth.register.fields.anamnese.fields.birthDate") }}</label>
-        <input disabled v-model="localUserInfo.birthDate" type="date" />
+        <input v-model="localUserInfo.birthDate" type="date" />
       </div>
 
       <div class="form-element">
@@ -51,7 +51,7 @@
         <label style="display: block">{{
           t("auth.register.fields.anamnese.fields.sex.label")
         }}</label>
-        <select disabled v-model="localUserInfo.sex">
+        <select  v-model="localUserInfo.sex">
           <option disabled value="">
             {{ t("common.select.placeholder") }}
           </option>
@@ -72,7 +72,6 @@ import { useTypedI18n } from "@/composables/useI18n";
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import { computed } from "vue";
-import IconUser from "../icons/IconUser.vue";
 
 const props = defineProps<{ userInfo: UserInformation }>();
 const emit = defineEmits<{

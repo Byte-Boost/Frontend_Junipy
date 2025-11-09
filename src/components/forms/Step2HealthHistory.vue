@@ -15,6 +15,7 @@
         v-model="userInfo.healthConditions"
         :title="'Você possui ou já teve alguma das condições abaixo?'"
         :options="healthConditionsOptions"
+        exclusive-value="no"
       />
     </div>
     <div
@@ -29,6 +30,7 @@
         v-model="userInfo.allergies"
         :title="$t('auth.register.fields.anamnese.fields.allergies.label')"
         :options="allergiesOptions"
+        exclusive-value="no"
       />
     </div>
     <div class="form-row" v-if="localUserInfo.allergies.includes('other')">
@@ -40,6 +42,7 @@
         v-model="localUserInfo.surgeries"
         :title="$t('auth.register.fields.anamnese.fields.surgeries.label')"
         :options="surgeriesOptions"
+        exclusive-value="no"
       />
     </div>
     <div class="form-row" v-if="localUserInfo.surgeries.includes('other')">
