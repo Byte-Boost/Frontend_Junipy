@@ -1,63 +1,71 @@
 <template>
-  <div class="form-container">
-    <!-- Progress header -->
-    <header class="form-header">
-      <h2>Informações de Usuário</h2>
-      <p>Passo {{ currentStep + 1 }} de {{ steps.length }}</p>
-    </header>
+  <CloudyBackground>
 
-    <!-- Dynamic form step -->
-    <component
-      v-if="currentStep === 1"
-      :is="steps[currentStep]"
-      v-model:userInfo="userInformation"
-      v-model:otherHealthConditions="otherHealthConditions"
-      v-model:otherAllergies="otherAllergies"
-      v-model:otherSurgeries="otherSurgeries"
-    />
-
-    <component
-      v-else-if="currentStep === 2"
-      :is="steps[currentStep]"
-      v-model:userInfo="userInformation"
-      v-model:otherActivities="otherActivities"
-    />
-
-    <component
-      v-else
-      :is="steps[currentStep]"
-      v-model:userInfo="userInformation"
-    />
-
-    <!-- Navigation buttons -->
-    <div class="form-navigation">
-      <div class="flex gap-2">
-        <button
-          @click="prevStep"
-          :disabled="currentStep <= 0"
-          class="btn back-btn"
-        >
-          Voltar
-        </button>
-
-        <button
-          @click="nextStep"
-          :disabled="currentStep >= 4"
-          class="btn next-btn"
-        >
-          Próximo
-        </button>
+    <div class="form-container better-scrollbar">
+      <!-- Progress header -->
+      <header class="form-header">
+        <h2>Informações de Usuário</h2>
+        <p>Passo {{ currentStep + 1 }} de {{ steps.length }}</p>
+      </header>
+  
+      <!-- Dynamic form step -->
+      <div class="form-body">
+        <component
+          v-if="currentStep === 1"
+          :is="steps[currentStep]"
+          v-model:userInfo="userInformation"
+          v-model:otherHealthConditions="otherHealthConditions"
+          v-model:otherAllergies="otherAllergies"
+          v-model:otherSurgeries="otherSurgeries"
+        />
+    
+        <component
+          v-else-if="currentStep === 2"
+          :is="steps[currentStep]"
+          v-model:userInfo="userInformation"
+          v-model:otherActivities="otherActivities"
+        />
+    
+        <component
+          v-else
+          :is="steps[currentStep]"
+          v-model:userInfo="userInformation"
+        />
       </div>
-
-      <button
-        @click="saveProfile"
-        :disabled="!isFormChanged"
-        class="btn save-btn"
-      >
-        Salvar
-      </button>
+  
+      <!-- Navigation buttons -->
+      <div class="form-footer">
+        <div class="form-navigation">
+          <div class="flex gap-2">
+            <button
+              @click="prevStep"
+              :disabled="currentStep <= 0"
+              class="btn back-btn"
+            >
+              Voltar
+            </button>
+    
+            <button
+              @click="nextStep"
+              :disabled="currentStep >= 4"
+              class="btn next-btn"
+            >
+              Próximo
+            </button>
+          </div>
+    
+          <button
+            @click="saveProfile"
+            :disabled="!isFormChanged"
+            class="btn save-btn"
+          >
+            Salvar
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+    
+  </CloudyBackground>
 </template>
 
 <script setup lang="ts">
@@ -72,6 +80,7 @@ import Step5Habits from "@/components/forms/Step5Habits.vue";
 import { getProfileData } from "@/scripts/http-requests/endpoints";
 import { patchProfileData } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
+import CloudyBackground from "@/components/CloudyBackground.vue";
 
 const steps = [
   Step1PersonalInfo,
