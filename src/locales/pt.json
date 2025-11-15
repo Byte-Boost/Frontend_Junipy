@@ -22,7 +22,8 @@
       "actions": {
         "submit": "Entrar",
         "forgotPassword": "Esqueceu a senha?",
-        "noAccount": "Não tem uma conta?"
+        "noAccount": "Não tem uma conta?",
+        "noAccountOption": "Cadastre-se"
       }
     },
     "register": {
@@ -208,7 +209,12 @@
                 }
               }
             }
-          }
+          },
+          "actions": {
+            "submit": "Finalizar",
+            "skip": "Pular por enquanto"
+          },
+          "success": "Configuração de perfil finalizada!"
         },
         "username": {
           "label": "Nome de usuário",
@@ -229,8 +235,10 @@
       },
       "actions": {
         "submit": "Registrar",
-        "hasAccount": "Já tem uma conta?"
-      }
+        "hasAccount": "Já tem uma conta?",
+        "hasAccountOption": "Faça login"
+      },
+      "success": "Registrado com sucesso! Vocë já pode fazer login."
     }
   },
   "chat": {

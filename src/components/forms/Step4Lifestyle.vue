@@ -24,7 +24,7 @@
       <RadioGroup
         v-model="userInfo.bowelFrequency"
         :title="
-          $t('auth.register.fields.anamnese.fields.intestinalHabits.description')
+          $t('auth.register.fields.anamnese.fields.intestinalHabits.title')
         "
         :options="bowelFrequency"
       />

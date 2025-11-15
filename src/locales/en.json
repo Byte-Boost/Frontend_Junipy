@@ -22,7 +22,8 @@
       "actions": {
         "submit": "Sign in",
         "forgotPassword": "Forgot password?",
-        "noAccount": "Don't have an account?"
+        "noAccount": "Don't have an account?",
+        "noAccountOption": "Sign up"
       }
     },
     "register": {
@@ -204,7 +205,12 @@
                 "autoimmuneDiseases": "Autoimmune diseases"
               }
             }
-          }
+          },
+          "actions": {
+            "submit": "Finish",
+            "skip": "Skip for now"
+          },
+          "success": "Finished setting up your profile!"
         },
         "username": {
           "label": "Username",
@@ -225,8 +231,10 @@
       },
       "actions": {
         "submit": "Register",
-        "hasAccount": "Already have an account?"
-      }
+        "hasAccount": "Already have an account?",
+        "hasAccountOption": "Sign in"
+      },
+      "success": "Successfully registered! You can now log in."
     }
   },
   "chat": {

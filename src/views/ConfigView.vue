@@ -42,7 +42,7 @@
               :disabled="currentStep <= 0"
               class="btn back-btn"
             >
-              Voltar
+              {{ t("common.back" as any)}}
             </button>
     
             <button
@@ -50,7 +50,7 @@
               :disabled="currentStep >= 4"
               class="btn next-btn"
             >
-              Próximo
+              {{ t("common.next" as any) }}
             </button>
           </div>
     
@@ -78,9 +78,10 @@ import Step3Activity from "@/components/forms/Step3Activity.vue";
 import Step4Lifestyle from "@/components/forms/Step4Lifestyle.vue";
 import Step5Habits from "@/components/forms/Step5Habits.vue";
 import { getProfileData } from "@/scripts/http-requests/endpoints";
-import { patchProfileData } from "@/scripts/http-requests/endpoints";
+import { insertAnamnese } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
 import CloudyBackground from "@/components/CloudyBackground.vue";
+import { useTypedI18n } from "@/composables/useI18n";
 
 const steps = [
   Step1PersonalInfo,
@@ -90,6 +91,7 @@ const steps = [
   Step5Habits,
 ];
 
+const { t } = useTypedI18n();
 const currentStep = ref(0);
 
 const isLoading = ref(true);
@@ -176,7 +178,7 @@ async function fetchProfileData() {
               "cancer",
               "depressionAnxiety",
               "autoimmuneDiseases",
-              "other",
+              "otherDisease",
             ].includes(item)
         )
         .join(", ");
@@ -189,7 +191,7 @@ async function fetchProfileData() {
               "glutenIntolerance",
               "foodAllergies",
               "medicalAllergies",
-              "other",
+              "otherAllergy",
             ].includes(item)
         )
         .join(", ");
@@ -203,7 +205,7 @@ async function fetchProfileData() {
               "hiatalHernia",
               "orthopedic",
               "cesarean",
-              "other",
+              "otherSurgery",
             ].includes(item)
         )
         .join(", ");
@@ -255,7 +257,7 @@ async function saveProfile() {
   }
 
   try {
-    await patchProfileData(localUserInfo);
+    await insertAnamnese(localUserInfo);
     isFormChanged.value = false;
   } catch (error) {
     console.error("Failed to save profile:", error);

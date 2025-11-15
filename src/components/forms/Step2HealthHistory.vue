@@ -3,9 +3,7 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.consultationReason"
-        :title="
-          $t('auth.register.fields.anamnese.fields.consultationReason.label')
-        "
+        :title="$t('auth.register.fields.anamnese.fields.consultationReason.label')"
         :options="consultationOptions"
       />
     </div>
@@ -13,17 +11,12 @@
     <div class="form-row">
       <CheckboxGroup
         v-model="userInfo.healthConditions"
-        :title="
-          $t('auth.register.fields.anamnese.fields.conditions.label')
-        "
+        :title="$t('auth.register.fields.anamnese.fields.conditions.label')"
         :options="healthConditionsOptions"
-        exclusive-value="no"
+        exclusive-value="noCondition"
       />
     </div>
-    <div
-      class="form-row"
-      v-if="localUserInfo.healthConditions.includes('other')"
-    >
+    <div class="form-row" v-if="localUserInfo.healthConditions.includes('otherDisease')">
       <input v-model="localOtherHealthConditions" type="text" />
     </div>
 
@@ -32,10 +25,10 @@
         v-model="userInfo.allergies"
         :title="$t('auth.register.fields.anamnese.fields.allergies.label')"
         :options="allergiesOptions"
-        exclusive-value="no"
+        exclusive-value="noAllergy"
       />
     </div>
-    <div class="form-row" v-if="localUserInfo.allergies.includes('other')">
+    <div class="form-row" v-if="localUserInfo.allergies.includes('otherAllergy')">
       <input v-model="localOtherAllergies" type="text" />
     </div>
 
@@ -44,10 +37,10 @@
         v-model="localUserInfo.surgeries"
         :title="$t('auth.register.fields.anamnese.fields.surgeries.label')"
         :options="surgeriesOptions"
-        exclusive-value="no"
+        exclusive-value="noSurgery"
       />
     </div>
-    <div class="form-row" v-if="localUserInfo.surgeries.includes('other')">
+    <div class="form-row" v-if="localUserInfo.surgeries.includes('otherSurgery')">
       <input v-model="localOtherSurgeries" type="text" />
     </div>
   </div>
@@ -125,7 +118,7 @@ const consultationOptions = [
   },
 ];
 const healthConditionsOptions = [
-  { text: t("common.no"), value: "no" },
+  { text: t("common.no"), value: "noCondition" },
   {
     text: t(
       "auth.register.fields.anamnese.fields.conditions.choices.type1Diabetes"
@@ -204,11 +197,11 @@ const healthConditionsOptions = [
   },
   {
     text: t("common.other"),
-    value: "other",
+    value: "otherDisease",
   },
 ];
 const allergiesOptions = [
-  { text: t("common.no"), value: "no" },
+  { text: t("common.no"), value: "noAllergy" },
   {
     text: t(
       "auth.register.fields.anamnese.fields.allergies.choices.lactoseIntolerance"
@@ -233,10 +226,10 @@ const allergiesOptions = [
     ),
     value: "medicalAllergies",
   },
-  { text: t("common.other"), value: "other" },
+  { text: t("common.other"), value: "otherAllergy" },
 ];
 const surgeriesOptions = [
-  { text: t("common.no"), value: "no" },
+  { text: t("common.no"), value: "noSurgery" },
   {
     text: t("auth.register.fields.anamnese.fields.surgeries.choices.bariatric"),
     value: "bariatric",
@@ -263,6 +256,6 @@ const surgeriesOptions = [
     text: t("auth.register.fields.anamnese.fields.surgeries.choices.cesarean"),
     value: "cesarean",
   },
-  { text: t("common.other"), value: "other" },
+  { text: t("common.other"), value: "otherSurgery" },
 ];
 </script>

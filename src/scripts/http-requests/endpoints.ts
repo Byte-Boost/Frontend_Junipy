@@ -1,20 +1,14 @@
 import apiClient from "./instance";
 import type { UserInformation } from "@/models/models";
 
-export async function register(
-  user: {
-    email: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-  },
-  userInfo: UserInformation
-) {
-  console.log(user, userInfo);
-  const response = await apiClient.post("/api/auth/register", {
-    ...user,
-    userProfile: userInfo,
-  });
+export async function register(user: {email: string; username: string; password: string; confirmPassword: string;}) {
+  const response = await apiClient.post("/api/auth/register", user);
+  return response.data;
+}
+
+export async function insertAnamnese(userInfo: UserInformation){
+  console.log(userInfo);
+  const response = await apiClient.post("/api/user/profile-data", userInfo);
   return response.data;
 }
 
@@ -44,12 +38,6 @@ export async function getAnalisysRequests() {
 
 export async function dietRequestAnalisys(dietId: string) { 
   const response = await apiClient.post(`api/user/request-diet-analysis/${dietId}`); 
-  return response.data;
-}
-
-export async function patchProfileData(userInfo: UserInformation){
-  console.log(userInfo);
-  const response = await apiClient.post("/api/user/profile-data", userInfo);
   return response.data;
 }
 

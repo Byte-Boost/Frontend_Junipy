@@ -63,7 +63,7 @@ const activityOptions = [
   { text: "Corrida", value: "running" },
   { text: "Crossfit", value: "crossfit" },
   { text: "Natação", value: "swimming" },
-  // { text: "Outro", value: "other" },
+  { text: "Outro", value: "otherActivity" },
 ];
 const activityFrequency = [
   { text: "Nunca", value: "never" },

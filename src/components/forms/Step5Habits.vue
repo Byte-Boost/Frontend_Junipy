@@ -81,8 +81,8 @@ const alcoholConsumption = [
   { text: "Uso diário", value: "daily" },
 ];
 const smoking = [
-  { text: "Sim", value: "yes" },
-  { text: "Não", value: "no" },
+  { text: "Sim", value: "yesSmoking" },
+  { text: "Não", value: "noSmoking" },
 ];
 const hydrationLevel = [
   { text: "Menos de 1L", value: "less than 1L" },
@@ -90,7 +90,7 @@ const hydrationLevel = [
   { text: "Mais de 2L", value: "more than 2L" },
 ];
 const takesMedication = [
-  { text: "Sim", value: "yes" },
-  { text: "Não", value: "no" },
+  { text: "Sim", value: "yesMedication" },
+  { text: "Não", value: "noMedication" },
 ];
 </script>
