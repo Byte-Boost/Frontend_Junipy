@@ -39,8 +39,13 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
-import { computed, watch } from "vue";
+import { computed } from "vue";
+import { activityTypeEnum } from "@/types/enums/activityType.enum";
+import { activityFrequencyEnum } from "@/types/enums/activityFrequency.enum";
+import { activityDurationEnum } from "@/types/enums/activityDuration.enum";
+import { useTypedI18n } from "@/composables/useI18n";
 
+const { t } = useTypedI18n();
 const props = defineProps<{
   userInfo: UserInformation;
   otherActivities: string;
@@ -56,25 +61,18 @@ const localOtherActivities = computed({
   set: (val) => emit("update:otherActivities", val),
 });
 
-const activityOptions = [
-  { text: "Sedentário(a)", value: "sedentary" },
-  { text: "Caminhada", value: "walking" },
-  { text: "Musculação", value: "weightlifting" },
-  { text: "Corrida", value: "running" },
-  { text: "Crossfit", value: "crossfit" },
-  { text: "Natação", value: "swimming" },
-  { text: "Outro", value: "otherActivity" },
-];
-const activityFrequency = [
-  { text: "Nunca", value: "never" },
-  { text: "1-2x por semana", value: "1-2 times/week" },
-  { text: "3-4x por semana", value: "3-4 times/week" },
-  { text: "5 ou mais vezes por semana", value: "5-6 times/week" },
-];
-const activityDuration = [
-  { text: "Não pratico", value: "0min" },
-  { text: "30 minutos", value: "30min" },
-  { text: "60 minutos", value: "60min" },
-  { text: "90 minutos", value: "90min" },
-];
+const activityOptions = Object.entries(activityTypeEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+activityOptions.push({ text: t("common.other"), value: "otherActivity" })
+
+const activityFrequency = Object.entries(activityFrequencyEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+const activityDuration = Object.entries(activityDurationEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
 </script>

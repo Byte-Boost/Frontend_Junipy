@@ -91,6 +91,7 @@
               "frequency": {
                 "title": "Frequency",
                 "choices": {
+                  "never": "Never",
                   "1-2": "1-2 times per week",
                   "3-4": "3-4 times per week",
                   "5+": "5 or more times per week"
@@ -99,6 +100,7 @@
               "time": {
                 "title": "How many minutes per day of physical activity?",
                 "choices": {
+                  "none": "None",
                   "30": "30 minutes",
                   "60": "60 minutes",
                   "90": "90 minutes"

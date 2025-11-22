@@ -53,9 +53,10 @@ import { computed } from "vue";
 import RadioGroup from "../RadioGroup.vue";
 import CheckboxGroup from "../CheckboxGroup.vue";
 import { useTypedI18n } from "@/composables/useI18n";
-import { surgeriesEnum } from "@/types/surgeries.enum";
-import { healthConditionsEnum } from "@/types/healthConditions.enum";
-import { allergiesEnum } from "@/types/allergies.enum";
+import { surgeriesEnum } from "@/types/enums/surgeries.enum";
+import { healthConditionsEnum } from "@/types/enums/healthConditions.enum";
+import { allergiesEnum } from "@/types/enums/allergies.enum";
+import { consultationReasons } from "@/types/enums/consultationReason.enum";
 
 const { t } = useTypedI18n();
 const props = defineProps<{
@@ -88,39 +89,10 @@ const localOtherSurgeries = computed({
   set: (val) => emit("update:otherSurgeries", val),
 });
 
-const consultationOptions = [
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.consultationReason.choices.weightLoss"
-    ),
-    value: "weightLoss",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.consultationReason.choices.muscleGain"
-    ),
-    value: "muscleGain",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.consultationReason.choices.diabetesControl"
-    ),
-    value: "diabetesControl",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.consultationReason.choices.eatingReeducation"
-    ),
-    value: "eatingReeducation",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.consultationReason.choices.physicalMentalPerformance"
-    ),
-    value: "physicalMentalPerformance",
-  },
-];
-
+const consultationOptions = Object.entries(consultationReasons).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
 
 const healthConditionsOptions = Object.entries(healthConditionsEnum).map(([key, value]) => ({
   value: key,

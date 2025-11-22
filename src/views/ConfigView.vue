@@ -82,9 +82,10 @@ import { insertAnamnese } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import { useTypedI18n } from "@/composables/useI18n";
-import { surgeriesEnum } from "@/types/surgeries.enum";
-import { healthConditionsEnum } from "@/types/healthConditions.enum";
-import { allergiesEnum } from "@/types/allergies.enum";
+import { surgeriesEnum } from "@/types/enums/surgeries.enum";
+import { healthConditionsEnum } from "@/types/enums/healthConditions.enum";
+import { allergiesEnum } from "@/types/enums/allergies.enum";
+import { activityTypeEnum } from "@/types/enums/activityType.enum";
 
 const steps = [
   Step1PersonalInfo,
@@ -179,6 +180,10 @@ async function fetchProfileData() {
       otherUserInformation.value.otherSurgeries = originalUserInformation.value["surgeries"]
         .filter( (item: string) => !surgeryKeys.includes(item as keyof typeof surgeriesEnum))
         .join(", ");
+      
+      // checks for a other Activity
+      const key = originalUserInformation.value.activityType as keyof typeof activityTypeEnum;
+      if (!(key in activityTypeEnum)) otherUserInformation.value.otherActivities = key;
 
       userInformation.value = data;
 
@@ -194,6 +199,9 @@ async function fetchProfileData() {
       if (otherUserInformation.value.otherSurgeries !== "") {
         userInformation.value.surgeries = userInformation.value.surgeries.filter( (item: string) => surgeryKeys.includes(item as keyof typeof surgeriesEnum))
         userInformation.value.surgeries.push("otherSurgery");
+      }
+      if (otherUserInformation.value.otherActivities !== ""){
+        userInformation.value.activityType = "otherActivity";
       }
       console.log(userInformation.value);
       console.log(otherUserInformation.value);
