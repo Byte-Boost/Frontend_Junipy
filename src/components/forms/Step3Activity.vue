@@ -40,9 +40,9 @@ import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
 import { computed } from "vue";
-import { activityTypeEnum } from "@/types/enums/activityType.enum";
-import { activityFrequencyEnum } from "@/types/enums/activityFrequency.enum";
-import { activityDurationEnum } from "@/types/enums/activityDuration.enum";
+import { ActivityTypeEnum } from "@/types/enums/ActivityTypeEnum";
+import { ActivityFrequencyEnum } from "@/types/enums/ActivityFrequencyEnum";
+import { ActivityDurationEnum } from "@/types/enums/ActivityDurationEnum";
 import { useTypedI18n } from "@/composables/useI18n";
 
 const { t } = useTypedI18n();
@@ -61,17 +61,17 @@ const localOtherActivities = computed({
   set: (val) => emit("update:otherActivities", val),
 });
 
-const activityOptions = Object.entries(activityTypeEnum).map(([key, value]) => ({
+const activityOptions = Object.entries(ActivityTypeEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
 activityOptions.push({ text: t("common.other"), value: "otherActivity" })
 
-const activityFrequency = Object.entries(activityFrequencyEnum).map(([key, value]) => ({
+const activityFrequency = Object.entries(ActivityFrequencyEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
-const activityDuration = Object.entries(activityDurationEnum).map(([key, value]) => ({
+const activityDuration = Object.entries(ActivityDurationEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));

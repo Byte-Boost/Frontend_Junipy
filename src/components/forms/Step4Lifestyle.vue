@@ -36,9 +36,9 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
-import { sleepQualityEnum } from "@/types/enums/sleepQuality.enum";
-import { wakeDuringNightEnum } from "@/types/enums/wakeDuringNight.enum";
-import { bowelFrequencyEnum } from "@/types/enums/bowelFrequency.enum";
+import { SleepQualityEnum } from "@/types/enums/SleepQualityEnum";
+import { WakeDuringNightEnum } from "@/types/enums/WakeDuringNightEnum";
+import { BowelFrequencyEnum } from "@/types/enums/BowelFrequencyEnum";
 import { useTypedI18n } from "@/composables/useI18n";
 
 const { t } = useTypedI18n();
@@ -47,13 +47,13 @@ const emit = defineEmits<{
   (e: "update:userInfo", value: UserInformation): void;
 }>();
 
-const sleepQuality = Object.entries(sleepQualityEnum).map(([key, value]) => ({
+const sleepQuality = Object.entries(SleepQualityEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
-}));const wakeDuringNight = Object.entries(wakeDuringNightEnum).map(([key, value]) => ({
+}));const wakeDuringNight = Object.entries(WakeDuringNightEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
-}));const bowelFrequency = Object.entries(bowelFrequencyEnum).map(([key, value]) => ({
+}));const bowelFrequency = Object.entries(BowelFrequencyEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));

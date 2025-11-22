@@ -53,10 +53,10 @@ import { computed } from "vue";
 import RadioGroup from "../RadioGroup.vue";
 import CheckboxGroup from "../CheckboxGroup.vue";
 import { useTypedI18n } from "@/composables/useI18n";
-import { surgeriesEnum } from "@/types/enums/surgeries.enum";
-import { healthConditionsEnum } from "@/types/enums/healthConditions.enum";
-import { allergiesEnum } from "@/types/enums/allergies.enum";
-import { consultationReasonsEnum } from "@/types/enums/consultationReason.enum";
+import { SurgeriesEnum } from "@/types/enums/SurgeriesEnum";
+import { HealthConditionsEnum } from "@/types/enums/HealthConditionsEnum";
+import { AllergiesEnum } from "@/types/enums/AllergiesEnum";
+import { ConsultationReasonsEnum } from "@/types/enums/ConsultationReasonEnum";
 
 const { t } = useTypedI18n();
 const props = defineProps<{
@@ -89,24 +89,24 @@ const localOtherSurgeries = computed({
   set: (val) => emit("update:otherSurgeries", val),
 });
 
-const consultationOptions = Object.entries(consultationReasonsEnum).map(([key, value]) => ({
+const consultationOptions = Object.entries(ConsultationReasonsEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
 
-const healthConditionsOptions = Object.entries(healthConditionsEnum).map(([key, value]) => ({
+const healthConditionsOptions = Object.entries(HealthConditionsEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
 healthConditionsOptions.push({ text: t("common.other"), value: "otherDisease" });
 
-const allergiesOptions = Object.entries(allergiesEnum).map(([key, value]) => ({
+const allergiesOptions = Object.entries(AllergiesEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
 allergiesOptions.push({ text: t("common.other"), value: "otherAllergy" })
 
-const surgeriesOptions = Object.entries(surgeriesEnum).map(([key, value]) => ({
+const surgeriesOptions = Object.entries(SurgeriesEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));

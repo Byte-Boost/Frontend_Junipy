@@ -50,7 +50,7 @@
       />
     </div>
 
-    <div class="form-row" v-if="userInfo.takesMedication === 'yes'">
+    <div class="form-row" v-if="userInfo.takesMedication === 'yesMedication'">
       <div class="form-element">
         <label>Quais medicações/suplementos?</label>
         <input v-model="userInfo.medicationDetails" type="text" />
@@ -63,11 +63,11 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
-import { stressLevelEnum } from "@/types/enums/stressLevel.enum";
-import { alcoholConsumptionEnum } from "@/types/enums/alcoholConsumption.enum";
-import { smokingEnum } from "@/types/enums/smoking.enum";
-import { hydrationLevelEnum } from "@/types/enums/hydrationLevel.enum";
-import { takesMedicationEnum } from "@/types/enums/takesMedication.enum";
+import { StressLevelEnum } from "@/types/enums/StressLevelEnum";
+import { AlcoholConsumptionEnum } from "@/types/enums/AlcoholConsumptionEnum";
+import { SmokingEnum } from "@/types/enums/SmokingEnum";
+import { HydrationLevelEnum } from "@/types/enums/HydrationLevelEnum";
+import { TakesMedicationEnum } from "@/types/enums/TakesMedicationEnum";
 import { useTypedI18n } from "@/composables/useI18n";
 
 const { t } = useTypedI18n();
@@ -76,23 +76,23 @@ const emit = defineEmits<{
   (e: "update:userInfo", value: UserInformation): void;
 }>();
 
-const stressLevel = Object.entries(stressLevelEnum).map(([key, value]) => ({
+const stressLevel = Object.entries(StressLevelEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
-const alcoholConsumption = Object.entries(alcoholConsumptionEnum).map(([key, value]) => ({
+const alcoholConsumption = Object.entries(AlcoholConsumptionEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
-const smoking = Object.entries(smokingEnum).map(([key, value]) => ({
+const smoking = Object.entries(SmokingEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
-const hydrationLevel = Object.entries(hydrationLevelEnum).map(([key, value]) => ({
+const hydrationLevel = Object.entries(HydrationLevelEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));
-const takesMedication = Object.entries(takesMedicationEnum).map(([key, value]) => ({
+const takesMedication = Object.entries(TakesMedicationEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));

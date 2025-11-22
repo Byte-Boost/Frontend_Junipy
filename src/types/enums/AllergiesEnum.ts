@@ -1,4 +1,4 @@
-export enum allergiesEnum {
+export enum AllergiesEnum {
     noAllergy = "common.no",
     lactoseIntolerance = "auth.register.fields.anamnese.fields.allergies.choices.lactoseIntolerance",
     glutenIntolerance = "auth.register.fields.anamnese.fields.allergies.choices.glutenIntolerance",

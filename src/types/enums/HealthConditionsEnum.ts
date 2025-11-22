@@ -1,4 +1,4 @@
-export enum healthConditionsEnum {
+export enum HealthConditionsEnum {
     noCondition = "common.no",
     type1Diabetes = "auth.register.fields.anamnese.fields.conditions.choices.type1Diabetes",
     type2Diabetes = "auth.register.fields.anamnese.fields.conditions.choices.type2Diabetes",

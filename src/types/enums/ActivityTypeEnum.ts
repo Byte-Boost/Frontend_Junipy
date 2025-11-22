@@ -1,4 +1,4 @@
-export enum activityTypeEnum {
+export enum ActivityTypeEnum {
   sedentary = "auth.register.fields.anamnese.fields.physicalActivities.choices.sedentary",
   walking = "auth.register.fields.anamnese.fields.physicalActivities.choices.walking",
   weightlifting = "auth.register.fields.anamnese.fields.physicalActivities.choices.musculation",

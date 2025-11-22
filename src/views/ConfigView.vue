@@ -82,10 +82,10 @@ import { insertAnamnese } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import { useTypedI18n } from "@/composables/useI18n";
-import { surgeriesEnum } from "@/types/enums/surgeries.enum";
-import { healthConditionsEnum } from "@/types/enums/healthConditions.enum";
-import { allergiesEnum } from "@/types/enums/allergies.enum";
-import { activityTypeEnum } from "@/types/enums/activityType.enum";
+import { SurgeriesEnum } from "@/types/enums/SurgeriesEnum";
+import { HealthConditionsEnum } from "@/types/enums/HealthConditionsEnum";
+import { AllergiesEnum } from "@/types/enums/AllergiesEnum";
+import { ActivityTypeEnum } from "@/types/enums/ActivityTypeEnum";
 
 const steps = [
   Step1PersonalInfo,
@@ -164,40 +164,40 @@ async function fetchProfileData() {
       }
 
       // separates other HealthConditions
-      const healthConditionKeys = Object.keys(healthConditionsEnum) as Array<keyof typeof healthConditionsEnum>;
+      const healthConditionKeys = Object.keys(HealthConditionsEnum) as Array<keyof typeof HealthConditionsEnum>;
       otherUserInformation.value.otherHealthConditions = originalUserInformation.value["healthConditions"]
-        .filter( (item: string) => !healthConditionKeys.includes(item as keyof typeof healthConditionsEnum))
+        .filter( (item: string) => !healthConditionKeys.includes(item as keyof typeof HealthConditionsEnum))
         .join(", ");
 
       // separates other Allergies
-      const allergyKeys = Object.keys(allergiesEnum) as Array<keyof typeof allergiesEnum>;
+      const allergyKeys = Object.keys(AllergiesEnum) as Array<keyof typeof AllergiesEnum>;
       otherUserInformation.value.otherAllergies = originalUserInformation.value["allergies"]
-        .filter( (item: string) => !allergyKeys.includes(item as keyof typeof allergiesEnum))
+        .filter( (item: string) => !allergyKeys.includes(item as keyof typeof AllergiesEnum))
         .join(", ");
 
       // separates other Surgeries
-      const surgeryKeys = Object.keys(surgeriesEnum) as Array<keyof typeof surgeriesEnum>;
+      const surgeryKeys = Object.keys(SurgeriesEnum) as Array<keyof typeof SurgeriesEnum>;
       otherUserInformation.value.otherSurgeries = originalUserInformation.value["surgeries"]
-        .filter( (item: string) => !surgeryKeys.includes(item as keyof typeof surgeriesEnum))
+        .filter( (item: string) => !surgeryKeys.includes(item as keyof typeof SurgeriesEnum))
         .join(", ");
       
       // checks for a other Activity
-      const key = originalUserInformation.value.activityType as keyof typeof activityTypeEnum;
-      if (!(key in activityTypeEnum)) otherUserInformation.value.otherActivities = key;
+      const key = originalUserInformation.value.activityType as keyof typeof ActivityTypeEnum;
+      if (!(key in ActivityTypeEnum)) otherUserInformation.value.otherActivities = key;
 
       userInformation.value = data;
 
       // makes other selections visible if they exist
       if (otherUserInformation.value.otherHealthConditions !== "") {
-        userInformation.value.healthConditions = userInformation.value.healthConditions.filter((item: string) => healthConditionKeys.includes(item as keyof typeof healthConditionsEnum));
+        userInformation.value.healthConditions = userInformation.value.healthConditions.filter((item: string) => healthConditionKeys.includes(item as keyof typeof HealthConditionsEnum));
         userInformation.value.healthConditions.push("otherDisease");
       }
       if (otherUserInformation.value.otherAllergies !== "") {
-        userInformation.value.allergies = userInformation.value.allergies.filter( (item: string) => allergyKeys.includes(item as keyof typeof allergiesEnum))
+        userInformation.value.allergies = userInformation.value.allergies.filter( (item: string) => allergyKeys.includes(item as keyof typeof AllergiesEnum))
         userInformation.value.allergies.push("otherAllergy");
       }
       if (otherUserInformation.value.otherSurgeries !== "") {
-        userInformation.value.surgeries = userInformation.value.surgeries.filter( (item: string) => surgeryKeys.includes(item as keyof typeof surgeriesEnum))
+        userInformation.value.surgeries = userInformation.value.surgeries.filter( (item: string) => surgeryKeys.includes(item as keyof typeof SurgeriesEnum))
         userInformation.value.surgeries.push("otherSurgery");
       }
       if (otherUserInformation.value.otherActivities !== ""){
@@ -266,5 +266,9 @@ function handleOtherFields(localUserInfo: UserInformation) {
     if (otherUserInformation.value.otherActivities !== "")
       localUserInfo.activityType = otherUserInformation.value.otherActivities;
   }
+
+  // Medication
+  if (localUserInfo.takesMedication == "noMedication")
+    localUserInfo.medicationDetails = "";
 }
 </script>

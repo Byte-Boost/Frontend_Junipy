@@ -1,4 +1,4 @@
-export enum surgeriesEnum {
+export enum SurgeriesEnum {
     noSurgery = "common.no",
     bariatric = "auth.register.fields.anamnese.fields.surgeries.choices.bariatric",
     gallbladder = "auth.register.fields.anamnese.fields.surgeries.choices.gallbladder",
