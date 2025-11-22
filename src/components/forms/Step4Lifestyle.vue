@@ -4,7 +4,7 @@
       <RadioGroup
         v-model="userInfo.sleepQuality"
         :title="
-          $t('auth.register.fields.anamnese.fields.sleepQuality.description')
+          $t('auth.register.fields.anamnese.fields.sleepQuality.title')
         "
         :options="sleepQuality"
       />
@@ -36,26 +36,25 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
+import { sleepQualityEnum } from "@/types/enums/sleepQuality.enum";
+import { wakeDuringNightEnum } from "@/types/enums/wakeDuringNight.enum";
+import { bowelFrequencyEnum } from "@/types/enums/bowelFrequency.enum";
+import { useTypedI18n } from "@/composables/useI18n";
 
+const { t } = useTypedI18n();
 const props = defineProps<{ userInfo: UserInformation }>();
 const emit = defineEmits<{
   (e: "update:userInfo", value: UserInformation): void;
 }>();
 
-const sleepQuality = [
-  { text: "Boa", value: "good" },
-  { text: "Regular", value: "average" },
-  { text: "Ruim", value: "bad" },
-];
-const wakeDuringNight = [
-  { text: "Não", value: "no" },
-  { text: "Pelo menos 1 x", value: "once" },
-  { text: "Mais que 1 x por noite", value: "multiple" },
-];
-const bowelFrequency = [
-  { text: "Todo dia", value: "everyday" },
-  { text: "5 x por semana", value: "five per week" },
-  { text: "3 x por semana", value: "three per week" },
-  { text: "1 x por semana", value: "once per week" },
-];
+const sleepQuality = Object.entries(sleepQualityEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));const wakeDuringNight = Object.entries(wakeDuringNightEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));const bowelFrequency = Object.entries(bowelFrequencyEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
 </script>

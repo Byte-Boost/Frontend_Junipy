@@ -35,7 +35,7 @@
   border-radius: 8px;
   padding: 1rem;
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .form-control {
