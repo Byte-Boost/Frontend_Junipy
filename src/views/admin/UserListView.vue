@@ -29,7 +29,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getAllUsers } from "@/scripts/http-requests/endpoints";
-import '../../styles/views/UserListView.css'
+import '../../styles/views/UserListView.scss'
 
 const users = ref([]);
 const loading = ref(false);

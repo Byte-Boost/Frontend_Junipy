@@ -78,7 +78,7 @@ import { useRouter } from "vue-router";
 import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
 import Swal from "sweetalert2";
-import "../styles/views/LoginView.css";
+import "../styles/views/LoginView.scss";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconMail from "@/components/icons/IconMail.vue";
 import IconKey from "@/components/icons/IconKey.vue";

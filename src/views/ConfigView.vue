@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import "../styles/views/ConfigView.css";
+import "../styles/views/ConfigView.scss";
 import { onMounted, ref, watch } from "vue";
 
 import Step1PersonalInfo from "@/components/forms/Step1PersonalInfo.vue";

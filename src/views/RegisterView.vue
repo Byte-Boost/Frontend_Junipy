@@ -134,7 +134,7 @@ import Step5Habits from "@/components/forms/Step5Habits.vue";
 import { ref } from "vue";
 import { insertAnamnese, login, register } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
-import "../styles/views/RegisterView.css";
+import "../styles/views/RegisterView.scss";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconRightArrow from "@/components/icons/IconRightArrow.vue";
 import { useToast } from "vue-toastification";

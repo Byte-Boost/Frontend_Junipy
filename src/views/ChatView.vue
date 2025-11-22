@@ -107,7 +107,7 @@ import { marked } from "marked";
 import IconSend from "@/components/icons/IconSend.vue";
 import { useChatSocket } from "@/scripts/websocket/chat";
 import { useTypedI18n } from "@/composables/useI18n";
-import "../styles/views/ChatView.css";
+import "../styles/views/ChatView.scss";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import { copyToClipboard, formatTimestamp } from "@/scripts/utils/utils";
 import IconCopy from "@/components/icons/IconCopy.vue";
