@@ -271,6 +271,10 @@ const handleOtherFields = async () => {
     if (otherUserInformation.value.otherActivities !== "")
       userInformation.value.activityType = otherUserInformation.value.otherActivities;
   }
+
+  // Medication
+  if (userInformation.value.takesMedication == "noMedication")
+    userInformation.value.medicationDetails = "";
 }
 
 const handleAnamneseSubmit = async () => {

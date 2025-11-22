@@ -1,13 +1,16 @@
 <template>
-  <CloudyBackground>
+  <div class="bg-[#EFE9E3]">
+  <!-- <CloudyBackground> -->
     <div class="chat-container">
+
       <div v-if="isLoading" class="loading-container">
         <div
           class="w-6 h-6 border-4 border-gray-300 border-t-[#48b684] rounded-full animate-spin"
         ></div>
       </div>
-      <div v-else class="chat-layout w-full h-full flex-row flex">
-        <section class="chat flex flex-col w-5/5">
+
+      <div v-else class="w-full h-full flex justify-center">
+        <section class="chat flex flex-col w-3/5">
           <div class="messages">
             <div
               v-for="(msg, i) in messages"
@@ -66,7 +69,7 @@
           <section class="chat-box">
             <form
               @submit.prevent="sendMessage"
-              class="input-container input-relative"
+              class="input-container"
             >
               <textarea
                 :disabled="!hasReply || !isConnected"
@@ -79,20 +82,26 @@
                 @input="adjustHeight"
                 ref="textareaRef"
               ></textarea>
+
+
               <button
                 type="submit"
                 :disabled="!input.trim() || !hasReply || !isConnected"
               >
-                <IconSend :size="64" color="white" />
-              </button>
+                <IconSend :size="48" color="gray" />
+              </button >
             </form>
           </section>
         </section>
       </div>
+
     </div>
-  </CloudyBackground>
+  <!-- </CloudyBackground> --></div>
 </template>
+
 <script setup>
+
+
 import { ref, onMounted, nextTick, watch } from "vue";
 import { marked } from "marked";
 import IconSend from "@/components/icons/IconSend.vue";
