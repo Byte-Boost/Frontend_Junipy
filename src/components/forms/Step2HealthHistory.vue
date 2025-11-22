@@ -56,7 +56,7 @@ import { useTypedI18n } from "@/composables/useI18n";
 import { surgeriesEnum } from "@/types/enums/surgeries.enum";
 import { healthConditionsEnum } from "@/types/enums/healthConditions.enum";
 import { allergiesEnum } from "@/types/enums/allergies.enum";
-import { consultationReasons } from "@/types/enums/consultationReason.enum";
+import { consultationReasonsEnum } from "@/types/enums/consultationReason.enum";
 
 const { t } = useTypedI18n();
 const props = defineProps<{
@@ -89,7 +89,7 @@ const localOtherSurgeries = computed({
   set: (val) => emit("update:otherSurgeries", val),
 });
 
-const consultationOptions = Object.entries(consultationReasons).map(([key, value]) => ({
+const consultationOptions = Object.entries(consultationReasonsEnum).map(([key, value]) => ({
   value: key,
   text: t(value),
 }));

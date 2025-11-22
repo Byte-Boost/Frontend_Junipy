@@ -63,34 +63,37 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
+import { stressLevelEnum } from "@/types/enums/stressLevel.enum";
+import { alcoholConsumptionEnum } from "@/types/enums/alcoholConsumption.enum";
+import { smokingEnum } from "@/types/enums/smoking.enum";
+import { hydrationLevelEnum } from "@/types/enums/hydrationLevel.enum";
+import { takesMedicationEnum } from "@/types/enums/takesMedication.enum";
+import { useTypedI18n } from "@/composables/useI18n";
 
+const { t } = useTypedI18n();
 const props = defineProps<{ userInfo: UserInformation }>();
 const emit = defineEmits<{
   (e: "update:userInfo", value: UserInformation): void;
 }>();
 
-const stressLevel = [
-  { text: "Baixo", value: "low" },
-  { text: "Moderado", value: "moderate" },
-  { text: "Alto", value: "high" },
-];
-const alcoholConsumption = [
-  { text: "Não consome", value: "none" },
-  { text: "Socialmente 1-2 x por semana", value: "social" },
-  { text: "Frequente 3-4 x por semana", value: "frequent" },
-  { text: "Uso diário", value: "daily" },
-];
-const smoking = [
-  { text: "Sim", value: "yesSmoking" },
-  { text: "Não", value: "noSmoking" },
-];
-const hydrationLevel = [
-  { text: "Menos de 1L", value: "less than 1L" },
-  { text: "Entre 1L e 2L", value: "1-2L" },
-  { text: "Mais de 2L", value: "more than 2L" },
-];
-const takesMedication = [
-  { text: "Sim", value: "yesMedication" },
-  { text: "Não", value: "noMedication" },
-];
+const stressLevel = Object.entries(stressLevelEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+const alcoholConsumption = Object.entries(alcoholConsumptionEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+const smoking = Object.entries(smokingEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+const hydrationLevel = Object.entries(hydrationLevelEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+const takesMedication = Object.entries(takesMedicationEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
 </script>

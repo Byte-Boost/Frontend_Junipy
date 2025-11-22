@@ -1,4 +1,4 @@
-export enum consultationReasons {
+export enum consultationReasonsEnum {
     weightLoss = "auth.register.fields.anamnese.fields.consultationReason.choices.weightLoss",
     muscleGain = "auth.register.fields.anamnese.fields.consultationReason.choices.muscleGain",
     diabetesControl = "auth.register.fields.anamnese.fields.consultationReason.choices.diabetesControl",
