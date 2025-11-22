@@ -29,6 +29,14 @@
           <IconChat :size="20" color="black" class="btn-icon" />
           <span v-if="!isCollapsed" class="btn-text">{{ chatId }}</span>
         </button>
+        <button
+          class="sidebar-btn"
+          @click="newChat()"
+          :title="isCollapsed ? 'New Chat' : ''"
+        >
+          <IconAdd :size="20" color="black" class="btn-icon" />
+          <span v-if="!isCollapsed" class="btn-text">{{ $t("nav.newChat") }}</span>
+        </button>
       </div>
 
       <!-- Settings Section -->
@@ -65,17 +73,19 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from "vue";
-  import { useRouter } from "vue-router";
+  import { onMounted, ref, watch } from "vue";
+  import { useRoute, useRouter } from "vue-router";
   import IconChat from "./icons/IconChat.vue";
   import IconCog from "./icons/IconCog.vue";
   import IconChevronLeft from "./icons/IconChevronLeft.vue";
   import IconChevronRight from "./icons/IconChevronRight.vue";
   import "../styles/components/Sidebar.css";
   import IconLogout from "./icons/IconLogout.vue";
-import { getChatList } from "@/scripts/http-requests/endpoints";
+import { createNewChat, getChatList } from "@/scripts/http-requests/endpoints";
+import IconAdd from "./icons/IconAdd.vue";
 
   const chatIds = ref<string[]>([]);
+  const route = useRoute();
   const router = useRouter();
   const isCollapsed = ref(true);
 
@@ -83,12 +93,20 @@ import { getChatList } from "@/scripts/http-requests/endpoints";
   onMounted(async () => {
     chatIds.value = await getChatList();
   });
-
+  watch(
+    () => route.params.uuid,
+    async () => {
+      chatIds.value = await getChatList();
+    }
+  );
   const toggleSidebar = () => {
     isCollapsed.value = !isCollapsed.value;
   };
-
   const navigateTo = (path: string) => {
     router.push(path);
+  };
+  const newChat = async () => {
+    const newChatId = await createNewChat();
+    router.push(`/chat/${newChatId}`);
   };
 </script>

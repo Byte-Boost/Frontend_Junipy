@@ -51,3 +51,7 @@ export async function getChatList(){
   // TBD
   return ["890c7a4c7b9f", "de955a4cf098", "f80238a85df6"];
 }
+export async function createNewChat(){
+  // create new chat and return its UUID
+  return "42f3c9e8a1b7";
+}

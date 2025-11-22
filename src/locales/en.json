@@ -2,6 +2,7 @@
   "nav": {
     "title": "Navigation",
     "chat": "Junipy",
+    "newChat": "New Chat",
     "users": "Users",
     "settings": "Settings",
     "logout": "Logout"
