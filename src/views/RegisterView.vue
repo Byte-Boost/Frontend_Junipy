@@ -245,24 +245,21 @@ const handleRegister = async () => {
 };
 
 const handleOtherFields = async () => {
-  // No allergies, Other allergies
-  userInformation.value.allergies = userInformation.value.allergies.filter((item) => item !== "noAllergy");
+  // Other allergies
   if (userInformation.value.allergies.includes("otherAllergy")){
     userInformation.value.allergies = userInformation.value.allergies.filter((item) => item !== "otherAllergy");
     if (otherUserInformation.value.otherAllergies !== "")
       userInformation.value.allergies.push(otherUserInformation.value.otherAllergies);
   }
 
-  // No conditions, Other conditions
-  userInformation.value.healthConditions = userInformation.value.healthConditions.filter((item) => item !== "noCondition");
+  // Other conditions
   if (userInformation.value.healthConditions.includes("otherDisease")){
     userInformation.value.healthConditions = userInformation.value.healthConditions.filter((item) => item !== "otherDisease");
     if (otherUserInformation.value.otherHealthConditions !== "")
       userInformation.value.healthConditions.push(otherUserInformation.value.otherHealthConditions);
   }
 
-  // No surgeries, Other surgeries
-  userInformation.value.surgeries = userInformation.value.surgeries.filter((item) => item !== "noSurgery");
+  // Other surgeries
   if (userInformation.value.surgeries.includes("otherSurgery")){
     userInformation.value.surgeries = userInformation.value.surgeries.filter((item) => item !== "otherSurgery");
     if (otherUserInformation.value.otherSurgeries !== "")
@@ -275,6 +272,7 @@ const handleOtherFields = async () => {
       userInformation.value.activityType = otherUserInformation.value.otherActivities;
   }
 }
+
 const handleAnamneseSubmit = async () => {
   await handleOtherFields();
   loading.value = true;

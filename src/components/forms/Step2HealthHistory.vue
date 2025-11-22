@@ -53,6 +53,9 @@ import { computed } from "vue";
 import RadioGroup from "../RadioGroup.vue";
 import CheckboxGroup from "../CheckboxGroup.vue";
 import { useTypedI18n } from "@/composables/useI18n";
+import { surgeriesEnum } from "@/types/surgeries.enum";
+import { healthConditionsEnum } from "@/types/healthConditions.enum";
+import { allergiesEnum } from "@/types/allergies.enum";
 
 const { t } = useTypedI18n();
 const props = defineProps<{
@@ -117,145 +120,24 @@ const consultationOptions = [
     value: "physicalMentalPerformance",
   },
 ];
-const healthConditionsOptions = [
-  { text: t("common.no"), value: "noCondition" },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.type1Diabetes"
-    ),
-    value: "type1Diabetes",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.type2Diabetes"
-    ),
-    value: "type2Diabetes",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.hypertension"
-    ),
-    value: "hypertension",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.dyslipidemia"
-    ),
-    value: "dyslipidemia",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.kidneyDisease"
-    ),
-    value: "kidneyDisease",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.liverDisease"
-    ),
-    value: "liverDisease",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.gastritisReflux"
-    ),
-    value: "gastritisReflux",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.intestinalIssues"
-    ),
-    value: "intestinalIssues",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.osteoporosis"
-    ),
-    value: "osteoporose",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.cardiovascularDisease"
-    ),
-    value: "cardiovascularDisease",
-  },
-  {
-    text: t("auth.register.fields.anamnese.fields.conditions.choices.cancer"),
-    value: "cancer",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.depressionAnxiety"
-    ),
-    value: "depressionAnxiety",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.conditions.choices.autoimmuneDiseases"
-    ),
-    value: "autoimmuneDiseases",
-  },
-  {
-    text: t("common.other"),
-    value: "otherDisease",
-  },
-];
-const allergiesOptions = [
-  { text: t("common.no"), value: "noAllergy" },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.allergies.choices.lactoseIntolerance"
-    ),
-    value: "lactoseIntolerance",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.allergies.choices.glutenIntolerance"
-    ),
-    value: "glutenIntolerance",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.allergies.choices.foodAllergies"
-    ),
-    value: "foodAllergies",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.allergies.choices.medicalAllergies"
-    ),
-    value: "medicalAllergies",
-  },
-  { text: t("common.other"), value: "otherAllergy" },
-];
-const surgeriesOptions = [
-  { text: t("common.no"), value: "noSurgery" },
-  {
-    text: t("auth.register.fields.anamnese.fields.surgeries.choices.bariatric"),
-    value: "bariatric",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.surgeries.choices.gallbladder"
-    ),
-    value: "gallbladder",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.surgeries.choices.hiatalHernia"
-    ),
-    value: "hiatalHernia",
-  },
-  {
-    text: t(
-      "auth.register.fields.anamnese.fields.surgeries.choices.orthopedic"
-    ),
-    value: "orthopedic",
-  },
-  {
-    text: t("auth.register.fields.anamnese.fields.surgeries.choices.cesarean"),
-    value: "cesarean",
-  },
-  { text: t("common.other"), value: "otherSurgery" },
-];
+
+
+const healthConditionsOptions = Object.entries(healthConditionsEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+healthConditionsOptions.push({ text: t("common.other"), value: "otherDisease" });
+
+const allergiesOptions = Object.entries(allergiesEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+allergiesOptions.push({ text: t("common.other"), value: "otherAllergy" })
+
+const surgeriesOptions = Object.entries(surgeriesEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+surgeriesOptions.push({ text: t("common.other"), value: "otherSurgery" })
+
 </script>

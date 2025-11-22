@@ -1,0 +1,16 @@
+export enum healthConditionsEnum {
+    noCondition = "common.no",
+    type1Diabetes = "auth.register.fields.anamnese.fields.conditions.choices.type1Diabetes",
+    type2Diabetes = "auth.register.fields.anamnese.fields.conditions.choices.type2Diabetes",
+    hypertension = "auth.register.fields.anamnese.fields.conditions.choices.hypertension",
+    dyslipidemia = "auth.register.fields.anamnese.fields.conditions.choices.dyslipidemia",
+    liverDisease = "auth.register.fields.anamnese.fields.conditions.choices.liverDisease",
+    kidneyDisease = "auth.register.fields.anamnese.fields.conditions.choices.kidneyDisease",
+    gastritisReflux = "auth.register.fields.anamnese.fields.conditions.choices.gastritisReflux",
+    osteoporose = "auth.register.fields.anamnese.fields.conditions.choices.osteoporosis",
+    intestinalIssues = "auth.register.fields.anamnese.fields.conditions.choices.intestinalIssues",
+    cardiovascularDisease = "auth.register.fields.anamnese.fields.conditions.choices.cardiovascularDisease",
+    cancer = "auth.register.fields.anamnese.fields.conditions.choices.cancer",
+    depressionAnxiety = "auth.register.fields.anamnese.fields.conditions.choices.depressionAnxiety",
+    autoimmuneDiseases = "auth.register.fields.anamnese.fields.conditions.choices.autoimmuneDiseases",
+}

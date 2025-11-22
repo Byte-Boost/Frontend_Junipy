@@ -14,16 +14,16 @@
           v-if="currentStep === 1"
           :is="steps[currentStep]"
           v-model:userInfo="userInformation"
-          v-model:otherHealthConditions="otherHealthConditions"
-          v-model:otherAllergies="otherAllergies"
-          v-model:otherSurgeries="otherSurgeries"
+          v-model:otherHealthConditions="otherUserInformation.otherHealthConditions"
+          v-model:otherAllergies="otherUserInformation.otherAllergies"
+          v-model:otherSurgeries="otherUserInformation.otherSurgeries"
         />
     
         <component
           v-else-if="currentStep === 2"
           :is="steps[currentStep]"
           v-model:userInfo="userInformation"
-          v-model:otherActivities="otherActivities"
+          v-model:otherActivities="otherUserInformation.otherActivities"
         />
     
         <component
@@ -82,6 +82,9 @@ import { insertAnamnese } from "@/scripts/http-requests/endpoints";
 import type { UserInformation } from "@/models/models";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import { useTypedI18n } from "@/composables/useI18n";
+import { surgeriesEnum } from "@/types/surgeries.enum";
+import { healthConditionsEnum } from "@/types/healthConditions.enum";
+import { allergiesEnum } from "@/types/allergies.enum";
 
 const steps = [
   Step1PersonalInfo,
@@ -93,6 +96,12 @@ const steps = [
 
 const { t } = useTypedI18n();
 const currentStep = ref(0);
+const nextStep = () => {
+  if (currentStep.value < steps.length - 1) currentStep.value++;
+}
+const prevStep = () => {
+  if (currentStep.value > 0) currentStep.value--;
+}
 
 const isLoading = ref(true);
 const isSaving = ref(false);
@@ -100,43 +109,35 @@ const isFormChanged = ref(false);
 
 const originalUserInformation = ref<UserInformation | null>(null);
 const userInformation = ref<UserInformation>({
-  // Page 1
-  name: "",
   email: "",
+  name: "",
+  occupation: "",
   birthDate: "",
   age: 0,
   sex: "",
-  occupation: "",
-
-  // Page 2
-  consultationReason: "",
-  healthConditions: [],
-  allergies: [],
-  surgeries: [],
-
-  // Page 3
   activityType: "",
   activityFrequency: "",
   activityDuration: "",
-
-  // Page 4
   sleepQuality: "",
   wakeDuringNight: "",
   bowelFrequency: "",
-
-  // Page 5
   stressLevel: "",
   alcoholConsumption: "",
   smoking: "",
   hydrationLevel: "",
   takesMedication: "",
   medicationDetails: "",
+  consultationReason: "",
+  healthConditions: [],
+  allergies: [],
+  surgeries: []
 });
-
-const otherHealthConditions = ref("");
-const otherAllergies = ref("");
-const otherSurgeries = ref("");
-const otherActivities = ref("");
+const otherUserInformation = ref({
+  otherHealthConditions: "",
+  otherAllergies: "",
+  otherSurgeries: "",
+  otherActivities: "",
+});
 
 onMounted(async () => {
   await fetchProfileData();
@@ -150,67 +151,52 @@ async function fetchProfileData() {
   try {
     const { data } = await getProfileData();
     if (data != null && typeof(data) != "string") {
+      // calculates age for display
       data.age = Math.floor(
         (Date.now().valueOf() - new Date(data.birthDate).valueOf()) /
           (1000 * 60 * 60 * 24 * 365)
       );
+      // sets original value
       originalUserInformation.value = JSON.parse(JSON.stringify(data));
       if (originalUserInformation.value === null) {
         throw new Error("No user data found");
       }
-      otherHealthConditions.value = originalUserInformation.value[
-        "healthConditions"
-      ]
-        .filter(
-          (item: string) =>
-            ![
-              "no",
-              "type1Diabetes",
-              "type2Diabetes",
-              "hypertension",
-              "dyslipidemia",
-              "kidneyDisease",
-              "liverDisease",
-              "gastritisReflux",
-              "intestinalIssues",
-              "osteoporose",
-              "cardiovascularDisease",
-              "cancer",
-              "depressionAnxiety",
-              "autoimmuneDiseases",
-              "otherDisease",
-            ].includes(item)
-        )
+
+      // separates other HealthConditions
+      const healthConditionKeys = Object.keys(healthConditionsEnum) as Array<keyof typeof healthConditionsEnum>;
+      otherUserInformation.value.otherHealthConditions = originalUserInformation.value["healthConditions"]
+        .filter( (item: string) => !healthConditionKeys.includes(item as keyof typeof healthConditionsEnum))
         .join(", ");
-      otherAllergies.value = originalUserInformation.value["allergies"]
-        .filter(
-          (item: string) =>
-            ![
-              "no",
-              "lactoseIntolerance",
-              "glutenIntolerance",
-              "foodAllergies",
-              "medicalAllergies",
-              "otherAllergy",
-            ].includes(item)
-        )
+
+      // separates other Allergies
+      const allergyKeys = Object.keys(allergiesEnum) as Array<keyof typeof allergiesEnum>;
+      otherUserInformation.value.otherAllergies = originalUserInformation.value["allergies"]
+        .filter( (item: string) => !allergyKeys.includes(item as keyof typeof allergiesEnum))
         .join(", ");
-      otherSurgeries.value = originalUserInformation.value["surgeries"]
-        .filter(
-          (item: string) =>
-            ![
-              "no",
-              "bariatric",
-              "gallbladder",
-              "hiatalHernia",
-              "orthopedic",
-              "cesarean",
-              "otherSurgery",
-            ].includes(item)
-        )
+
+      // separates other Surgeries
+      const surgeryKeys = Object.keys(surgeriesEnum) as Array<keyof typeof surgeriesEnum>;
+      otherUserInformation.value.otherSurgeries = originalUserInformation.value["surgeries"]
+        .filter( (item: string) => !surgeryKeys.includes(item as keyof typeof surgeriesEnum))
         .join(", ");
+
       userInformation.value = data;
-      console.log(userInformation);
+
+      // makes other selections visible if they exist
+      if (otherUserInformation.value.otherHealthConditions !== "") {
+        userInformation.value.healthConditions = userInformation.value.healthConditions.filter((item: string) => healthConditionKeys.includes(item as keyof typeof healthConditionsEnum));
+        userInformation.value.healthConditions.push("otherDisease");
+      }
+      if (otherUserInformation.value.otherAllergies !== "") {
+        userInformation.value.allergies = userInformation.value.allergies.filter( (item: string) => allergyKeys.includes(item as keyof typeof allergiesEnum))
+        userInformation.value.allergies.push("otherAllergy");
+      }
+      if (otherUserInformation.value.otherSurgeries !== "") {
+        userInformation.value.surgeries = userInformation.value.surgeries.filter( (item: string) => surgeryKeys.includes(item as keyof typeof surgeriesEnum))
+        userInformation.value.surgeries.push("otherSurgery");
+      }
+      console.log(userInformation.value);
+      console.log(otherUserInformation.value);
     }
   } catch (error) {
     console.error("Failed to fetch profile:", error);
@@ -232,29 +218,8 @@ watch(
 async function saveProfile() {
   if (!isFormChanged.value || isSaving.value) return;
   isSaving.value = true;
-
   let localUserInfo = { ...userInformation.value };
-  if (localUserInfo.healthConditions.includes("outra")) {
-    localUserInfo.healthConditions = localUserInfo.healthConditions.filter(
-      (item) => item !== "outra"
-    );
-    localUserInfo.healthConditions.push(otherHealthConditions.value);
-  }
-  if (localUserInfo.allergies.includes("outra")) {
-    localUserInfo.allergies = localUserInfo.allergies.filter(
-      (item) => item !== "outra"
-    );
-    localUserInfo.allergies.push(otherAllergies.value);
-  }
-  if (localUserInfo.surgeries.includes("outra")) {
-    localUserInfo.surgeries = localUserInfo.surgeries.filter(
-      (item) => item !== "outra"
-    );
-    localUserInfo.surgeries.push(otherSurgeries.value);
-  }
-  if (localUserInfo.activityType === "outro") {
-    localUserInfo.activityType = otherActivities.value;
-  }
+  handleOtherFields(localUserInfo);
 
   try {
     await insertAnamnese(localUserInfo);
@@ -266,11 +231,32 @@ async function saveProfile() {
   }
 }
 
-function nextStep() {
-  if (currentStep.value < steps.length - 1) currentStep.value++;
-}
+function handleOtherFields(localUserInfo: UserInformation) {
+  // Other allergies
+  if (localUserInfo.allergies.includes("otherAllergy")){
+    localUserInfo.allergies = localUserInfo.allergies.filter((item) => item !== "otherAllergy");
+    if (otherUserInformation.value.otherAllergies !== "")
+      localUserInfo.allergies.push(otherUserInformation.value.otherAllergies);
+  }
 
-function prevStep() {
-  if (currentStep.value > 0) currentStep.value--;
+  // Other conditions
+  if (localUserInfo.healthConditions.includes("otherDisease")){
+    localUserInfo.healthConditions = localUserInfo.healthConditions.filter((item) => item !== "otherDisease");
+    if (otherUserInformation.value.otherHealthConditions !== "")
+      localUserInfo.healthConditions.push(otherUserInformation.value.otherHealthConditions);
+  }
+
+  // Other surgeries
+  if (localUserInfo.surgeries.includes("otherSurgery")){
+    localUserInfo.surgeries = localUserInfo.surgeries.filter((item) => item !== "otherSurgery");
+    if (otherUserInformation.value.otherSurgeries !== "")
+      localUserInfo.surgeries.push(otherUserInformation.value.otherSurgeries);
+  }
+
+  // Other activity type
+  if (localUserInfo.activityType == "otherActivity"){
+    if (otherUserInformation.value.otherActivities !== "")
+      localUserInfo.activityType = otherUserInformation.value.otherActivities;
+  }
 }
 </script>
