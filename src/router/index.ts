@@ -35,6 +35,13 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/chat/:uuid",
+    name: "chatId",
+    component: ChatView,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
     path: "/diet",
     name: "diet",
     component: DietView,

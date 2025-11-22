@@ -1,25 +1,3 @@
-<script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import IconChat from "./icons/IconChat.vue";
-import IconCog from "./icons/IconCog.vue";
-import IconChevronLeft from "./icons/IconChevronLeft.vue";
-import IconChevronRight from "./icons/IconChevronRight.vue";
-import "../styles/components/Sidebar.css";
-import IconLogout from "./icons/IconLogout.vue";
-
-const router = useRouter();
-
-const isCollapsed = ref(true);
-
-const toggleSidebar = () => {
-  isCollapsed.value = !isCollapsed.value;
-};
-
-const navigateTo = (path: string) => {
-  router.push(path);
-};
-</script>
 <template>
   <div class="sidebar" :class="{ collapsed: isCollapsed }">
     <div class="sidebar-content">
@@ -43,30 +21,15 @@ const navigateTo = (path: string) => {
             />
           </button>
         </div>
-        <button
+        <button v-for="chatId in chatIds" :key="chatId"
           class="sidebar-btn"
-          @click="navigateTo('/chat')"
+          @click="navigateTo(`/chat/${chatId}`)"
           :title="isCollapsed ? 'Chat' : ''"
         >
           <IconChat :size="20" color="black" class="btn-icon" />
-          <span v-if="!isCollapsed" class="btn-text">{{ $t("nav.chat") }}</span>
+          <span v-if="!isCollapsed" class="btn-text">{{ chatId }}</span>
         </button>
       </div>
-
-      <!-- Action Buttons -->
-      <!-- <div class="action-section">
-        <h3 v-if="!isCollapsed" class="section-title">Actions</h3>
-        <button
-          class="sidebar-btn"
-          @click="toggleTheme"
-          :title="isCollapsed ? 'Toggle Theme' : ''"
-        >
-          <span class="btn-icon">{{ isDarkMode ? "Light" : "Dark" }}</span>
-          <span v-if="!isCollapsed" class="btn-text">{{
-            isDarkMode ? "Light Mode" : "Dark Mode"
-          }}</span>
-        </button> 
-      </div> -->
 
       <!-- Settings Section -->
       <div class="settings-section">
@@ -74,6 +37,7 @@ const navigateTo = (path: string) => {
           {{ $t("nav.settings") }}
         </h3>
         <hr v-if="isCollapsed" />
+
         <button
           class="sidebar-btn"
           @click="navigateTo('/config')"
@@ -84,6 +48,7 @@ const navigateTo = (path: string) => {
             $t("nav.settings")
           }}</span>
         </button>
+
         <button
           class="sidebar-btn"
           @click="navigateTo('/login')"
@@ -98,3 +63,32 @@ const navigateTo = (path: string) => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import { onMounted, ref } from "vue";
+  import { useRouter } from "vue-router";
+  import IconChat from "./icons/IconChat.vue";
+  import IconCog from "./icons/IconCog.vue";
+  import IconChevronLeft from "./icons/IconChevronLeft.vue";
+  import IconChevronRight from "./icons/IconChevronRight.vue";
+  import "../styles/components/Sidebar.css";
+  import IconLogout from "./icons/IconLogout.vue";
+import { getChatList } from "@/scripts/http-requests/endpoints";
+
+  const chatIds = ref<string[]>([]);
+  const router = useRouter();
+  const isCollapsed = ref(true);
+
+
+  onMounted(async () => {
+    chatIds.value = await getChatList();
+  });
+
+  const toggleSidebar = () => {
+    isCollapsed.value = !isCollapsed.value;
+  };
+
+  const navigateTo = (path: string) => {
+    router.push(path);
+  };
+</script>

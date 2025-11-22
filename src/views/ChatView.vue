@@ -1,6 +1,5 @@
 <template>
   <div class="bg-[#EFE9E3]">
-  <!-- <CloudyBackground> -->
     <div class="chat-container">
 
       <div v-if="isLoading" class="loading-container">
@@ -74,7 +73,7 @@
               <textarea
                 :disabled="!hasReply || !isConnected"
                 v-model="input"
-                :placeholder="$t('chat.placeholder')"
+                :placeholder="$t('chat.placeholder')" 
                 class="chat-input"
                 :class="{ blocked: !hasReply || !isConnected }"
                 rows="1"
@@ -96,7 +95,7 @@
       </div>
 
     </div>
-  <!-- </CloudyBackground> --></div>
+  </div>
 </template>
 
 <script setup>
@@ -108,14 +107,17 @@ import IconSend from "@/components/icons/IconSend.vue";
 import { useChatSocket } from "@/scripts/websocket/chat";
 import { useTypedI18n } from "@/composables/useI18n";
 import "../styles/views/ChatView.scss";
-import CloudyBackground from "@/components/CloudyBackground.vue";
 import { copyToClipboard, formatTimestamp } from "@/scripts/utils/utils";
 import IconCopy from "@/components/icons/IconCopy.vue";
 import { useToast } from "vue-toastification";
+import { getChatList } from "@/scripts/http-requests/endpoints";
+import { useRouter } from "vue-router";
 
 const toast = useToast();
 const { t } = useTypedI18n();
+const props = defineProps({uuid: String})
 
+const router = useRouter();
 const defaultText = t("chat.greetingMessage");
 const errorText = t("errors.ai.503");
 const isLoading = ref(true);
@@ -135,18 +137,27 @@ const {
   sendMessage: socketSendMessage,
 } = useChatSocket(userId.value);
 
-onMounted(async () => {
-  token.value = localStorage.getItem("token") || "";
-  if (token.value) {
-    if (messages.value.length === 0) {
-      messages.value.push({ role: "assistant", content: defaultText });
+watch(
+  () => props.uuid,
+  async (newUuid) => {
+    if (!newUuid) {
+      const firstOrNewChat = (await getChatList())[0];
+      router.push(`/chat/${firstOrNewChat}`)
+    } else {
+      token.value = localStorage.getItem("token") || "";
+      if (token.value) {
+        if (messages.value.length === 0) {
+          messages.value.push({ role: "assistant", content: defaultText });
+        }
+      } else {
+        console.warn("No token found in localStorage.");
+        messages.value.push({ role: "assistant", content: errorText });
+      }
+      connect(token.value);
     }
-  } else {
-    console.warn("No token found in localStorage.");
-    messages.value.push({ role: "assistant", content: errorText });
-  }
-  connect(token.value);
-});
+},
+  { immediate: true }
+)
 
 watch(isConnected, (newVal) => {
   if (newVal) {
@@ -168,6 +179,7 @@ watch(isConnected, (newVal) => {
     }, 5000);
   }
 });
+
 function adjustHeight() {
   nextTick(() => {
     if (textareaRef.value) {
