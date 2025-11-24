@@ -1,20 +1,14 @@
 import apiClient from "./instance";
 import type { UserInformation } from "@/models/models";
 
-export async function register(
-  user: {
-    email: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-  },
-  userInfo: UserInformation
-) {
-  console.log(user, userInfo);
-  const response = await apiClient.post("/api/auth/register", {
-    ...user,
-    userProfile: userInfo,
-  });
+export async function register(user: {email: string; username: string; password: string; confirmPassword: string;}) {
+  const response = await apiClient.post("/api/auth/register", user);
+  return response.data;
+}
+
+export async function insertAnamnese(userInfo: UserInformation){
+  console.log(userInfo);
+  const response = await apiClient.post("/api/user/profile-data", userInfo);
   return response.data;
 }
 
@@ -47,13 +41,17 @@ export async function dietRequestAnalisys(dietId: string) {
   return response.data;
 }
 
-export async function patchProfileData(userInfo: UserInformation){
-  console.log(userInfo);
-  const response = await apiClient.post("/api/user/profile-data", userInfo);
-  return response.data;
-}
-
 export async function getAllUsers() {
   const response = await apiClient.get("/api/user");
   return response.data;
+}
+
+export async function getChatList(){
+  // get chats UUIDs (create one if not exist, return as array)
+  // TBD
+  return ["890c7a4c7b9f", "de955a4cf098", "f80238a85df6"];
+}
+export async function createNewChat(){
+  // create new chat and return its UUID
+  return "42f3c9e8a1b7";
 }

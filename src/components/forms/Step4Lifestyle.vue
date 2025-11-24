@@ -3,7 +3,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.sleepQuality"
-        :title="'Qual a qualidade do seu sono'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.sleepQuality.title')
+        "
         :options="sleepQuality"
       />
     </div>
@@ -11,7 +13,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.wakeDuringNight"
-        :title="'Acorda durante a noite?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.nightInterruptions.title')
+        "
         :options="wakeDuringNight"
       />
     </div>
@@ -19,7 +23,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.bowelFrequency"
-        :title="'Quantas vezes por semana você evacua?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.intestinalHabits.title')
+        "
         :options="bowelFrequency"
       />
     </div>
@@ -30,26 +36,25 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
+import { SleepQualityEnum } from "@/types/enums/SleepQualityEnum";
+import { WakeDuringNightEnum } from "@/types/enums/WakeDuringNightEnum";
+import { BowelFrequencyEnum } from "@/types/enums/BowelFrequencyEnum";
+import { useTypedI18n } from "@/composables/useI18n";
 
+const { t } = useTypedI18n();
 const props = defineProps<{ userInfo: UserInformation }>();
 const emit = defineEmits<{
   (e: "update:userInfo", value: UserInformation): void;
 }>();
 
-const sleepQuality = [
-  { text: "Boa", value: "good" },
-  { text: "Regular", value: "average" },
-  { text: "Ruim", value: "bad" },
-];
-const wakeDuringNight = [
-  { text: "Não", value: "no" },
-  { text: "Pelo menos 1 x", value: "once" },
-  { text: "Mais que 1 x por noite", value: "multiple" },
-];
-const bowelFrequency = [
-  { text: "Todo dia", value: "everyday" },
-  { text: "5 x por semana", value: "five per week" },
-  { text: "3 x por semana", value: "three per week" },
-  { text: "1 x por semana", value: "once per week" },
-];
+const sleepQuality = Object.entries(SleepQualityEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));const wakeDuringNight = Object.entries(WakeDuringNightEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));const bowelFrequency = Object.entries(BowelFrequencyEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
 </script>

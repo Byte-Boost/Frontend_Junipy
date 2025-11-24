@@ -1,7 +1,11 @@
 <template>
   <div class="checkbox-group">
     <p class="checkbox-title">{{ title }}</p>
-    <div v-for="option in options" :key="option.value" class="checkbox-option">
+    <div
+      v-for="option in options"
+      :key="option.value"
+      class="checkbox-option"
+    >
       <input
         type="checkbox"
         :id="option.value"
@@ -27,6 +31,7 @@ const props = defineProps<{
   title: string;
   options: CheckboxOption[];
   modelValue: string[];
+  exclusiveValue?: string;
 }>();
 
 const emit = defineEmits<{
@@ -35,11 +40,24 @@ const emit = defineEmits<{
 
 function onChange(value: string, checked: boolean) {
   let newValue = [...props.modelValue];
-  if (checked) {
+
+  if (checked && props.exclusiveValue && value === props.exclusiveValue) {
+    newValue = [props.exclusiveValue]; // clear everything else
+  }
+
+  else if (checked && props.exclusiveValue && newValue.includes(props.exclusiveValue)) {
+    newValue = newValue.filter(v => v !== props.exclusiveValue);
+    newValue.push(value);
+  }
+
+  else if (checked) {
     if (!newValue.includes(value)) newValue.push(value);
-  } else {
+  } 
+  
+  else {
     newValue = newValue.filter(v => v !== value);
   }
+
   emit("update:modelValue", newValue);
 }
 </script>

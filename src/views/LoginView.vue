@@ -21,7 +21,7 @@
                     :placeholder="$t('auth.login.fields.email.placeholder')"
                   />
                   <IconMail
-                    class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                    class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
                   />
                 </div>
               </div>
@@ -39,7 +39,7 @@
                     :placeholder="$t('auth.login.fields.password.placeholder')"
                   />
                   <IconKey
-                    class="absolute left-3 text-gray-400 peer-focus:text-white transition-colors"
+                    class="absolute left-3 text-gray-400 peer-focus:text-black transition-colors"
                   />
                 </div>
               </div>
@@ -64,11 +64,8 @@
           </form>
         </section>
         <p class="flex content-center flex-wrap gap-3 justify-center">
-          <a href="/forgot-password">{{
-            $t("auth.login.actions.forgotPassword")
-          }}</a>
           <span class="font-extrabold text-gray-400">•</span>
-          <a href="/register">{{ $t("auth.login.actions.noAccount") }}</a>
+          <span class="text-black">{{ $t("auth.login.actions.noAccount") }}</span><a href="/register">{{ $t("auth.login.actions.noAccountOption") }}</a>
         </p>
       </div>
     </div>
@@ -81,7 +78,7 @@ import { useRouter } from "vue-router";
 import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
 import Swal from "sweetalert2";
-import "../styles/views/LoginView.css";
+import "../styles/views/LoginView.scss";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconMail from "@/components/icons/IconMail.vue";
 import IconKey from "@/components/icons/IconKey.vue";

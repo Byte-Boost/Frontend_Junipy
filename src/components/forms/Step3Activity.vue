@@ -3,7 +3,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.activityType"
-        :title="'Qual atividade mais te descreve?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.physicalActivities.label')
+        "
         :options="activityOptions"
       />
     </div>
@@ -14,7 +16,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.activityFrequency"
-        :title="'Com que frequência pratica Atividade física?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.physicalActivities.frequency.title')
+        "
         :options="activityFrequency"
       />
     </div>
@@ -22,7 +26,9 @@
     <div class="form-row">
       <RadioGroup
         v-model="userInfo.activityDuration"
-        :title="'Quantos minutos por dia de Atividade fisica?'"
+        :title="
+          $t('auth.register.fields.anamnese.fields.physicalActivities.time.title')
+        "
         :options="activityDuration"
       />
     </div>
@@ -33,8 +39,13 @@
 import "../../styles/components/Forms.css";
 import type { UserInformation } from "@/models/models";
 import RadioGroup from "../RadioGroup.vue";
-import { computed, watch } from "vue";
+import { computed } from "vue";
+import { ActivityTypeEnum } from "@/types/enums/ActivityTypeEnum";
+import { ActivityFrequencyEnum } from "@/types/enums/ActivityFrequencyEnum";
+import { ActivityDurationEnum } from "@/types/enums/ActivityDurationEnum";
+import { useTypedI18n } from "@/composables/useI18n";
 
+const { t } = useTypedI18n();
 const props = defineProps<{
   userInfo: UserInformation;
   otherActivities: string;
@@ -50,25 +61,18 @@ const localOtherActivities = computed({
   set: (val) => emit("update:otherActivities", val),
 });
 
-const activityOptions = [
-  { text: "Sedentário(a)", value: "sedentary" },
-  { text: "Caminhada", value: "walking" },
-  { text: "Musculação", value: "weightlifting" },
-  { text: "Corrida", value: "running" },
-  { text: "Crossfit", value: "crossfit" },
-  { text: "Natação", value: "swimming" },
-  // { text: "Outro", value: "other" },
-];
-const activityFrequency = [
-  { text: "Nunca", value: "never" },
-  { text: "1-2x por semana", value: "1-2 times/week" },
-  { text: "3-4x por semana", value: "3-4 times/week" },
-  { text: "5 ou mais vezes por semana", value: "5-6 times/week" },
-];
-const activityDuration = [
-  { text: "Não pratico", value: "0min" },
-  { text: "30 minutos", value: "30min" },
-  { text: "60 minutos", value: "60min" },
-  { text: "90 minutos", value: "90min" },
-];
+const activityOptions = Object.entries(ActivityTypeEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+activityOptions.push({ text: t("common.other"), value: "otherActivity" })
+
+const activityFrequency = Object.entries(ActivityFrequencyEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
+const activityDuration = Object.entries(ActivityDurationEnum).map(([key, value]) => ({
+  value: key,
+  text: t(value),
+}));
 </script>

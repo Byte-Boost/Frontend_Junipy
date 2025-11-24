@@ -2,6 +2,7 @@
   "nav": {
     "title": "Navigation",
     "chat": "Junipy",
+    "newChat": "New Chat",
     "users": "Users",
     "settings": "Settings",
     "logout": "Logout"
@@ -22,7 +23,8 @@
       "actions": {
         "submit": "Sign in",
         "forgotPassword": "Forgot password?",
-        "noAccount": "Don't have an account?"
+        "noAccount": "Don't have an account?",
+        "noAccountOption": "Sign up"
       }
     },
     "register": {
@@ -90,6 +92,7 @@
               "frequency": {
                 "title": "Frequency",
                 "choices": {
+                  "never": "Never",
                   "1-2": "1-2 times per week",
                   "3-4": "3-4 times per week",
                   "5+": "5 or more times per week"
@@ -98,6 +101,7 @@
               "time": {
                 "title": "How many minutes per day of physical activity?",
                 "choices": {
+                  "none": "None",
                   "30": "30 minutes",
                   "60": "60 minutes",
                   "90": "90 minutes"
@@ -204,7 +208,12 @@
                 "autoimmuneDiseases": "Autoimmune diseases"
               }
             }
-          }
+          },
+          "actions": {
+            "submit": "Finish",
+            "skip": "Skip for now"
+          },
+          "success": "Finished setting up your profile!"
         },
         "username": {
           "label": "Username",
@@ -225,8 +234,10 @@
       },
       "actions": {
         "submit": "Register",
-        "hasAccount": "Already have an account?"
-      }
+        "hasAccount": "Already have an account?",
+        "hasAccountOption": "Sign in"
+      },
+      "success": "Successfully registered! You can now log in."
     }
   },
   "chat": {

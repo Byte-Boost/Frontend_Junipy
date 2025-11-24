@@ -1,13 +1,15 @@
 <template>
-  <CloudyBackground>
+  <div class="bg-[#EFE9E3]">
     <div class="chat-container">
+
       <div v-if="isLoading" class="loading-container">
         <div
           class="w-6 h-6 border-4 border-gray-300 border-t-[#48b684] rounded-full animate-spin"
         ></div>
       </div>
-      <div v-else class="chat-layout w-full h-full flex-row flex">
-        <section class="chat flex flex-col w-5/5">
+
+      <div v-else class="w-full h-full flex justify-center">
+        <section class="chat flex flex-col w-3/5">
           <div class="messages">
             <div
               v-for="(msg, i) in messages"
@@ -66,12 +68,12 @@
           <section class="chat-box">
             <form
               @submit.prevent="sendMessage"
-              class="input-container input-relative"
+              class="input-container"
             >
               <textarea
                 :disabled="!hasReply || !isConnected"
                 v-model="input"
-                :placeholder="$t('chat.placeholder')"
+                :placeholder="$t('chat.placeholder')" 
                 class="chat-input"
                 :class="{ blocked: !hasReply || !isConnected }"
                 rows="1"
@@ -79,34 +81,43 @@
                 @input="adjustHeight"
                 ref="textareaRef"
               ></textarea>
+
+
               <button
                 type="submit"
                 :disabled="!input.trim() || !hasReply || !isConnected"
               >
-                <IconSend :size="64" color="white" />
-              </button>
+                <IconSend :size="48" color="gray" />
+              </button >
             </form>
           </section>
         </section>
       </div>
+
     </div>
-  </CloudyBackground>
+  </div>
 </template>
+
 <script setup>
+
+
 import { ref, onMounted, nextTick, watch } from "vue";
 import { marked } from "marked";
 import IconSend from "@/components/icons/IconSend.vue";
 import { useChatSocket } from "@/scripts/websocket/chat";
 import { useTypedI18n } from "@/composables/useI18n";
-import "../styles/views/ChatView.css";
-import CloudyBackground from "@/components/CloudyBackground.vue";
+import "../styles/views/ChatView.scss";
 import { copyToClipboard, formatTimestamp } from "@/scripts/utils/utils";
 import IconCopy from "@/components/icons/IconCopy.vue";
 import { useToast } from "vue-toastification";
+import { getChatList } from "@/scripts/http-requests/endpoints";
+import { useRouter } from "vue-router";
 
 const toast = useToast();
 const { t } = useTypedI18n();
+const props = defineProps({uuid: String})
 
+const router = useRouter();
 const defaultText = t("chat.greetingMessage");
 const errorText = t("errors.ai.503");
 const isLoading = ref(true);
@@ -126,18 +137,27 @@ const {
   sendMessage: socketSendMessage,
 } = useChatSocket(userId.value);
 
-onMounted(async () => {
-  token.value = localStorage.getItem("token") || "";
-  if (token.value) {
-    if (messages.value.length === 0) {
-      messages.value.push({ role: "assistant", content: defaultText });
+watch(
+  () => props.uuid,
+  async (newUuid) => {
+    if (!newUuid) {
+      const firstOrNewChat = (await getChatList())[0];
+      router.push(`/chat/${firstOrNewChat}`)
+    } else {
+      token.value = localStorage.getItem("token") || "";
+      if (token.value) {
+        if (messages.value.length === 0) {
+          messages.value.push({ role: "assistant", content: defaultText });
+        }
+      } else {
+        console.warn("No token found in localStorage.");
+        messages.value.push({ role: "assistant", content: errorText });
+      }
+      connect(token.value);
     }
-  } else {
-    console.warn("No token found in localStorage.");
-    messages.value.push({ role: "assistant", content: errorText });
-  }
-  connect(token.value);
-});
+},
+  { immediate: true }
+)
 
 watch(isConnected, (newVal) => {
   if (newVal) {
@@ -159,6 +179,7 @@ watch(isConnected, (newVal) => {
     }, 5000);
   }
 });
+
 function adjustHeight() {
   nextTick(() => {
     if (textareaRef.value) {
