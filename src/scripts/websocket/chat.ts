@@ -8,11 +8,11 @@ export function useChatSocket(userId: string, chatId: string) {
   const isConnected: Ref<boolean> = ref(false);
   const hasReply: Ref<boolean> = ref(true);
   const client: Ref<Client | null> = ref(null);
-  let localToken = "";
+  const localToken: Ref<string> = ref("");
   const { t } = useTypedI18n();
 
   function connect(token: string) {
-    localToken = token;
+    localToken.value = token;
 
     const wsUrl = `${import.meta.env.VITE_API_URL.replace(
       /^http/,
@@ -77,7 +77,7 @@ export function useChatSocket(userId: string, chatId: string) {
     const payload = {
       userId,
       message: content,
-      token: localToken,
+      token: localToken.value,
     };
 
     client.value.publish({

@@ -204,7 +204,7 @@ watch(isConnected, (newVal) => {
   }
 });
 onMounted(() => {
-  console.log("Fish");
+  token.value = localStorage.getItem("token") || "";
   connect(token.value);
 });
 function adjustHeight() {

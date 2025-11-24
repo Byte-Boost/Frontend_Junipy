@@ -109,7 +109,7 @@ const navigateTo = (path: string) => {
   router.push(path);
 };
 const newChat = async () => {
-  const newChatId = await createNewChat();
+  const newChatId = (await createNewChat()).id;
   router.push(`/chat/${newChatId}`);
 };
 </script>
