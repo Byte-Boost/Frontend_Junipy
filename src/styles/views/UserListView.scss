@@ -1,0 +1,22 @@
+.user-list-page {
+  padding: 1rem;
+}
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  th, td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    text-align: left;
+  }
+  th {
+    background-color: #ccc;
+    font-weight: bold;
+  }
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
+}

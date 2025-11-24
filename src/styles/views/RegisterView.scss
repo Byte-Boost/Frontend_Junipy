@@ -1,0 +1,104 @@
+input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px !important;
+}
+
+.register-anamnese-card {
+  height: 65vh;
+  width: 42rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--color-background-mute);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: .5rem;
+  
+  button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    background: #48b684;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bolder;
+    width: 25%;
+  }
+}
+.register-anamnese-skip{
+  float: right;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+.register-card {
+  max-height: 65vh;
+  width: 32rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: var(--color-background-mute);
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: .5rem;
+
+  button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 3px;
+    background: #48b684;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bolder;
+    width: 100%;
+  }
+}
+.register-card-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+.register-card-form {
+  background-color: var(--color-background-soft);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.8rem;
+  border-radius: 8px;
+  flex-grow: 1;
+  overflow-y: auto; 
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.register-card-title, .register-card-footer{
+  flex-grow: 0;
+}
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.register-form {
+  button:disabled {
+    background: #9999997a;
+    cursor: not-allowed;
+  }
+}
+
+
+.extra {
+  margin-top: 1rem;
+  text-align: center;
+}
+.error {
+  margin-top: 1rem;
+  color: red;
+  font-weight: bold;
+}

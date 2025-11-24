@@ -2,7 +2,7 @@
   <CloudyBackground>
     <div class="diet-container p-8 flex flex-col min-h-screen w-full">
       <header class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-white">Minha dieta</h1>
+        <h1 class="text-2xl font-semibold">Minha dieta</h1>
 
         <!-- Status badge -->
         <div
@@ -30,7 +30,7 @@
           <div>
             <div v-html="renderMarkdown(diet?.markdownDiet)"></div>
 
-            <div v-if="!diet?.markdownDiet" class="text-center text-gray-400 mt-6">
+            <div v-if="!diet?.markdownDiet" class="text-center mt-6">
               Nenhuma dieta disponível.
             </div>
           </div>
@@ -74,13 +74,13 @@ const statusLabel = computed(() => status.value);
 const statusClass = computed(() => {
   switch (status.value) {
     case "Em Revisão":
-      return "bg-blue-500/20 text-blue-300 border-blue-400/40";
+      return "bg-blue-500/40 text-blue-300 border-blue-400/60";
     case "Aprovado":
-      return "bg-green-500/20 text-green-300 border-green-400/40";
+      return "bg-green-500/40 text-green-300 border-green-400/60";
     case "Recusado":
-      return "bg-red-500/20 text-red-300 border-red-400/40";
+      return "bg-red-500/40 text-red-300 border-red-400/60";
     default:
-      return "bg-yellow-500/20 text-yellow-300 border-yellow-400/40";
+      return "bg-yellow-500/40 text-yellow-300 border-yellow-400/60";
   }
 });
 
@@ -167,6 +167,9 @@ onMounted(loadDiet);
 <style scoped>
 .diet-container {
   min-height: 100vh;
+}
+.diet-container * {
+  color: var(--label-color)
 }
 .prose {
   max-width: none;

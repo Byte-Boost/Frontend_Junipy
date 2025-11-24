@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import type { useToast } from "vue-toastification";
 
 function copyToClipboard(
@@ -26,6 +27,7 @@ function formatTimestamp(timestamp: number): string {
     minute: "2-digit",
   });
 }
+
 function hasNullValues(obj: Record<string, any>): boolean {
   for (const key in obj) {
     if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
@@ -36,4 +38,17 @@ function hasNullValues(obj: Record<string, any>): boolean {
   return false;
 }
 
-export { copyToClipboard, formatTimestamp, hasNullValues };
+const successAlert = (text: string, log: string, cb: Function=()=>{}) : void =>{
+  Swal.fire({
+    title: 'Sucesso',
+    text: text,
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1750,
+    timerProgressBar: true,
+  })
+  console.log(log)
+  cb()
+}
+
+export { copyToClipboard, formatTimestamp, hasNullValues, successAlert };

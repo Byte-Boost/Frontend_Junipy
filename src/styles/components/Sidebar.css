@@ -4,10 +4,10 @@
   top: 0;
   height: 100vh;
   width: 250px;
-  background: #1c1c1c;
+  background:  #f4f4f4;
   background-repeat: repeat;
   background-size: 50px;
-  color: white;
+  color: var(--label-color);
   transition: width 0.3s ease;
   z-index: 1000;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -19,9 +19,9 @@
 }
 
 .toggle-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0 0.1);
   border: none;
-  color: white;
+  color: var(--label-color);
   width: 32px;
   height: 32px;
   border-radius: 6px;
@@ -35,7 +35,7 @@
 }
 
 .toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0 0.2);
 }
 
 .toggle-icon {
@@ -75,7 +75,7 @@
 
 .section-title {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
   margin: 0;
   font-weight: 600;
   text-transform: uppercase;
@@ -95,7 +95,7 @@
   padding: 12px 20px;
   background: none;
   border: none;
-  color: white;
+  color: var(--label-color);
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
@@ -110,7 +110,7 @@
 }
 
 .sidebar-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0 0.1);
 }
 
 .sidebar.collapsed .sidebar-btn:hover {
@@ -138,7 +138,7 @@
   top: 50%;
   transform: translateY(-50%);
   background: rgba(0, 0, 0, 0.8);
-  color: white;
+  color: var(--label-color);
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 12px;
