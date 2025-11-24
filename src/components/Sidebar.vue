@@ -21,7 +21,9 @@
             />
           </button>
         </div>
-        <button v-for="chatId in chatIds" :key="chatId"
+        <button
+          v-for="chatId in chatIds"
+          :key="chatId"
           class="sidebar-btn"
           @click="navigateTo(`/chat/${chatId}`)"
           :title="isCollapsed ? 'Chat' : ''"
@@ -35,7 +37,9 @@
           :title="isCollapsed ? 'New Chat' : ''"
         >
           <IconAdd :size="20" color="black" class="btn-icon" />
-          <span v-if="!isCollapsed" class="btn-text">{{ $t("nav.newChat") }}</span>
+          <span v-if="!isCollapsed" class="btn-text">{{
+            $t("nav.newChat")
+          }}</span>
         </button>
       </div>
 
@@ -73,40 +77,39 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, watch } from "vue";
-  import { useRoute, useRouter } from "vue-router";
-  import IconChat from "./icons/IconChat.vue";
-  import IconCog from "./icons/IconCog.vue";
-  import IconChevronLeft from "./icons/IconChevronLeft.vue";
-  import IconChevronRight from "./icons/IconChevronRight.vue";
-  import "../styles/components/Sidebar.css";
-  import IconLogout from "./icons/IconLogout.vue";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import IconChat from "./icons/IconChat.vue";
+import IconCog from "./icons/IconCog.vue";
+import IconChevronLeft from "./icons/IconChevronLeft.vue";
+import IconChevronRight from "./icons/IconChevronRight.vue";
+import "../styles/components/Sidebar.css";
+import IconLogout from "./icons/IconLogout.vue";
 import { createNewChat, getChatList } from "@/scripts/http-requests/endpoints";
 import IconAdd from "./icons/IconAdd.vue";
 
-  const chatIds = ref<string[]>([]);
-  const route = useRoute();
-  const router = useRouter();
-  const isCollapsed = ref(true);
+const chatIds = ref<string[]>([]);
+const route = useRoute();
+const router = useRouter();
+const isCollapsed = ref(true);
 
-
-  onMounted(async () => {
-    chatIds.value = await getChatList();
-  });
-  watch(
-    () => route.params.uuid,
-    async () => {
-      chatIds.value = await getChatList();
-    }
-  );
-  const toggleSidebar = () => {
-    isCollapsed.value = !isCollapsed.value;
-  };
-  const navigateTo = (path: string) => {
-    router.push(path);
-  };
-  const newChat = async () => {
-    const newChatId = await createNewChat();
-    router.push(`/chat/${newChatId}`);
-  };
+onMounted(async () => {
+  chatIds.value = (await getChatList()).map((chat) => chat.id);
+});
+watch(
+  () => route.params.uuid,
+  async () => {
+    chatIds.value = (await getChatList()).map((chat) => chat.id);
+  }
+);
+const toggleSidebar = () => {
+  isCollapsed.value = !isCollapsed.value;
+};
+const navigateTo = (path: string) => {
+  router.push(path);
+};
+const newChat = async () => {
+  const newChatId = await createNewChat();
+  router.push(`/chat/${newChatId}`);
+};
 </script>

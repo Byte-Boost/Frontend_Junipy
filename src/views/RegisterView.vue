@@ -8,7 +8,8 @@
         />
         <div class="register-card-footer">
           <div class="register-card-buttons">
-            <button class="px-4 py-2 flex items-center justify-center gap-2"
+            <button
+              class="px-4 py-2 flex items-center justify-center gap-2"
               @click="handleRegister()"
               :disabled="loading"
             >
@@ -23,18 +24,22 @@
               <IconRightArrow class="w-5 h-5" />
             </button>
           </div>
-  
+
           <p class="extra">
-            <span>{{ $t("auth.register.actions.hasAccount") }}</span> <a href="/login">{{ $t("auth.register.actions.hasAccountOption") }} </a>
+            <span>{{ $t("auth.register.actions.hasAccount") }}</span>
+            <a href="/login"
+              >{{ $t("auth.register.actions.hasAccountOption") }}
+            </a>
           </p>
         </div>
       </div>
 
       <div v-else class="register-anamnese-card">
-        
         <h1 class="register-card-title text-2xl pb-5">
           {{ $t("auth.register.title") }}
-          <a class="register-anamnese-skip" href="/login">{{ $t("auth.register.fields.anamnese.actions.skip") }}</a>
+          <a class="register-anamnese-skip" href="/login">{{
+            $t("auth.register.fields.anamnese.actions.skip")
+          }}</a>
           <p class="text-sm">
             Passo {{ currentStep }} de {{ steps.length - 1 }}
           </p>
@@ -45,24 +50,25 @@
             v-if="currentStep === 2"
             :is="steps[currentStep]"
             v-model:userInfo="userInformation"
-            v-model:otherHealthConditions="otherUserInformation.otherHealthConditions"
+            v-model:otherHealthConditions="
+              otherUserInformation.otherHealthConditions
+            "
             v-model:otherAllergies="otherUserInformation.otherAllergies"
             v-model:otherSurgeries="otherUserInformation.otherSurgeries"
           />
-      
+
           <component
             v-else-if="currentStep === 3"
             :is="steps[currentStep]"
             v-model:userInfo="userInformation"
             v-model:otherActivities="otherUserInformation.otherActivities"
           />
-      
+
           <component
             v-else
             :is="steps[currentStep]"
             v-model:userInfo="userInformation"
           />
-
         </div>
 
         <div class="register-card-footer">
@@ -118,7 +124,6 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </CloudyBackground>
@@ -132,7 +137,11 @@ import Step3Activity from "@/components/forms/Step3Activity.vue";
 import Step4Lifestyle from "@/components/forms/Step4Lifestyle.vue";
 import Step5Habits from "@/components/forms/Step5Habits.vue";
 import { ref } from "vue";
-import { insertAnamnese, login, register } from "@/scripts/http-requests/endpoints";
+import {
+  insertAnamnese,
+  login,
+  register,
+} from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
 import "../styles/views/RegisterView.scss";
 import CloudyBackground from "@/components/CloudyBackground.vue";
@@ -194,7 +203,7 @@ const userInformation = ref<UserInformation>({
   consultationReason: "",
   healthConditions: [],
   allergies: [],
-  surgeries: []
+  surgeries: [],
 });
 const otherUserInformation = ref({
   otherHealthConditions: "",
@@ -205,12 +214,11 @@ const otherUserInformation = ref({
 
 const handleRegister = async () => {
   let user = {
-    username: userCredentials.value.username,
     email: userCredentials.value.email,
-    password: userCredentials.value.password??"",
-    confirmPassword: userCredentials.value.confirmPassword??"",
+    password: userCredentials.value.password ?? "",
+    confirmPassword: userCredentials.value.confirmPassword ?? "",
   };
-  
+
   loading.value = true;
   if (hasNullValues(user)) {
     toast.error(t("errors.auth.registrationFailed"));
@@ -226,8 +234,8 @@ const handleRegister = async () => {
   try {
     const registerResponse = await register(user);
     successAlert(t("auth.register.success"), "User registered successfully");
-    
-    const loginResponse = (await login(user.email, user.password));
+
+    const loginResponse = await login(user.email, user.password);
     if (loginResponse.token) {
       localStorage.setItem("token", loginResponse.token);
     }
@@ -240,49 +248,64 @@ const handleRegister = async () => {
   } finally {
     loading.value = false;
   }
-
-
 };
 
 const handleOtherFields = async () => {
   // Other allergies
-  if (userInformation.value.allergies.includes("otherAllergy")){
-    userInformation.value.allergies = userInformation.value.allergies.filter((item) => item !== "otherAllergy");
+  if (userInformation.value.allergies.includes("otherAllergy")) {
+    userInformation.value.allergies = userInformation.value.allergies.filter(
+      (item) => item !== "otherAllergy"
+    );
     if (otherUserInformation.value.otherAllergies !== "")
-      userInformation.value.allergies.push(otherUserInformation.value.otherAllergies);
+      userInformation.value.allergies.push(
+        otherUserInformation.value.otherAllergies
+      );
   }
 
   // Other conditions
-  if (userInformation.value.healthConditions.includes("otherDisease")){
-    userInformation.value.healthConditions = userInformation.value.healthConditions.filter((item) => item !== "otherDisease");
+  if (userInformation.value.healthConditions.includes("otherDisease")) {
+    userInformation.value.healthConditions =
+      userInformation.value.healthConditions.filter(
+        (item) => item !== "otherDisease"
+      );
     if (otherUserInformation.value.otherHealthConditions !== "")
-      userInformation.value.healthConditions.push(otherUserInformation.value.otherHealthConditions);
+      userInformation.value.healthConditions.push(
+        otherUserInformation.value.otherHealthConditions
+      );
   }
 
   // Other surgeries
-  if (userInformation.value.surgeries.includes("otherSurgery")){
-    userInformation.value.surgeries = userInformation.value.surgeries.filter((item) => item !== "otherSurgery");
+  if (userInformation.value.surgeries.includes("otherSurgery")) {
+    userInformation.value.surgeries = userInformation.value.surgeries.filter(
+      (item) => item !== "otherSurgery"
+    );
     if (otherUserInformation.value.otherSurgeries !== "")
-      userInformation.value.surgeries.push(otherUserInformation.value.otherSurgeries);
+      userInformation.value.surgeries.push(
+        otherUserInformation.value.otherSurgeries
+      );
   }
 
   // Other activity type
-  if (userInformation.value.activityType == "otherActivity"){
+  if (userInformation.value.activityType == "otherActivity") {
     if (otherUserInformation.value.otherActivities !== "")
-      userInformation.value.activityType = otherUserInformation.value.otherActivities;
+      userInformation.value.activityType =
+        otherUserInformation.value.otherActivities;
   }
 
   // Medication
   if (userInformation.value.takesMedication == "noMedication")
     userInformation.value.medicationDetails = "";
-}
+};
 
 const handleAnamneseSubmit = async () => {
   await handleOtherFields();
   loading.value = true;
   try {
     const response = await insertAnamnese(userInformation.value);
-    successAlert(t("auth.register.fields.anamnese.success"), "Anamnese submitted successfully");
+    successAlert(
+      t("auth.register.fields.anamnese.success"),
+      "Anamnese submitted successfully"
+    );
     router.push("/login");
   } catch (e) {
     toast.error(t("errors.server.generic"));
@@ -290,5 +313,4 @@ const handleAnamneseSubmit = async () => {
     loading.value = false;
   }
 };
-
 </script>

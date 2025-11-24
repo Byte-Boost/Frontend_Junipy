@@ -30,3 +30,14 @@ export interface UserInformation {
   takesMedication: string;
   medicationDetails: string;
 }
+
+export interface Chat {
+  id: string;
+  messages: ChatMessage[];
+}
+
+export interface ChatMessage {
+  role: string;
+  content: string;
+  timestamp: number;
+}

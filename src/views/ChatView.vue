@@ -1,7 +1,6 @@
 <template>
   <div class="bg-[#EFE9E3]">
     <div class="chat-container">
-
       <div v-if="isLoading" class="loading-container">
         <div
           class="w-6 h-6 border-4 border-gray-300 border-t-[#48b684] rounded-full animate-spin"
@@ -51,11 +50,13 @@
                     </div>
                   </div>
                   <div class="message-time">
-                    <span>{{ formatTimestamp(Date.now()) }}</span>
+                    <span>{{ formatTimestamp(msg.timestamp) }}</span>
                   </div>
                 </div>
               </div>
-              <div v-else :class="['message', 'user']">{{ msg.content }}</div>
+              <div v-else :class="['message', 'user']">
+                {{ msg.content }}
+              </div>
             </div>
             <div v-if="!hasReply" class="assistant loader-message">
               <div class="jumping-balls-loader">
@@ -66,14 +67,11 @@
             </div>
           </div>
           <section class="chat-box">
-            <form
-              @submit.prevent="sendMessage"
-              class="input-container"
-            >
+            <form @submit.prevent="sendMessage" class="input-container">
               <textarea
                 :disabled="!hasReply || !isConnected"
                 v-model="input"
-                :placeholder="$t('chat.placeholder')" 
+                :placeholder="$t('chat.placeholder')"
                 class="chat-input"
                 :class="{ blocked: !hasReply || !isConnected }"
                 rows="1"
@@ -82,25 +80,21 @@
                 ref="textareaRef"
               ></textarea>
 
-
               <button
                 type="submit"
                 :disabled="!input.trim() || !hasReply || !isConnected"
               >
                 <IconSend :size="48" color="gray" />
-              </button >
+              </button>
             </form>
           </section>
         </section>
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup>
-
-
 import { ref, onMounted, nextTick, watch } from "vue";
 import { marked } from "marked";
 import IconSend from "@/components/icons/IconSend.vue";
@@ -115,7 +109,7 @@ import { useRouter } from "vue-router";
 
 const toast = useToast();
 const { t } = useTypedI18n();
-const props = defineProps({uuid: String})
+const props = defineProps({ uuid: String });
 
 const router = useRouter();
 const defaultText = t("chat.greetingMessage");
@@ -135,29 +129,59 @@ const {
   disconnect,
   hasReply,
   sendMessage: socketSendMessage,
-} = useChatSocket(userId.value);
+} = useChatSocket(userId.value, ref(props.uuid));
 
 watch(
   () => props.uuid,
   async (newUuid) => {
     if (!newUuid) {
-      const firstOrNewChat = (await getChatList())[0];
-      router.push(`/chat/${firstOrNewChat}`)
+      const firstOrNewChat =
+        (await getChatList())[0]?.id ?? (await createNewChat()).id;
+      router.push(`/chat/${firstOrNewChat}`);
     } else {
+      messages.value = [];
+
+      const chats = await getChatList();
+      const chat = chats.find((c) => c.id === newUuid);
+
+      if (chat && chat.messages?.length) {
+        for (const message of chat.messages) {
+          console.log(message);
+          messages.value.push({
+            role: message.role,
+            content: message.message,
+            timestamp: message.timestamp,
+          });
+        }
+      } else {
+        messages.value.push({
+          role: "assistant",
+          content: defaultText,
+          timestamp: Date.now(),
+        });
+      }
+
       token.value = localStorage.getItem("token") || "";
       if (token.value) {
         if (messages.value.length === 0) {
-          messages.value.push({ role: "assistant", content: defaultText });
+          messages.value.push({
+            role: "assistant",
+            content: defaultText,
+            timestamp: Date.now(),
+          });
         }
       } else {
         console.warn("No token found in localStorage.");
-        messages.value.push({ role: "assistant", content: errorText });
+        messages.value.push({
+          role: "assistant",
+          content: errorText,
+          timestamp: Date.now(),
+        });
       }
-      connect(token.value);
     }
-},
+  },
   { immediate: true }
-)
+);
 
 watch(isConnected, (newVal) => {
   if (newVal) {
@@ -179,7 +203,10 @@ watch(isConnected, (newVal) => {
     }, 5000);
   }
 });
-
+onMounted(() => {
+  console.log("Fish");
+  connect(token.value);
+});
 function adjustHeight() {
   nextTick(() => {
     if (textareaRef.value) {

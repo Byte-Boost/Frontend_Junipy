@@ -1,50 +1,68 @@
-import { ref } from "vue";
-import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
-import type { Ref } from "vue";
+import { ref, type Ref } from "vue";
+import { Client, type IMessage } from "@stomp/stompjs";
 import { useTypedI18n } from "@/composables/useI18n";
+import type { ChatMessage } from "@/models/models";
 
-export function useChatSocket(userId: string) {
-  const messages = ref<{ role: string; content: string }[]>([]);
-  const isConnected = ref(false);
-  const hasReply = ref(true);
+export function useChatSocket(userId: string, chatId: string) {
+  const messages: Ref<ChatMessage[]> = ref([]);
+  const isConnected: Ref<boolean> = ref(false);
+  const hasReply: Ref<boolean> = ref(true);
   const client: Ref<Client | null> = ref(null);
-  let localtoken: string = "";
+  let localToken = "";
   const { t } = useTypedI18n();
+
   function connect(token: string) {
-    localtoken = token;
+    localToken = token;
+
+    const wsUrl = `${import.meta.env.VITE_API_URL.replace(
+      /^http/,
+      "ws"
+    )}api/ws/chat`;
+
     client.value = new Client({
-      brokerURL: `${import.meta.env.VITE_API_URL.replace(
-        /^http/,
-        "ws"
-      )}api/ws/chat`,
+      brokerURL: wsUrl,
       connectHeaders: {
         Authorization: `Bearer ${token}`,
       },
+      reconnectDelay: 5000,
+      debug: (str: string) => console.log("[STOMP]", str),
       onConnect: () => {
         isConnected.value = true;
-        client.value?.subscribe("/topic/chat", (message) => {
-          const data = JSON.parse(message.body);
-          console.log("Received message:", data);
-          if (data.error) {
-            messages.value.push({
-              role: "assistant",
-              content: t("errors.ai.503"),
-            });
-            hasReply.value = true;
-          } else if (data.message) {
-            setTimeout(() => {
-              messages.value.push({ role: "assistant", content: data.message });
+
+        client.value?.subscribe(
+          `/topic/chat/${chatId}`,
+          (message: IMessage) => {
+            let data: { role?: string; message?: string; error?: boolean };
+            try {
+              data = JSON.parse(message.body);
+            } catch {
+              console.warn("Failed to parse STOMP message body", message.body);
+              return;
+            }
+
+            if (data.error) {
+              messages.value.push({
+                role: "assistant",
+                content: t("errors.ai.503"),
+                timestamp: Date.now(),
+              });
               hasReply.value = true;
-            }, 1000);
+            } else if (data.message) {
+              messages.value.push({
+                role: data.role || "assistant",
+                content: data.message,
+                timestamp: Date.now(),
+              });
+              hasReply.value = true;
+            }
           }
-        });
+        );
       },
       onDisconnect: () => {
         isConnected.value = false;
       },
-      debug: (str: string) => console.log(str),
     });
+
     client.value.activate();
   }
 
@@ -55,15 +73,18 @@ export function useChatSocket(userId: string) {
 
   function sendMessage(content: string) {
     if (!client.value || !isConnected.value) return;
+
+    const payload = {
+      userId,
+      message: content,
+    };
+
     client.value.publish({
-      destination: "/app/chat",
-      body: JSON.stringify({
-        message: content,
-        token: localtoken,
-        userId,
-      }),
+      destination: `/app/chat/${chatId}/send`,
+      body: JSON.stringify(payload),
     });
-    messages.value.push({ role: "user", content });
+
+    messages.value.push({ role: "user", content, timestamp: Date.now() });
     hasReply.value = false;
   }
 

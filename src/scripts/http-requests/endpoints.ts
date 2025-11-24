@@ -1,12 +1,16 @@
 import apiClient from "./instance";
-import type { UserInformation } from "@/models/models";
+import type { Chat, UserInformation } from "@/models/models";
 
-export async function register(user: {email: string; username: string; password: string; confirmPassword: string;}) {
+export async function register(user: {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}) {
   const response = await apiClient.post("/api/auth/register", user);
   return response.data;
 }
 
-export async function insertAnamnese(userInfo: UserInformation){
+export async function insertAnamnese(userInfo: UserInformation) {
   console.log(userInfo);
   const response = await apiClient.post("/api/user/profile-data", userInfo);
   return response.data;
@@ -31,13 +35,15 @@ export async function getDietData() {
   return response.data;
 }
 
-export async function getAnalisysRequests() { 
-  const response = await apiClient.get("/api/user/diet-analysis-requests"); 
-  return response.data; 
+export async function getAnalisysRequests() {
+  const response = await apiClient.get("/api/user/diet-analysis-requests");
+  return response.data;
 }
 
-export async function dietRequestAnalisys(dietId: string) { 
-  const response = await apiClient.post(`api/user/request-diet-analysis/${dietId}`); 
+export async function dietRequestAnalisys(dietId: string) {
+  const response = await apiClient.post(
+    `api/user/request-diet-analysis/${dietId}`
+  );
   return response.data;
 }
 
@@ -46,12 +52,11 @@ export async function getAllUsers() {
   return response.data;
 }
 
-export async function getChatList(){
-  // get chats UUIDs (create one if not exist, return as array)
-  // TBD
-  return ["890c7a4c7b9f", "de955a4cf098", "f80238a85df6"];
+export async function getChatList(): Promise<Chat[]> {
+  const response = await apiClient.get("/api/chat");
+  return response.data;
 }
-export async function createNewChat(){
-  // create new chat and return its UUID
-  return "42f3c9e8a1b7";
+export async function createNewChat(): Promise<Chat> {
+  const response = await apiClient.post("/api/chat");
+  return response.data;
 }
