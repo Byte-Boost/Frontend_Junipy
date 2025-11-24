@@ -129,7 +129,7 @@ const {
   disconnect,
   hasReply,
   sendMessage: socketSendMessage,
-} = useChatSocket(userId.value, ref(props.uuid));
+} = useChatSocket(userId.value, ref(props.uuid).value);
 
 watch(
   () => props.uuid,

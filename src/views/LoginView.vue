@@ -65,7 +65,12 @@
         </section>
         <p class="flex content-center flex-wrap gap-3 justify-center">
           <span class="font-extrabold text-gray-400">•</span>
-          <span class="text-black">{{ $t("auth.login.actions.noAccount") }}</span><a href="/register">{{ $t("auth.login.actions.noAccountOption") }}</a>
+          <span class="text-black">{{
+            $t("auth.login.actions.noAccount")
+          }}</span
+          ><a href="/register">{{
+            $t("auth.login.actions.noAccountOption")
+          }}</a>
         </p>
       </div>
     </div>
@@ -77,7 +82,6 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { login } from "@/scripts/http-requests/endpoints";
 import { useTypedI18n } from "@/composables/useI18n";
-import Swal from "sweetalert2";
 import "../styles/views/LoginView.scss";
 import CloudyBackground from "@/components/CloudyBackground.vue";
 import IconMail from "@/components/icons/IconMail.vue";
@@ -107,7 +111,7 @@ const handleLogin = async () => {
       localStorage.setItem("token", response.token);
       router.push("/chat");
     } else {
-      toast.error(t("errors.server.generic"));
+      toast.error(t("errors.auth.invalidCredentials"));
     }
   } catch (e: any) {
     toast.error(e.response?.data?.message || t("errors.server.generic"));

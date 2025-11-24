@@ -77,6 +77,7 @@ export function useChatSocket(userId: string, chatId: string) {
     const payload = {
       userId,
       message: content,
+      token: localToken,
     };
 
     client.value.publish({
