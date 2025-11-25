@@ -53,7 +53,8 @@ export function useChatSocket(userId: string, chatId: string) {
                 content: data.message,
                 timestamp: Date.now(),
               });
-              hasReply.value = true;
+              if (data.role == "assistant")
+                hasReply.value = true;
             }
           }
         );
