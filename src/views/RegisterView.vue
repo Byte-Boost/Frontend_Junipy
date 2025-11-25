@@ -176,7 +176,6 @@ function prevStep() {
 }
 
 const userCredentials = ref({
-  username: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -241,7 +240,6 @@ const handleRegister = async () => {
     }
 
     userInformation.value.email = userCredentials.value.email;
-    userInformation.value.name = userCredentials.value.username;
     nextStep();
   } catch (e) {
     toast.error(t("errors.server.generic"));

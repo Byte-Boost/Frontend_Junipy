@@ -1,12 +1,6 @@
 <template>
   <div class="step-container">
     <div class="form-row">
-        <div class="form-element">
-          <label>{{ t("auth.register.fields.username.label") }}</label>
-          <input v-model="userInfo.username" type="text" :placeholder="t('auth.register.fields.username.placeholder')" />
-        </div>
-    </div>
-    <div class="form-row">
       <div class="form-element">
         <label>{{ t("auth.register.fields.email.label") }}</label>
         <input v-model="userInfo.email" type="text" :placeholder="t('auth.register.fields.email.placeholder')" />
