@@ -51,4 +51,21 @@ const successAlert = (text: string, log: string, cb: Function=()=>{}) : void =>{
   cb()
 }
 
+export const confirmationAlert = (text:string, log: string, confirmCb:Function=()=>{}): void =>{
+  Swal.fire({
+    title: text,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText:"Cancelar",
+    confirmButtonText: "Sim, deletar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      confirmCb()
+    }
+  });
+  console.log(log)
+}
+
 export { copyToClipboard, formatTimestamp, hasNullValues, successAlert };

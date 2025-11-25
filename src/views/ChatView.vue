@@ -104,7 +104,7 @@ import "../styles/views/ChatView.scss";
 import { copyToClipboard, formatTimestamp } from "@/scripts/utils/utils";
 import IconCopy from "@/components/icons/IconCopy.vue";
 import { useToast } from "vue-toastification";
-import { getChatList } from "@/scripts/http-requests/endpoints";
+import { deleteChat, getChatList } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
 
 const toast = useToast();
@@ -148,7 +148,7 @@ watch(
         for (const message of chat.messages) {
           console.log(message);
           messages.value.push({
-            role: message.role,
+            role: message.sentBy,
             content: message.message,
             timestamp: message.timestamp,
           });

@@ -56,7 +56,14 @@ export async function getChatList(): Promise<Chat[]> {
   const response = await apiClient.get("/api/chat");
   return response.data;
 }
+
 export async function createNewChat(): Promise<Chat> {
   const response = await apiClient.post("/api/chat");
+  return response.data;
+}
+
+export async function deleteChat(id: string): Promise<void> {
+  console.log("trying to delete it.")
+  const response = await apiClient.delete(`/api/chat/${id}`);
   return response.data;
 }

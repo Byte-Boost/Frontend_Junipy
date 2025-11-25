@@ -24,12 +24,13 @@
         <button
           v-for="chatId in chatIds"
           :key="chatId"
-          class="sidebar-btn"
+          class="sidebar-btn flex justify-between"
           @click="navigateTo(`/chat/${chatId}`)"
           :title="isCollapsed ? 'Chat' : ''"
         >
           <IconChat :size="20" color="black" class="btn-icon" />
-          <span v-if="!isCollapsed" class="btn-text">{{ chatId }}</span>
+          <span v-if="!isCollapsed" class="btn-text max-w-4/5 flex-grow overflow-hidden">...{{ chatId.slice(-12) }}</span>
+          <IconTrash v-if="!isCollapsed" size="20" color="black" class="btn-icon right-0" @click.stop="deleteChatById(chatId)"></IconTrash>
         </button>
         <button
           class="sidebar-btn"
@@ -85,8 +86,10 @@ import IconChevronLeft from "./icons/IconChevronLeft.vue";
 import IconChevronRight from "./icons/IconChevronRight.vue";
 import "../styles/components/Sidebar.css";
 import IconLogout from "./icons/IconLogout.vue";
-import { createNewChat, getChatList } from "@/scripts/http-requests/endpoints";
+import { createNewChat, deleteChat, getChatList } from "@/scripts/http-requests/endpoints";
 import IconAdd from "./icons/IconAdd.vue";
+import IconTrash from "./icons/IconTrash.vue";
+import { confirmationAlert } from "@/scripts/utils/utils";
 
 const chatIds = ref<string[]>([]);
 const route = useRoute();
@@ -112,4 +115,13 @@ const newChat = async () => {
   const newChatId = (await createNewChat()).id;
   router.push(`/chat/${newChatId}`);
 };
+const deleteChatById = async (chatId: string) => {
+  confirmationAlert("Tem certeza que deseja deletar este chat?", "confirming deletion", async ()=>{
+    await deleteChat(chatId)
+    if (route.params.uuid == chatId) {
+      router.push(`/chat`);
+    }
+    chatIds.value = (await getChatList()).map((chat) => chat.id);
+  });
+}
 </script>
