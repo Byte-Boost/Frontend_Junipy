@@ -9,7 +9,7 @@
 
       <div v-else class="w-full h-full flex justify-center">
         <section class="chat flex flex-col w-3/5">
-          <div class="messages">
+          <div class="messages" ref="messagesContainer">
             <div
               v-for="(msg, i) in messages"
               :key="i"
@@ -39,14 +39,6 @@
                           />
                         </button>
                       </div>
-                      <!-- <div class="toolbar-icon download-icon-container">
-                        <button
-                          @click="downloadPDF(msg.content, toast, t)"
-                          class="toolbar-button"
-                        >
-                          <IconDownload :size="24" color="#007bff" />
-                        </button>
-                      </div> -->
                     </div>
                   </div>
                   <div class="message-time">
@@ -106,6 +98,8 @@ import IconCopy from "@/components/icons/IconCopy.vue";
 import { useToast } from "vue-toastification";
 import { getChatList } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
+
+const messagesContainer = ref(null);
 
 const toast = useToast();
 const { t } = useTypedI18n();
@@ -203,10 +197,19 @@ watch(isConnected, (newVal) => {
     }, 5000);
   }
 });
+
+watch(
+  () => messages.value.length,
+  () => {
+    scrollToBottom();
+  }
+)
+
 onMounted(() => {
   token.value = localStorage.getItem("token") || "";
   connect(token.value);
 });
+
 function adjustHeight() {
   nextTick(() => {
     if (textareaRef.value) {
@@ -244,6 +247,23 @@ function sendMessage() {
   nextTick(() => {
     if (textareaRef.value) {
       textareaRef.value.style.height = "auto";
+    }
+  });
+}
+
+function scrollToBottom() {
+  console.log("Scrolling to bottom");
+  nextTick(() => {
+    const el = messagesContainer.value;
+    if (!el) {
+      console.warn("chatContainer ref not found");
+      return;
+    }
+    el.scrollTop = el.scrollHeight;
+    try {
+      el.scrollTo({ top: el.scrollHeight, behavior: "auto" });
+    } catch (e) {
+      console.warn("Smooth scrolling not supported");
     }
   });
 }
