@@ -104,7 +104,7 @@ import "../styles/views/ChatView.scss";
 import { copyToClipboard, formatTimestamp } from "@/scripts/utils/utils";
 import IconCopy from "@/components/icons/IconCopy.vue";
 import { useToast } from "vue-toastification";
-import { deleteChat, getChatList } from "@/scripts/http-requests/endpoints";
+import { getChatList } from "@/scripts/http-requests/endpoints";
 import { useRouter } from "vue-router";
 
 const toast = useToast();

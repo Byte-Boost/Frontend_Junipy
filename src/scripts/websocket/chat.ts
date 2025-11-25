@@ -85,7 +85,6 @@ export function useChatSocket(userId: string, chatId: string) {
       body: JSON.stringify(payload),
     });
 
-    messages.value.push({ role: "user", content, timestamp: Date.now() });
     hasReply.value = false;
   }
 
